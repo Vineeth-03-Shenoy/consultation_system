@@ -1,0 +1,5330 @@
+{
+  "id": "33e382b5-c570-46c0-9d17-5dc28c232557",
+  "version": "1.8",
+  "name": "AgenticConsultationManagement",
+  "runtime": "maestro",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "core.trigger.manual",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "App Trigger"
+      },
+      "inputs": {
+        "entryPointId": "a0320203-ebb2-454a-b090-1ab4cff1446c",
+        "isDefaultEntryPoint": true
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Data passed when manually triggering the workflow.",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "moveTriggerMail",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Move Trigger Mail to Processed (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "bookingAgent",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Booking Agent (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "getAllRecords",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Get All Records from Data Fabric (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "sendConfirmMail",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Send Confirmation Mail (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "pollDayLoop",
+      "type": "core.logic.loop",
+      "typeVersion": "2.4",
+      "display": {
+        "label": "Wait for Appointment Day (poll)"
+      },
+      "inputs": {
+        "collection": "=js:Array.from({length: 20}, (_, i) => i + 1)",
+        "parallel": false,
+        "completionCondition": "$vars.dayEventType !== \"\""
+      },
+      "outputs": {
+        "currentItem": {
+          "type": "any",
+          "description": "The current item being iterated in the loop",
+          "scope": "internal",
+          "source": "=loopContext.currentItem",
+          "var": "currentItem"
+        },
+        "currentIteration": {
+          "type": "number",
+          "description": "The current iteration number (1-based)",
+          "scope": "internal",
+          "source": "=loopContext.currentIteration",
+          "var": "currentIteration"
+        },
+        "collection": {
+          "type": "array",
+          "description": "The collection being iterated over",
+          "scope": "internal",
+          "source": "=loopContext.collection",
+          "var": "collection"
+        },
+        "output": {
+          "type": "array",
+          "description": "Aggregated results from all loop iterations",
+          "scope": "external",
+          "source": "=loopContext.output",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "delayDayPoll",
+      "type": "core.logic.delay",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Poll interval"
+      },
+      "inputs": {
+        "timerType": "timeDuration",
+        "timerPreset": "PT5S"
+      },
+      "parentId": "pollDayLoop"
+    },
+    {
+      "id": "checkDayEvents",
+      "type": "core.action.script",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Check for events (mock)"
+      },
+      "inputs": {
+        "script": "// Mock: in production this checks the mailbox / Data Fabric for doctorEmergency, rescheduleCancel or finalReminder events\nreturn { eventType: \"finalReminder\" };"
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the script fails",
+          "source": "=Error",
+          "var": "error"
+        }
+      },
+      "parentId": "pollDayLoop"
+    },
+    {
+      "id": "routeDayEvent",
+      "type": "core.logic.switch",
+      "typeVersion": "1.1",
+      "display": {
+        "label": "Which Event"
+      },
+      "inputs": {
+        "cases": [
+          {
+            "id": "doctorEmergency",
+            "label": "Doctor Emergency",
+            "expression": "$vars.dayEventType === \"doctorEmergency\""
+          },
+          {
+            "id": "rescheduleCancel",
+            "label": "Reschedule or Cancel",
+            "expression": "$vars.dayEventType === \"rescheduleCancel\""
+          },
+          {
+            "id": "finalReminder",
+            "label": "Final Reminder",
+            "expression": "$vars.dayEventType === \"finalReminder\""
+          }
+        ]
+      }
+    },
+    {
+      "id": "bufferBP1",
+      "type": "core.action.script",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Buffer for Best Practice"
+      },
+      "inputs": {
+        "script": "return { buffered: true };"
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the script fails",
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "pollReplyLoop1",
+      "type": "core.logic.loop",
+      "typeVersion": "2.4",
+      "display": {
+        "label": "Wait for Patient Reply (8h poll)"
+      },
+      "inputs": {
+        "collection": "=js:Array.from({length: 20}, (_, i) => i + 1)",
+        "parallel": false,
+        "completionCondition": "$vars.reply1Received === true"
+      },
+      "outputs": {
+        "currentItem": {
+          "type": "any",
+          "description": "The current item being iterated in the loop",
+          "scope": "internal",
+          "source": "=loopContext.currentItem",
+          "var": "currentItem"
+        },
+        "currentIteration": {
+          "type": "number",
+          "description": "The current iteration number (1-based)",
+          "scope": "internal",
+          "source": "=loopContext.currentIteration",
+          "var": "currentIteration"
+        },
+        "collection": {
+          "type": "array",
+          "description": "The collection being iterated over",
+          "scope": "internal",
+          "source": "=loopContext.collection",
+          "var": "collection"
+        },
+        "output": {
+          "type": "array",
+          "description": "Aggregated results from all loop iterations",
+          "scope": "external",
+          "source": "=loopContext.output",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "delayReply1",
+      "type": "core.logic.delay",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Poll interval"
+      },
+      "inputs": {
+        "timerType": "timeDuration",
+        "timerPreset": "PT5S"
+      },
+      "parentId": "pollReplyLoop1"
+    },
+    {
+      "id": "checkReply1",
+      "type": "core.action.script",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Check for reply (mock)"
+      },
+      "inputs": {
+        "script": "// Mock: checks mailbox for the patient's reply to the reschedule request\nreturn { received: true };"
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the script fails",
+          "source": "=Error",
+          "var": "error"
+        }
+      },
+      "parentId": "pollReplyLoop1"
+    },
+    {
+      "id": "gotReply1",
+      "type": "core.logic.decision",
+      "typeVersion": "1.1",
+      "display": {
+        "label": "Reply Received?"
+      },
+      "inputs": {
+        "expression": "$vars.reply1Received === true",
+        "trueLabel": "Reply received",
+        "falseLabel": "8h elapsed"
+      }
+    },
+    {
+      "id": "analyseReply",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Analyse Patient Reply (mock agent)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "moveReplyMail",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Move Reply Mail to Processed (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "isCancelled",
+      "type": "core.logic.decision",
+      "typeVersion": "1.1",
+      "display": {
+        "label": "Cancelled?"
+      },
+      "inputs": {
+        "expression": "(($vars.analyseReply.output || {}).cancelled) === true",
+        "trueLabel": "Yes",
+        "falseLabel": "No"
+      }
+    },
+    {
+      "id": "updCancelPatient",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Update Appointment Cancelled by Patient (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "sendBookingMail",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Send Booking Mail (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "updRescheduled",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Update Appointment Rescheduled (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "updCancelNoReply",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Update Appointment Cancelled No Reply (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "moveReminderMail",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Move Reminder Mail to Processed (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "dayOfConsult",
+      "type": "core.subflow",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Day Of Consultation",
+        "icon": "layers"
+      },
+      "inputs": {},
+      "outputs": {
+        "error": {
+          "type": "object",
+          "description": "Error information if the subflow fails",
+          "source": "=result.Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string",
+                "descriptionKey": "subflowInterface_errorCode_description"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message",
+                "descriptionKey": "subflowInterface_errorMessage_description"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description",
+                "descriptionKey": "subflowInterface_errorDetail_description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category",
+                "descriptionKey": "subflowInterface_errorCategory_description"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code",
+                "descriptionKey": "subflowInterface_errorStatus_description"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "type": "object",
+          "description": "The return value of the subflow",
+          "source": "=result.response",
+          "var": "output",
+          "properties": {
+            "outcome": {
+              "type": "string"
+            },
+            "testsNeeded": {
+              "type": "boolean"
+            },
+            "medsNeeded": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "emergencyWatch",
+      "type": "core.logic.loop",
+      "typeVersion": "2.4",
+      "display": {
+        "label": "Doctor Emergency Watch (poll)"
+      },
+      "inputs": {
+        "collection": "=js:Array.from({length: 5}, (_, i) => i + 1)",
+        "parallel": false,
+        "completionCondition": "$vars.emergencyOccurred === true"
+      },
+      "outputs": {
+        "currentItem": {
+          "type": "any",
+          "description": "The current item being iterated in the loop",
+          "scope": "internal",
+          "source": "=loopContext.currentItem",
+          "var": "currentItem"
+        },
+        "currentIteration": {
+          "type": "number",
+          "description": "The current iteration number (1-based)",
+          "scope": "internal",
+          "source": "=loopContext.currentIteration",
+          "var": "currentIteration"
+        },
+        "collection": {
+          "type": "array",
+          "description": "The collection being iterated over",
+          "scope": "internal",
+          "source": "=loopContext.collection",
+          "var": "collection"
+        },
+        "output": {
+          "type": "array",
+          "description": "Aggregated results from all loop iterations",
+          "scope": "external",
+          "source": "=loopContext.output",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "delayEmerg",
+      "type": "core.logic.delay",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Poll interval"
+      },
+      "inputs": {
+        "timerType": "timeDuration",
+        "timerPreset": "PT5S"
+      },
+      "parentId": "emergencyWatch"
+    },
+    {
+      "id": "checkEmerg",
+      "type": "core.action.script",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Check for emergency (mock)"
+      },
+      "inputs": {
+        "script": "// Mock: checks for a doctor emergency raised on the consultation day\nreturn { occurred: false };"
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the script fails",
+          "source": "=Error",
+          "var": "error"
+        }
+      },
+      "parentId": "emergencyWatch"
+    },
+    {
+      "id": "hadEmergency",
+      "type": "core.logic.decision",
+      "typeVersion": "1.1",
+      "display": {
+        "label": "Emergency Occurred?"
+      },
+      "inputs": {
+        "expression": "$vars.emergencyOccurred === true",
+        "trueLabel": "Yes",
+        "falseLabel": "No"
+      }
+    },
+    {
+      "id": "bufferBP2",
+      "type": "core.action.script",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Buffer for Best Practice 2"
+      },
+      "inputs": {
+        "script": "return { buffered: true };"
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the script fails",
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "pollReplyLoop2",
+      "type": "core.logic.loop",
+      "typeVersion": "2.4",
+      "display": {
+        "label": "Wait for Patient Reply (1h poll)"
+      },
+      "inputs": {
+        "collection": "=js:Array.from({length: 10}, (_, i) => i + 1)",
+        "parallel": false,
+        "completionCondition": "$vars.reply2Received === true"
+      },
+      "outputs": {
+        "currentItem": {
+          "type": "any",
+          "description": "The current item being iterated in the loop",
+          "scope": "internal",
+          "source": "=loopContext.currentItem",
+          "var": "currentItem"
+        },
+        "currentIteration": {
+          "type": "number",
+          "description": "The current iteration number (1-based)",
+          "scope": "internal",
+          "source": "=loopContext.currentIteration",
+          "var": "currentIteration"
+        },
+        "collection": {
+          "type": "array",
+          "description": "The collection being iterated over",
+          "scope": "internal",
+          "source": "=loopContext.collection",
+          "var": "collection"
+        },
+        "output": {
+          "type": "array",
+          "description": "Aggregated results from all loop iterations",
+          "scope": "external",
+          "source": "=loopContext.output",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "delayReply2",
+      "type": "core.logic.delay",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Poll interval"
+      },
+      "inputs": {
+        "timerType": "timeDuration",
+        "timerPreset": "PT5S"
+      },
+      "parentId": "pollReplyLoop2"
+    },
+    {
+      "id": "checkReply2",
+      "type": "core.action.script",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Check for reply (mock)"
+      },
+      "inputs": {
+        "script": "// Mock: checks mailbox for the patient's reply after a same-day emergency\nreturn { received: true };"
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the script fails",
+          "source": "=Error",
+          "var": "error"
+        }
+      },
+      "parentId": "pollReplyLoop2"
+    },
+    {
+      "id": "gotReply2",
+      "type": "core.logic.decision",
+      "typeVersion": "1.1",
+      "display": {
+        "label": "Reply Received? (same day)"
+      },
+      "inputs": {
+        "expression": "$vars.reply2Received === true",
+        "trueLabel": "Reply received",
+        "falseLabel": "1h elapsed"
+      }
+    },
+    {
+      "id": "updCancel1h",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Update Appointment Cancelled 1h Timeout (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "outcomeOk",
+      "type": "core.logic.decision",
+      "typeVersion": "1.1",
+      "display": {
+        "label": "Consultation Completed?"
+      },
+      "inputs": {
+        "expression": "(($vars.dayOfConsult.output || {}).outcome || \"completed\") === \"completed\"",
+        "trueLabel": "Completed",
+        "falseLabel": "Cancelled or Abandoned"
+      }
+    },
+    {
+      "id": "terminateFlow",
+      "type": "core.logic.terminate",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Terminate Instance"
+      },
+      "inputs": {},
+      "outputs": {
+        "finalStatus": {
+          "source": "=js:\"Terminated\""
+        },
+        "dayEventType": {
+          "source": "=js:$vars.dayEventType"
+        },
+        "reply1Received": {
+          "source": "=js:$vars.reply1Received"
+        },
+        "emergencyOccurred": {
+          "source": "=js:$vars.emergencyOccurred"
+        },
+        "reply2Received": {
+          "source": "=js:$vars.reply2Received"
+        }
+      }
+    },
+    {
+      "id": "decisionTests",
+      "type": "core.logic.decision",
+      "typeVersion": "1.1",
+      "display": {
+        "label": "Tests Needed?"
+      },
+      "inputs": {
+        "expression": "(($vars.dayOfConsult.output || {}).testsNeeded) === true",
+        "trueLabel": "Tests",
+        "falseLabel": "None"
+      }
+    },
+    {
+      "id": "labTestRequest",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Lab Test Request (mock HITL)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "joinTests",
+      "type": "core.action.script",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Tests branch done"
+      },
+      "inputs": {
+        "script": "return { done: true };"
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the script fails",
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "decisionMeds",
+      "type": "core.logic.decision",
+      "typeVersion": "1.1",
+      "display": {
+        "label": "Medicines Needed?"
+      },
+      "inputs": {
+        "expression": "(($vars.dayOfConsult.output || {}).medsNeeded) === true",
+        "trueLabel": "Medicines",
+        "falseLabel": "None"
+      }
+    },
+    {
+      "id": "pharmacyOrder",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Pharmacy Order Request (mock HITL)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "joinMeds",
+      "type": "core.action.script",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Meds branch done"
+      },
+      "inputs": {
+        "script": "return { done: true };"
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the script fails",
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "mergeOrders",
+      "type": "core.logic.merge",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Merge Orders"
+      },
+      "inputs": {}
+    },
+    {
+      "id": "apptCompleted",
+      "type": "core.logic.mock",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Appointment Completed (mock)"
+      },
+      "inputs": {},
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      }
+    },
+    {
+      "id": "done_reschedCancel",
+      "type": "core.control.end",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Done - Reschedule or Cancel"
+      },
+      "inputs": {},
+      "outputs": {
+        "finalStatus": {
+          "source": "=js:\"RescheduleCancelled\"",
+          "type": "string"
+        },
+        "dayEventType": {
+          "source": "=js:$vars.dayEventType"
+        },
+        "reply1Received": {
+          "source": "=js:$vars.reply1Received"
+        },
+        "emergencyOccurred": {
+          "source": "=js:$vars.emergencyOccurred"
+        },
+        "reply2Received": {
+          "source": "=js:$vars.reply2Received"
+        }
+      }
+    },
+    {
+      "id": "done_noReply",
+      "type": "core.control.end",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Done - Cancelled No Reply"
+      },
+      "inputs": {},
+      "outputs": {
+        "finalStatus": {
+          "source": "=js:\"CancelledNoReply\"",
+          "type": "string"
+        },
+        "dayEventType": {
+          "source": "=js:$vars.dayEventType"
+        },
+        "reply1Received": {
+          "source": "=js:$vars.reply1Received"
+        },
+        "emergencyOccurred": {
+          "source": "=js:$vars.emergencyOccurred"
+        },
+        "reply2Received": {
+          "source": "=js:$vars.reply2Received"
+        }
+      }
+    },
+    {
+      "id": "done_cancelPatient",
+      "type": "core.control.end",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Done - Cancelled by Patient"
+      },
+      "inputs": {},
+      "outputs": {
+        "finalStatus": {
+          "source": "=js:\"CancelledByPatient\"",
+          "type": "string"
+        },
+        "dayEventType": {
+          "source": "=js:$vars.dayEventType"
+        },
+        "reply1Received": {
+          "source": "=js:$vars.reply1Received"
+        },
+        "emergencyOccurred": {
+          "source": "=js:$vars.emergencyOccurred"
+        },
+        "reply2Received": {
+          "source": "=js:$vars.reply2Received"
+        }
+      }
+    },
+    {
+      "id": "done_rescheduled",
+      "type": "core.control.end",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Done - Rescheduled"
+      },
+      "inputs": {},
+      "outputs": {
+        "finalStatus": {
+          "source": "=js:\"Rescheduled\"",
+          "type": "string"
+        },
+        "dayEventType": {
+          "source": "=js:$vars.dayEventType"
+        },
+        "reply1Received": {
+          "source": "=js:$vars.reply1Received"
+        },
+        "emergencyOccurred": {
+          "source": "=js:$vars.emergencyOccurred"
+        },
+        "reply2Received": {
+          "source": "=js:$vars.reply2Received"
+        }
+      }
+    },
+    {
+      "id": "done_emerg1h",
+      "type": "core.control.end",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Done - Cancelled 1h Timeout"
+      },
+      "inputs": {},
+      "outputs": {
+        "finalStatus": {
+          "source": "=js:\"Cancelled1h\"",
+          "type": "string"
+        },
+        "dayEventType": {
+          "source": "=js:$vars.dayEventType"
+        },
+        "reply1Received": {
+          "source": "=js:$vars.reply1Received"
+        },
+        "emergencyOccurred": {
+          "source": "=js:$vars.emergencyOccurred"
+        },
+        "reply2Received": {
+          "source": "=js:$vars.reply2Received"
+        }
+      }
+    },
+    {
+      "id": "done_noEmerg",
+      "type": "core.control.end",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Done - No Emergency"
+      },
+      "inputs": {},
+      "outputs": {
+        "finalStatus": {
+          "source": "=js:\"NoEmergency\"",
+          "type": "string"
+        },
+        "dayEventType": {
+          "source": "=js:$vars.dayEventType"
+        },
+        "reply1Received": {
+          "source": "=js:$vars.reply1Received"
+        },
+        "emergencyOccurred": {
+          "source": "=js:$vars.emergencyOccurred"
+        },
+        "reply2Received": {
+          "source": "=js:$vars.reply2Received"
+        }
+      }
+    },
+    {
+      "id": "done_main",
+      "type": "core.control.end",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Done - Completed"
+      },
+      "inputs": {},
+      "outputs": {
+        "finalStatus": {
+          "source": "=js:\"Completed\"",
+          "type": "string"
+        },
+        "dayEventType": {
+          "source": "=js:$vars.dayEventType"
+        },
+        "reply1Received": {
+          "source": "=js:$vars.reply1Received"
+        },
+        "emergencyOccurred": {
+          "source": "=js:$vars.emergencyOccurred"
+        },
+        "reply2Received": {
+          "source": "=js:$vars.reply2Received"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "sourceNodeId": "start",
+      "sourcePort": "output",
+      "targetNodeId": "moveTriggerMail",
+      "targetPort": "input"
+    },
+    {
+      "id": "e2",
+      "sourceNodeId": "moveTriggerMail",
+      "sourcePort": "output",
+      "targetNodeId": "bookingAgent",
+      "targetPort": "input"
+    },
+    {
+      "id": "e3",
+      "sourceNodeId": "bookingAgent",
+      "sourcePort": "output",
+      "targetNodeId": "getAllRecords",
+      "targetPort": "input"
+    },
+    {
+      "id": "e4",
+      "sourceNodeId": "getAllRecords",
+      "sourcePort": "output",
+      "targetNodeId": "sendConfirmMail",
+      "targetPort": "input"
+    },
+    {
+      "id": "e5",
+      "sourceNodeId": "sendConfirmMail",
+      "sourcePort": "output",
+      "targetNodeId": "pollDayLoop",
+      "targetPort": "input"
+    },
+    {
+      "id": "e6",
+      "sourceNodeId": "pollDayLoop",
+      "sourcePort": "start",
+      "targetNodeId": "delayDayPoll",
+      "targetPort": "input"
+    },
+    {
+      "id": "e7",
+      "sourceNodeId": "delayDayPoll",
+      "sourcePort": "output",
+      "targetNodeId": "checkDayEvents",
+      "targetPort": "input"
+    },
+    {
+      "id": "e8",
+      "sourceNodeId": "checkDayEvents",
+      "sourcePort": "success",
+      "targetNodeId": "pollDayLoop",
+      "targetPort": "continue"
+    },
+    {
+      "id": "e9",
+      "sourceNodeId": "pollDayLoop",
+      "sourcePort": "success",
+      "targetNodeId": "routeDayEvent",
+      "targetPort": "input"
+    },
+    {
+      "id": "e10",
+      "sourceNodeId": "routeDayEvent",
+      "sourcePort": "case-doctorEmergency",
+      "targetNodeId": "bufferBP1",
+      "targetPort": "input"
+    },
+    {
+      "id": "e11",
+      "sourceNodeId": "routeDayEvent",
+      "sourcePort": "case-rescheduleCancel",
+      "targetNodeId": "done_reschedCancel",
+      "targetPort": "input"
+    },
+    {
+      "id": "e12",
+      "sourceNodeId": "routeDayEvent",
+      "sourcePort": "case-finalReminder",
+      "targetNodeId": "moveReminderMail",
+      "targetPort": "input"
+    },
+    {
+      "id": "e13",
+      "sourceNodeId": "routeDayEvent",
+      "sourcePort": "default",
+      "targetNodeId": "done_reschedCancel",
+      "targetPort": "input"
+    },
+    {
+      "id": "e14",
+      "sourceNodeId": "bufferBP1",
+      "sourcePort": "success",
+      "targetNodeId": "pollReplyLoop1",
+      "targetPort": "input"
+    },
+    {
+      "id": "e15",
+      "sourceNodeId": "pollReplyLoop1",
+      "sourcePort": "start",
+      "targetNodeId": "delayReply1",
+      "targetPort": "input"
+    },
+    {
+      "id": "e16",
+      "sourceNodeId": "delayReply1",
+      "sourcePort": "output",
+      "targetNodeId": "checkReply1",
+      "targetPort": "input"
+    },
+    {
+      "id": "e17",
+      "sourceNodeId": "checkReply1",
+      "sourcePort": "success",
+      "targetNodeId": "pollReplyLoop1",
+      "targetPort": "continue"
+    },
+    {
+      "id": "e18",
+      "sourceNodeId": "pollReplyLoop1",
+      "sourcePort": "success",
+      "targetNodeId": "gotReply1",
+      "targetPort": "input"
+    },
+    {
+      "id": "e19",
+      "sourceNodeId": "gotReply1",
+      "sourcePort": "true",
+      "targetNodeId": "analyseReply",
+      "targetPort": "input"
+    },
+    {
+      "id": "e20",
+      "sourceNodeId": "gotReply1",
+      "sourcePort": "false",
+      "targetNodeId": "updCancelNoReply",
+      "targetPort": "input"
+    },
+    {
+      "id": "e21",
+      "sourceNodeId": "updCancelNoReply",
+      "sourcePort": "output",
+      "targetNodeId": "done_noReply",
+      "targetPort": "input"
+    },
+    {
+      "id": "e22",
+      "sourceNodeId": "analyseReply",
+      "sourcePort": "output",
+      "targetNodeId": "moveReplyMail",
+      "targetPort": "input"
+    },
+    {
+      "id": "e23",
+      "sourceNodeId": "moveReplyMail",
+      "sourcePort": "output",
+      "targetNodeId": "isCancelled",
+      "targetPort": "input"
+    },
+    {
+      "id": "e24",
+      "sourceNodeId": "isCancelled",
+      "sourcePort": "true",
+      "targetNodeId": "updCancelPatient",
+      "targetPort": "input"
+    },
+    {
+      "id": "e25",
+      "sourceNodeId": "isCancelled",
+      "sourcePort": "false",
+      "targetNodeId": "sendBookingMail",
+      "targetPort": "input"
+    },
+    {
+      "id": "e26",
+      "sourceNodeId": "updCancelPatient",
+      "sourcePort": "output",
+      "targetNodeId": "done_cancelPatient",
+      "targetPort": "input"
+    },
+    {
+      "id": "e27",
+      "sourceNodeId": "sendBookingMail",
+      "sourcePort": "output",
+      "targetNodeId": "updRescheduled",
+      "targetPort": "input"
+    },
+    {
+      "id": "e28",
+      "sourceNodeId": "updRescheduled",
+      "sourcePort": "output",
+      "targetNodeId": "done_rescheduled",
+      "targetPort": "input"
+    },
+    {
+      "id": "e29",
+      "sourceNodeId": "moveReminderMail",
+      "sourcePort": "output",
+      "targetNodeId": "dayOfConsult",
+      "targetPort": "input"
+    },
+    {
+      "id": "e30",
+      "sourceNodeId": "moveReminderMail",
+      "sourcePort": "output",
+      "targetNodeId": "emergencyWatch",
+      "targetPort": "input"
+    },
+    {
+      "id": "e31",
+      "sourceNodeId": "emergencyWatch",
+      "sourcePort": "start",
+      "targetNodeId": "delayEmerg",
+      "targetPort": "input"
+    },
+    {
+      "id": "e32",
+      "sourceNodeId": "delayEmerg",
+      "sourcePort": "output",
+      "targetNodeId": "checkEmerg",
+      "targetPort": "input"
+    },
+    {
+      "id": "e33",
+      "sourceNodeId": "checkEmerg",
+      "sourcePort": "success",
+      "targetNodeId": "emergencyWatch",
+      "targetPort": "continue"
+    },
+    {
+      "id": "e34",
+      "sourceNodeId": "emergencyWatch",
+      "sourcePort": "success",
+      "targetNodeId": "hadEmergency",
+      "targetPort": "input"
+    },
+    {
+      "id": "e35",
+      "sourceNodeId": "hadEmergency",
+      "sourcePort": "true",
+      "targetNodeId": "bufferBP2",
+      "targetPort": "input"
+    },
+    {
+      "id": "e36",
+      "sourceNodeId": "hadEmergency",
+      "sourcePort": "false",
+      "targetNodeId": "done_noEmerg",
+      "targetPort": "input"
+    },
+    {
+      "id": "e37",
+      "sourceNodeId": "bufferBP2",
+      "sourcePort": "success",
+      "targetNodeId": "pollReplyLoop2",
+      "targetPort": "input"
+    },
+    {
+      "id": "e38",
+      "sourceNodeId": "pollReplyLoop2",
+      "sourcePort": "start",
+      "targetNodeId": "delayReply2",
+      "targetPort": "input"
+    },
+    {
+      "id": "e39",
+      "sourceNodeId": "delayReply2",
+      "sourcePort": "output",
+      "targetNodeId": "checkReply2",
+      "targetPort": "input"
+    },
+    {
+      "id": "e40",
+      "sourceNodeId": "checkReply2",
+      "sourcePort": "success",
+      "targetNodeId": "pollReplyLoop2",
+      "targetPort": "continue"
+    },
+    {
+      "id": "e41",
+      "sourceNodeId": "pollReplyLoop2",
+      "sourcePort": "success",
+      "targetNodeId": "gotReply2",
+      "targetPort": "input"
+    },
+    {
+      "id": "e42",
+      "sourceNodeId": "gotReply2",
+      "sourcePort": "true",
+      "targetNodeId": "analyseReply",
+      "targetPort": "input"
+    },
+    {
+      "id": "e43",
+      "sourceNodeId": "gotReply2",
+      "sourcePort": "false",
+      "targetNodeId": "updCancel1h",
+      "targetPort": "input"
+    },
+    {
+      "id": "e44",
+      "sourceNodeId": "updCancel1h",
+      "sourcePort": "output",
+      "targetNodeId": "done_emerg1h",
+      "targetPort": "input"
+    },
+    {
+      "id": "e45",
+      "sourceNodeId": "dayOfConsult",
+      "sourcePort": "output",
+      "targetNodeId": "outcomeOk",
+      "targetPort": "input"
+    },
+    {
+      "id": "e46",
+      "sourceNodeId": "outcomeOk",
+      "sourcePort": "false",
+      "targetNodeId": "terminateFlow",
+      "targetPort": "input"
+    },
+    {
+      "id": "e47",
+      "sourceNodeId": "outcomeOk",
+      "sourcePort": "true",
+      "targetNodeId": "decisionTests",
+      "targetPort": "input"
+    },
+    {
+      "id": "e48",
+      "sourceNodeId": "outcomeOk",
+      "sourcePort": "true",
+      "targetNodeId": "decisionMeds",
+      "targetPort": "input"
+    },
+    {
+      "id": "e49",
+      "sourceNodeId": "decisionTests",
+      "sourcePort": "true",
+      "targetNodeId": "labTestRequest",
+      "targetPort": "input"
+    },
+    {
+      "id": "e50",
+      "sourceNodeId": "decisionTests",
+      "sourcePort": "false",
+      "targetNodeId": "joinTests",
+      "targetPort": "input"
+    },
+    {
+      "id": "e51",
+      "sourceNodeId": "labTestRequest",
+      "sourcePort": "output",
+      "targetNodeId": "joinTests",
+      "targetPort": "input"
+    },
+    {
+      "id": "e52",
+      "sourceNodeId": "decisionMeds",
+      "sourcePort": "true",
+      "targetNodeId": "pharmacyOrder",
+      "targetPort": "input"
+    },
+    {
+      "id": "e53",
+      "sourceNodeId": "decisionMeds",
+      "sourcePort": "false",
+      "targetNodeId": "joinMeds",
+      "targetPort": "input"
+    },
+    {
+      "id": "e54",
+      "sourceNodeId": "pharmacyOrder",
+      "sourcePort": "output",
+      "targetNodeId": "joinMeds",
+      "targetPort": "input"
+    },
+    {
+      "id": "e55",
+      "sourceNodeId": "joinTests",
+      "sourcePort": "success",
+      "targetNodeId": "mergeOrders",
+      "targetPort": "input"
+    },
+    {
+      "id": "e56",
+      "sourceNodeId": "joinMeds",
+      "sourcePort": "success",
+      "targetNodeId": "mergeOrders",
+      "targetPort": "input"
+    },
+    {
+      "id": "e57",
+      "sourceNodeId": "mergeOrders",
+      "sourcePort": "output",
+      "targetNodeId": "apptCompleted",
+      "targetPort": "input"
+    },
+    {
+      "id": "e58",
+      "sourceNodeId": "apptCompleted",
+      "sourcePort": "output",
+      "targetNodeId": "done_main",
+      "targetPort": "input"
+    }
+  ],
+  "definitions": [
+    {
+      "nodeType": "core.trigger.manual",
+      "version": "1.0",
+      "category": "trigger",
+      "description": "Start workflow manually",
+      "tags": [
+        "trigger",
+        "start",
+        "manual"
+      ],
+      "sortOrder": 40,
+      "display": {
+        "label": "Manual trigger",
+        "icon": "play",
+        "shape": "circle"
+      },
+      "handleConfiguration": [
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output",
+              "showButton": true,
+              "constraints": {
+                "forbiddenTargetCategories": [
+                  "trigger"
+                ]
+              }
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "model": {
+        "type": "bpmn:StartEvent",
+        "entryPointId": true
+      },
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "Data passed when manually triggering the workflow.",
+          "source": "null",
+          "var": "output"
+        }
+      },
+      "toolbarExtensions": {
+        "design": {
+          "actions": [
+            {
+              "id": "change-trigger-type",
+              "icon": "square-mouse-pointer",
+              "label": "Change trigger type"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "nodeType": "core.logic.mock",
+      "version": "1.0",
+      "category": "control-flow",
+      "description": "Placeholder node for prototyping",
+      "tags": [
+        "blank",
+        "todo"
+      ],
+      "sortOrder": 20,
+      "display": {
+        "label": "Mock",
+        "icon": "square-dashed"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ],
+          "visible": true
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output"
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "model": {
+        "type": "bpmn:Task"
+      },
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      },
+      "runtimeConstraints": {
+        "exclude": [
+          "api-function"
+        ]
+      }
+    },
+    {
+      "nodeType": "core.logic.loop",
+      "supportsErrorHandling": true,
+      "version": "2.4",
+      "category": "control-flow",
+      "description": "Iterate over a collection of items",
+      "tags": [
+        "control-flow",
+        "loop",
+        "iteration"
+      ],
+      "sortOrder": 20,
+      "display": {
+        "label": "Loop",
+        "icon": "repeat",
+        "shape": "container",
+        "description": "Execute a sequence of actions repeatedly for each item in a collection"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "boundary": "outer",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "boundary": "outer",
+          "handles": [
+            {
+              "id": "success",
+              "type": "source",
+              "handleType": "output"
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        },
+        {
+          "position": "left",
+          "boundary": "inner",
+          "handles": [
+            {
+              "id": "start",
+              "label": "start",
+              "type": "source",
+              "handleType": "output"
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "boundary": "inner",
+          "handles": [
+            {
+              "id": "continue",
+              "label": "continue",
+              "type": "target",
+              "handleType": "input"
+            },
+            {
+              "id": "break",
+              "label": "break",
+              "type": "target",
+              "handleType": "input",
+              "visible": "inputs.breakEnabled"
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:SubProcess"
+      },
+      "inputDefinition": {
+        "type": "object",
+        "properties": {
+          "collection": {
+            "type": "array"
+          },
+          "parallel": {
+            "type": "boolean"
+          },
+          "completionCondition": {
+            "type": "string"
+          },
+          "breakEnabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "collection"
+        ]
+      },
+      "inputDefaults": {
+        "collection": [],
+        "parallel": false,
+        "completionCondition": "",
+        "breakEnabled": false
+      },
+      "outputDefinition": {
+        "currentItem": {
+          "type": "any",
+          "description": "The current item being iterated in the loop",
+          "source": "=loopContext.currentItem",
+          "var": "currentItem",
+          "scope": "internal"
+        },
+        "currentIteration": {
+          "type": "number",
+          "description": "The current iteration number (1-based)",
+          "source": "=loopContext.currentIteration",
+          "var": "currentIteration",
+          "scope": "internal"
+        },
+        "collection": {
+          "type": "array",
+          "description": "The collection being iterated over",
+          "source": "=loopContext.collection",
+          "var": "collection",
+          "scope": "internal"
+        },
+        "output": {
+          "type": "array",
+          "description": "Aggregated results from all loop iterations",
+          "source": "=loopContext.output",
+          "var": "output",
+          "scope": "external"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "form": {
+        "id": "loop-properties",
+        "title": "Loop configuration",
+        "sections": [
+          {
+            "id": "iteration",
+            "title": "Iteration",
+            "fields": [
+              {
+                "name": "inputs.collection",
+                "type": "custom",
+                "component": "code-editor",
+                "label": "Collection",
+                "description": "Array or collection to iterate over (e.g., $vars.scriptTask1.output)",
+                "componentProps": {
+                  "singleLine": true,
+                  "mode": "expression",
+                  "toggleable": false,
+                  "placeholder": "e.g., $vars.scriptTask1.output",
+                  "showVariableButton": true,
+                  "language": "javascript",
+                  "expectedType": "array",
+                  "validationMode": "expression"
+                }
+              },
+              {
+                "name": "inputs.parallel",
+                "type": "switch",
+                "label": "Parallel",
+                "description": "Execute all iterations at the same time."
+              },
+              {
+                "name": "inputs.completionCondition",
+                "type": "custom",
+                "component": "code-editor",
+                "label": "Break on condition",
+                "description": "Exit the loop early when this condition becomes true after an iteration completes.",
+                "componentProps": {
+                  "singleLine": true,
+                  "mode": "expression",
+                  "toggleable": false,
+                  "placeholder": "e.g., $vars.processedCount >= 5",
+                  "showVariableButton": true,
+                  "alwaysIncludeSelf": true,
+                  "returnType": "boolean",
+                  "validationMode": "expression",
+                  "language": "javascript"
+                }
+              },
+              {
+                "name": "inputs.breakEnabled",
+                "type": "switch",
+                "label": "Show break handle",
+                "description": "Allow nodes inside the loop to exit the loop early through a break handle."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nodeType": "core.logic.delay",
+      "version": "1.0",
+      "category": "control-flow",
+      "description": "Pause execution for a duration or until a date",
+      "tags": [
+        "control",
+        "flow",
+        "logic",
+        "delay",
+        "timer",
+        "wait"
+      ],
+      "sortOrder": 20,
+      "display": {
+        "label": "Delay",
+        "icon": "timer"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output"
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:IntermediateCatchEvent",
+        "eventDefinition": "bpmn:TimerEventDefinition",
+        "values": {
+          "timerType": "inputs.timerType",
+          "timerValue": "inputs.timerValue",
+          "timerPreset": "inputs.timerPreset",
+          "timerDate": "inputs.timerDate"
+        }
+      },
+      "inputDefinition": {
+        "type": "object",
+        "properties": {
+          "timerType": {
+            "type": "string",
+            "minLength": 1,
+            "errorMessage": "Timer type is required"
+          },
+          "timerPreset": {
+            "type": "string",
+            "minLength": 1,
+            "errorMessage": "Duration is required"
+          },
+          "timerValue": {
+            "type": "string"
+          },
+          "timerDate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "timerType",
+          "timerPreset"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "timerType": {
+                  "const": "timeDuration"
+                },
+                "timerPreset": {
+                  "const": "custom"
+                }
+              },
+              "required": [
+                "timerType",
+                "timerPreset"
+              ]
+            },
+            "then": {
+              "properties": {
+                "timerValue": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+S)?)?$",
+                  "errorMessage": "Custom duration is required (ISO 8601 format, e.g., PT15M, PT1H, P1D)"
+                }
+              },
+              "required": [
+                "timerValue"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "timerType": {
+                  "const": "timeDate"
+                }
+              },
+              "required": [
+                "timerType"
+              ]
+            },
+            "then": {
+              "properties": {
+                "timerDate": {
+                  "type": "string",
+                  "minLength": 1,
+                  "errorMessage": "Date is required"
+                }
+              },
+              "required": [
+                "timerDate"
+              ]
+            }
+          }
+        ]
+      },
+      "inputDefaults": {
+        "timerType": "timeDuration",
+        "timerPreset": "PT15M"
+      },
+      "form": {
+        "id": "delay-properties",
+        "title": "Delay",
+        "sections": [
+          {
+            "id": "timer",
+            "title": "Timer",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "name": "inputs.timerType",
+                "type": "select",
+                "label": "Type",
+                "options": [
+                  {
+                    "label": "Duration",
+                    "value": "timeDuration"
+                  },
+                  {
+                    "label": "Date",
+                    "value": "timeDate"
+                  }
+                ]
+              },
+              {
+                "name": "inputs.timerPreset",
+                "type": "select",
+                "label": "Duration",
+                "options": [
+                  {
+                    "label": "5 seconds",
+                    "value": "PT5S"
+                  },
+                  {
+                    "label": "15 seconds",
+                    "value": "PT15S"
+                  },
+                  {
+                    "label": "30 seconds",
+                    "value": "PT30S"
+                  },
+                  {
+                    "label": "1 minute",
+                    "value": "PT1M"
+                  },
+                  {
+                    "label": "5 minutes",
+                    "value": "PT5M"
+                  },
+                  {
+                    "label": "15 minutes",
+                    "value": "PT15M"
+                  },
+                  {
+                    "label": "30 minutes",
+                    "value": "PT30M"
+                  },
+                  {
+                    "label": "1 hour",
+                    "value": "PT1H"
+                  },
+                  {
+                    "label": "6 hours",
+                    "value": "PT6H"
+                  },
+                  {
+                    "label": "12 hours",
+                    "value": "PT12H"
+                  },
+                  {
+                    "label": "1 day",
+                    "value": "P1D"
+                  },
+                  {
+                    "label": "1 week",
+                    "value": "P1W"
+                  },
+                  {
+                    "label": "Custom",
+                    "value": "custom"
+                  }
+                ],
+                "rules": [
+                  {
+                    "id": "duration-presets",
+                    "conditions": [
+                      {
+                        "when": "inputs.timerType",
+                        "is": "timeDuration"
+                      }
+                    ],
+                    "effects": {
+                      "visible": true
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "inputs.timerValue",
+                "type": "custom",
+                "component": "iso-expression-field",
+                "label": "Custom duration",
+                "placeholder": "PT15M",
+                "description": "ISO 8601 duration - use the AI button to generate from natural language",
+                "componentProps": {
+                  "expressionType": "duration",
+                  "supportsExpressions": true
+                },
+                "rules": [
+                  {
+                    "id": "custom-duration",
+                    "conditions": [
+                      {
+                        "when": "inputs.timerType",
+                        "is": "timeDuration"
+                      },
+                      {
+                        "when": "inputs.timerPreset",
+                        "is": "custom"
+                      }
+                    ],
+                    "effects": {
+                      "visible": true
+                    }
+                  }
+                ]
+              },
+              {
+                "name": "inputs.timerDate",
+                "type": "datetime",
+                "label": "Value",
+                "description": "The date and time when the workflow should continue",
+                "rules": [
+                  {
+                    "id": "date-format",
+                    "conditions": [
+                      {
+                        "when": "inputs.timerType",
+                        "is": "timeDate"
+                      }
+                    ],
+                    "effects": {
+                      "visible": true
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nodeType": "core.action.script",
+      "version": "1.0",
+      "category": "data-operations",
+      "description": "Run custom JavaScript code",
+      "tags": [
+        "code",
+        "javascript",
+        "python"
+      ],
+      "sortOrder": 35,
+      "supportsErrorHandling": true,
+      "display": {
+        "label": "Script",
+        "icon": "code"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "success",
+              "type": "source",
+              "handleType": "output"
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "debug": {
+        "runtime": "clientScript"
+      },
+      "model": {
+        "type": "bpmn:ScriptTask"
+      },
+      "inputDefinition": {
+        "type": "object",
+        "properties": {
+          "script": {
+            "type": "string",
+            "minLength": 1,
+            "errorMessage": "A script function is required",
+            "validationSeverity": "warning"
+          }
+        },
+        "required": [
+          "script"
+        ]
+      },
+      "inputDefaults": {
+        "script": ""
+      },
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "form": {
+        "id": "script-properties",
+        "title": "Script configuration",
+        "sections": [
+          {
+            "id": "script",
+            "title": "Script",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "name": "inputs.script",
+                "type": "custom",
+                "component": "script-editor",
+                "componentProps": {
+                  "language": "javascript",
+                  "returnType": "any",
+                  "validationMode": "script",
+                  "minHeight": 200,
+                  "placeholder": " // Return an object with your result\nreturn {\n  message: \"Web request response\",\n  data: $vars.httpRequest1.output\n                  };"
+                },
+                "label": "Code",
+                "description": "JavaScript expression that returns a result object"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nodeType": "core.logic.switch",
+      "version": "1.1",
+      "category": "control-flow",
+      "description": "Route to one of many branches by condition",
+      "tags": [
+        "control-flow",
+        "switch",
+        "case",
+        "when"
+      ],
+      "sortOrder": 20,
+      "display": {
+        "label": "Switch",
+        "icon": "between-horizontal-start"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ],
+          "visible": true
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "case-{item.id}",
+              "type": "source",
+              "handleType": "output",
+              "label": "{item.label || 'Case ' + (index + 1)}",
+              "repeat": "inputs.cases"
+            },
+            {
+              "id": "default",
+              "type": "source",
+              "handleType": "output",
+              "label": "Default"
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "debug": {
+        "runtime": "clientScript"
+      },
+      "model": {
+        "type": "bpmn:ExclusiveGateway"
+      },
+      "inputDefinition": {
+        "type": "object",
+        "properties": {
+          "cases": {
+            "type": "array",
+            "minItems": 1,
+            "errorMessage": "At least one case is required",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "expression": {
+                  "type": "string",
+                  "minLength": 1,
+                  "errorMessage": "A condition expression is required"
+                }
+              },
+              "required": [
+                "expression"
+              ]
+            }
+          }
+        },
+        "required": [
+          "cases"
+        ]
+      },
+      "outputDefinition": {
+        "matchedCase": {
+          "type": "string",
+          "description": "The label of the matched case",
+          "var": "matchedCase"
+        },
+        "matchedCaseId": {
+          "type": "string",
+          "description": "The ID of the matched case (\"default\" for the default branch)",
+          "var": "matchedCaseId"
+        }
+      },
+      "inputDefaults": {
+        "cases": [
+          {
+            "id": "default-1",
+            "label": "Case 1",
+            "expression": ""
+          },
+          {
+            "id": "default-2",
+            "label": "Case 2",
+            "expression": ""
+          }
+        ]
+      },
+      "form": {
+        "id": "switch-properties",
+        "title": "Switch configuration",
+        "sections": [
+          {
+            "id": "cases",
+            "title": "Cases",
+            "description": "Each case is evaluated in order. The first condition that returns true is taken.",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "name": "inputs.cases",
+                "type": "custom",
+                "label": "Switch cases",
+                "component": "case-list-editor",
+                "componentProps": {
+                  "minCases": 1,
+                  "maxCases": 10,
+                  "expressionPlaceholder": "e.g., $vars.value <= 30",
+                  "expressionValidationFields": [
+                    {
+                      "subPath": "expression",
+                      "validationMode": "expression",
+                      "expectedType": "boolean"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "runtimeConstraints": {
+        "exclude": [
+          "api-function"
+        ]
+      }
+    },
+    {
+      "nodeType": "core.logic.decision",
+      "version": "1.1",
+      "category": "control-flow",
+      "description": "Branch based on a true/false condition",
+      "tags": [
+        "control-flow",
+        "if",
+        "loop",
+        "switch"
+      ],
+      "sortOrder": 20,
+      "display": {
+        "label": "Decision",
+        "icon": "trending-up-down"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ],
+          "visible": true
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "true",
+              "type": "source",
+              "handleType": "output",
+              "label": "{inputs.trueLabel}",
+              "constraints": {
+                "minConnections": 1
+              }
+            },
+            {
+              "id": "false",
+              "type": "source",
+              "handleType": "output",
+              "label": "{inputs.falseLabel}"
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "debug": {
+        "runtime": "clientScript"
+      },
+      "model": {
+        "type": "bpmn:InclusiveGateway"
+      },
+      "inputDefinition": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string",
+            "minLength": 1,
+            "errorMessage": "A condition expression is required"
+          },
+          "trueLabel": {
+            "type": "string"
+          },
+          "falseLabel": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "expression"
+        ]
+      },
+      "outputDefinition": {
+        "matchedCase": {
+          "type": "string",
+          "description": "The label of the matched branch (true/false label)",
+          "var": "matchedCase"
+        },
+        "matchedCaseId": {
+          "type": "string",
+          "description": "The branch that was taken (true or false)",
+          "var": "matchedCaseId"
+        }
+      },
+      "inputDefaults": {
+        "trueLabel": "True",
+        "falseLabel": "False"
+      },
+      "form": {
+        "id": "decision-properties",
+        "title": "Decision configuration",
+        "sections": [
+          {
+            "id": "condition",
+            "title": "Condition",
+            "fields": [
+              {
+                "name": "inputs.expression",
+                "type": "custom",
+                "component": "script-editor",
+                "componentProps": {
+                  "language": "javascript",
+                  "returnType": "boolean",
+                  "validationMode": "expression",
+                  "minHeight": 100,
+                  "placeholder": "e.g., $vars.data.status === \"approved\" && $vars.data.amount > 1000"
+                },
+                "label": "Expression",
+                "description": "JavaScript expression that evaluates to true or false"
+              },
+              {
+                "name": "inputs.trueLabel",
+                "type": "text",
+                "label": "True branch label",
+                "description": "Label shown when condition is true"
+              },
+              {
+                "name": "inputs.falseLabel",
+                "type": "text",
+                "label": "False branch label",
+                "description": "Label shown when condition is false"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nodeType": "core.subflow",
+      "version": "1.0",
+      "category": "control-flow",
+      "description": "Group steps into a reusable subflow",
+      "tags": [
+        "subflow",
+        "composite",
+        "container",
+        "subprocess"
+      ],
+      "sortOrder": 20,
+      "supportsErrorHandling": true,
+      "display": {
+        "label": "Subflow",
+        "icon": "layers"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ],
+          "visible": true
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output"
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "model": {
+        "type": "bpmn:SubProcess"
+      },
+      "outputDefinition": {
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "drillable": true,
+      "runtimeConstraints": {
+        "exclude": [
+          "api-function"
+        ]
+      }
+    },
+    {
+      "nodeType": "core.logic.terminate",
+      "version": "1.0",
+      "category": "control-flow",
+      "description": "Stop the entire workflow immediately",
+      "tags": [
+        "control-flow",
+        "end",
+        "stop",
+        "terminate"
+      ],
+      "sortOrder": 20,
+      "display": {
+        "label": "Terminate",
+        "icon": "circle-x",
+        "shape": "circle"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:EndEvent",
+        "eventDefinition": "bpmn:TerminateEventDefinition"
+      },
+      "runtimeConstraints": {
+        "exclude": [
+          "api-function"
+        ]
+      }
+    },
+    {
+      "nodeType": "core.logic.merge",
+      "version": "1.0",
+      "category": "control-flow",
+      "description": "Join parallel branches into one path",
+      "tags": [
+        "control-flow",
+        "merge"
+      ],
+      "sortOrder": 20,
+      "display": {
+        "label": "Merge",
+        "icon": "merge"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ],
+          "visible": true
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output"
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "model": {
+        "type": "bpmn:ParallelGateway"
+      },
+      "runtimeConstraints": {
+        "exclude": [
+          "api-function"
+        ]
+      }
+    },
+    {
+      "nodeType": "core.control.end",
+      "version": "1.0",
+      "category": "control-flow",
+      "description": "Mark the end of a workflow path",
+      "tags": [
+        "control-flow",
+        "end",
+        "finish",
+        "complete"
+      ],
+      "sortOrder": 20,
+      "display": {
+        "label": "End",
+        "icon": "circle-check",
+        "shape": "circle"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:EndEvent"
+      },
+      "runtimeConstraints": {
+        "exclude": [
+          "api-function"
+        ]
+      }
+    }
+  ],
+  "variables": {
+    "globals": [
+      {
+        "id": "bookingRequest",
+        "direction": "in",
+        "type": "object",
+        "defaultValue": {},
+        "triggerNodeId": "start"
+      },
+      {
+        "id": "finalStatus",
+        "direction": "out",
+        "type": "string",
+        "defaultValue": ""
+      },
+      {
+        "id": "dayEventType",
+        "direction": "inout",
+        "type": "string",
+        "defaultValue": ""
+      },
+      {
+        "id": "reply1Received",
+        "direction": "inout",
+        "type": "boolean",
+        "defaultValue": false
+      },
+      {
+        "id": "emergencyOccurred",
+        "direction": "inout",
+        "type": "boolean",
+        "defaultValue": false
+      },
+      {
+        "id": "reply2Received",
+        "direction": "inout",
+        "type": "boolean",
+        "defaultValue": false
+      }
+    ],
+    "nodes": [
+      {
+        "id": "start.output",
+        "type": "object",
+        "description": "Data passed when manually triggering the workflow.",
+        "binding": {
+          "nodeId": "start",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "moveTriggerMail.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "moveTriggerMail",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "bookingAgent.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "bookingAgent",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "getAllRecords.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "getAllRecords",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "sendConfirmMail.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "sendConfirmMail",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "pollDayLoop.currentItem",
+        "type": "any",
+        "description": "The current item being iterated in the loop",
+        "binding": {
+          "nodeId": "pollDayLoop",
+          "outputId": "currentItem"
+        }
+      },
+      {
+        "id": "pollDayLoop.currentIteration",
+        "type": "number",
+        "description": "The current iteration number (1-based)",
+        "binding": {
+          "nodeId": "pollDayLoop",
+          "outputId": "currentIteration"
+        }
+      },
+      {
+        "id": "pollDayLoop.collection",
+        "type": "array",
+        "description": "The collection being iterated over",
+        "binding": {
+          "nodeId": "pollDayLoop",
+          "outputId": "collection"
+        }
+      },
+      {
+        "id": "pollDayLoop.output",
+        "type": "array",
+        "description": "Aggregated results from all loop iterations",
+        "binding": {
+          "nodeId": "pollDayLoop",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "pollDayLoop.error",
+        "type": "object",
+        "description": "Error information if the node fails",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "binding": {
+          "nodeId": "pollDayLoop",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "checkDayEvents.output",
+        "type": "object",
+        "description": "The return value of the script",
+        "binding": {
+          "nodeId": "checkDayEvents",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "checkDayEvents.error",
+        "type": "object",
+        "description": "Error information if the script fails",
+        "binding": {
+          "nodeId": "checkDayEvents",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "routeDayEvent.matchedCase",
+        "type": "string",
+        "description": "The label of the matched case",
+        "binding": {
+          "nodeId": "routeDayEvent",
+          "outputId": "matchedCase"
+        }
+      },
+      {
+        "id": "routeDayEvent.matchedCaseId",
+        "type": "string",
+        "description": "The ID of the matched case (\"default\" for the default branch)",
+        "binding": {
+          "nodeId": "routeDayEvent",
+          "outputId": "matchedCaseId"
+        }
+      },
+      {
+        "id": "bufferBP1.output",
+        "type": "object",
+        "description": "The return value of the script",
+        "binding": {
+          "nodeId": "bufferBP1",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "bufferBP1.error",
+        "type": "object",
+        "description": "Error information if the script fails",
+        "binding": {
+          "nodeId": "bufferBP1",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "pollReplyLoop1.currentItem",
+        "type": "any",
+        "description": "The current item being iterated in the loop",
+        "binding": {
+          "nodeId": "pollReplyLoop1",
+          "outputId": "currentItem"
+        }
+      },
+      {
+        "id": "pollReplyLoop1.currentIteration",
+        "type": "number",
+        "description": "The current iteration number (1-based)",
+        "binding": {
+          "nodeId": "pollReplyLoop1",
+          "outputId": "currentIteration"
+        }
+      },
+      {
+        "id": "pollReplyLoop1.collection",
+        "type": "array",
+        "description": "The collection being iterated over",
+        "binding": {
+          "nodeId": "pollReplyLoop1",
+          "outputId": "collection"
+        }
+      },
+      {
+        "id": "pollReplyLoop1.output",
+        "type": "array",
+        "description": "Aggregated results from all loop iterations",
+        "binding": {
+          "nodeId": "pollReplyLoop1",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "pollReplyLoop1.error",
+        "type": "object",
+        "description": "Error information if the node fails",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "binding": {
+          "nodeId": "pollReplyLoop1",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "checkReply1.output",
+        "type": "object",
+        "description": "The return value of the script",
+        "binding": {
+          "nodeId": "checkReply1",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "checkReply1.error",
+        "type": "object",
+        "description": "Error information if the script fails",
+        "binding": {
+          "nodeId": "checkReply1",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "gotReply1.matchedCase",
+        "type": "string",
+        "description": "The label of the matched branch (true/false label)",
+        "binding": {
+          "nodeId": "gotReply1",
+          "outputId": "matchedCase"
+        }
+      },
+      {
+        "id": "gotReply1.matchedCaseId",
+        "type": "string",
+        "description": "The branch that was taken (true or false)",
+        "binding": {
+          "nodeId": "gotReply1",
+          "outputId": "matchedCaseId"
+        }
+      },
+      {
+        "id": "analyseReply.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "analyseReply",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "moveReplyMail.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "moveReplyMail",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "isCancelled.matchedCase",
+        "type": "string",
+        "description": "The label of the matched branch (true/false label)",
+        "binding": {
+          "nodeId": "isCancelled",
+          "outputId": "matchedCase"
+        }
+      },
+      {
+        "id": "isCancelled.matchedCaseId",
+        "type": "string",
+        "description": "The branch that was taken (true or false)",
+        "binding": {
+          "nodeId": "isCancelled",
+          "outputId": "matchedCaseId"
+        }
+      },
+      {
+        "id": "updCancelPatient.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "updCancelPatient",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "sendBookingMail.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "sendBookingMail",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "updRescheduled.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "updRescheduled",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "updCancelNoReply.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "updCancelNoReply",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "moveReminderMail.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "moveReminderMail",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "dayOfConsult.error",
+        "type": "object",
+        "description": "Error information if the subflow fails",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string",
+              "descriptionKey": "subflowInterface_errorCode_description"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message",
+              "descriptionKey": "subflowInterface_errorMessage_description"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description",
+              "descriptionKey": "subflowInterface_errorDetail_description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category",
+              "descriptionKey": "subflowInterface_errorCategory_description"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code",
+              "descriptionKey": "subflowInterface_errorStatus_description"
+            }
+          },
+          "additionalProperties": false
+        },
+        "binding": {
+          "nodeId": "dayOfConsult",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "dayOfConsult.output",
+        "type": "object",
+        "description": "The return value of the subflow",
+        "binding": {
+          "nodeId": "dayOfConsult",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "emergencyWatch.currentItem",
+        "type": "any",
+        "description": "The current item being iterated in the loop",
+        "binding": {
+          "nodeId": "emergencyWatch",
+          "outputId": "currentItem"
+        }
+      },
+      {
+        "id": "emergencyWatch.currentIteration",
+        "type": "number",
+        "description": "The current iteration number (1-based)",
+        "binding": {
+          "nodeId": "emergencyWatch",
+          "outputId": "currentIteration"
+        }
+      },
+      {
+        "id": "emergencyWatch.collection",
+        "type": "array",
+        "description": "The collection being iterated over",
+        "binding": {
+          "nodeId": "emergencyWatch",
+          "outputId": "collection"
+        }
+      },
+      {
+        "id": "emergencyWatch.output",
+        "type": "array",
+        "description": "Aggregated results from all loop iterations",
+        "binding": {
+          "nodeId": "emergencyWatch",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "emergencyWatch.error",
+        "type": "object",
+        "description": "Error information if the node fails",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "binding": {
+          "nodeId": "emergencyWatch",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "checkEmerg.output",
+        "type": "object",
+        "description": "The return value of the script",
+        "binding": {
+          "nodeId": "checkEmerg",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "checkEmerg.error",
+        "type": "object",
+        "description": "Error information if the script fails",
+        "binding": {
+          "nodeId": "checkEmerg",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "hadEmergency.matchedCase",
+        "type": "string",
+        "description": "The label of the matched branch (true/false label)",
+        "binding": {
+          "nodeId": "hadEmergency",
+          "outputId": "matchedCase"
+        }
+      },
+      {
+        "id": "hadEmergency.matchedCaseId",
+        "type": "string",
+        "description": "The branch that was taken (true or false)",
+        "binding": {
+          "nodeId": "hadEmergency",
+          "outputId": "matchedCaseId"
+        }
+      },
+      {
+        "id": "bufferBP2.output",
+        "type": "object",
+        "description": "The return value of the script",
+        "binding": {
+          "nodeId": "bufferBP2",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "bufferBP2.error",
+        "type": "object",
+        "description": "Error information if the script fails",
+        "binding": {
+          "nodeId": "bufferBP2",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "pollReplyLoop2.currentItem",
+        "type": "any",
+        "description": "The current item being iterated in the loop",
+        "binding": {
+          "nodeId": "pollReplyLoop2",
+          "outputId": "currentItem"
+        }
+      },
+      {
+        "id": "pollReplyLoop2.currentIteration",
+        "type": "number",
+        "description": "The current iteration number (1-based)",
+        "binding": {
+          "nodeId": "pollReplyLoop2",
+          "outputId": "currentIteration"
+        }
+      },
+      {
+        "id": "pollReplyLoop2.collection",
+        "type": "array",
+        "description": "The collection being iterated over",
+        "binding": {
+          "nodeId": "pollReplyLoop2",
+          "outputId": "collection"
+        }
+      },
+      {
+        "id": "pollReplyLoop2.output",
+        "type": "array",
+        "description": "Aggregated results from all loop iterations",
+        "binding": {
+          "nodeId": "pollReplyLoop2",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "pollReplyLoop2.error",
+        "type": "object",
+        "description": "Error information if the node fails",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "binding": {
+          "nodeId": "pollReplyLoop2",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "checkReply2.output",
+        "type": "object",
+        "description": "The return value of the script",
+        "binding": {
+          "nodeId": "checkReply2",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "checkReply2.error",
+        "type": "object",
+        "description": "Error information if the script fails",
+        "binding": {
+          "nodeId": "checkReply2",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "gotReply2.matchedCase",
+        "type": "string",
+        "description": "The label of the matched branch (true/false label)",
+        "binding": {
+          "nodeId": "gotReply2",
+          "outputId": "matchedCase"
+        }
+      },
+      {
+        "id": "gotReply2.matchedCaseId",
+        "type": "string",
+        "description": "The branch that was taken (true or false)",
+        "binding": {
+          "nodeId": "gotReply2",
+          "outputId": "matchedCaseId"
+        }
+      },
+      {
+        "id": "updCancel1h.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "updCancel1h",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "outcomeOk.matchedCase",
+        "type": "string",
+        "description": "The label of the matched branch (true/false label)",
+        "binding": {
+          "nodeId": "outcomeOk",
+          "outputId": "matchedCase"
+        }
+      },
+      {
+        "id": "outcomeOk.matchedCaseId",
+        "type": "string",
+        "description": "The branch that was taken (true or false)",
+        "binding": {
+          "nodeId": "outcomeOk",
+          "outputId": "matchedCaseId"
+        }
+      },
+      {
+        "id": "terminateFlow.finalStatus",
+        "type": "string",
+        "binding": {
+          "nodeId": "terminateFlow",
+          "outputId": "finalStatus"
+        }
+      },
+      {
+        "id": "terminateFlow.dayEventType",
+        "type": "string",
+        "binding": {
+          "nodeId": "terminateFlow",
+          "outputId": "dayEventType"
+        }
+      },
+      {
+        "id": "terminateFlow.reply1Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "terminateFlow",
+          "outputId": "reply1Received"
+        }
+      },
+      {
+        "id": "terminateFlow.emergencyOccurred",
+        "type": "string",
+        "binding": {
+          "nodeId": "terminateFlow",
+          "outputId": "emergencyOccurred"
+        }
+      },
+      {
+        "id": "terminateFlow.reply2Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "terminateFlow",
+          "outputId": "reply2Received"
+        }
+      },
+      {
+        "id": "decisionTests.matchedCase",
+        "type": "string",
+        "description": "The label of the matched branch (true/false label)",
+        "binding": {
+          "nodeId": "decisionTests",
+          "outputId": "matchedCase"
+        }
+      },
+      {
+        "id": "decisionTests.matchedCaseId",
+        "type": "string",
+        "description": "The branch that was taken (true or false)",
+        "binding": {
+          "nodeId": "decisionTests",
+          "outputId": "matchedCaseId"
+        }
+      },
+      {
+        "id": "labTestRequest.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "labTestRequest",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "joinTests.output",
+        "type": "object",
+        "description": "The return value of the script",
+        "binding": {
+          "nodeId": "joinTests",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "joinTests.error",
+        "type": "object",
+        "description": "Error information if the script fails",
+        "binding": {
+          "nodeId": "joinTests",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "decisionMeds.matchedCase",
+        "type": "string",
+        "description": "The label of the matched branch (true/false label)",
+        "binding": {
+          "nodeId": "decisionMeds",
+          "outputId": "matchedCase"
+        }
+      },
+      {
+        "id": "decisionMeds.matchedCaseId",
+        "type": "string",
+        "description": "The branch that was taken (true or false)",
+        "binding": {
+          "nodeId": "decisionMeds",
+          "outputId": "matchedCaseId"
+        }
+      },
+      {
+        "id": "pharmacyOrder.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "pharmacyOrder",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "joinMeds.output",
+        "type": "object",
+        "description": "The return value of the script",
+        "binding": {
+          "nodeId": "joinMeds",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "joinMeds.error",
+        "type": "object",
+        "description": "Error information if the script fails",
+        "binding": {
+          "nodeId": "joinMeds",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "apptCompleted.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "apptCompleted",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "done_reschedCancel.finalStatus",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_reschedCancel",
+          "outputId": "finalStatus"
+        }
+      },
+      {
+        "id": "done_reschedCancel.dayEventType",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_reschedCancel",
+          "outputId": "dayEventType"
+        }
+      },
+      {
+        "id": "done_reschedCancel.reply1Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_reschedCancel",
+          "outputId": "reply1Received"
+        }
+      },
+      {
+        "id": "done_reschedCancel.emergencyOccurred",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_reschedCancel",
+          "outputId": "emergencyOccurred"
+        }
+      },
+      {
+        "id": "done_reschedCancel.reply2Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_reschedCancel",
+          "outputId": "reply2Received"
+        }
+      },
+      {
+        "id": "done_noReply.finalStatus",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noReply",
+          "outputId": "finalStatus"
+        }
+      },
+      {
+        "id": "done_noReply.dayEventType",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noReply",
+          "outputId": "dayEventType"
+        }
+      },
+      {
+        "id": "done_noReply.reply1Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noReply",
+          "outputId": "reply1Received"
+        }
+      },
+      {
+        "id": "done_noReply.emergencyOccurred",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noReply",
+          "outputId": "emergencyOccurred"
+        }
+      },
+      {
+        "id": "done_noReply.reply2Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noReply",
+          "outputId": "reply2Received"
+        }
+      },
+      {
+        "id": "done_cancelPatient.finalStatus",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_cancelPatient",
+          "outputId": "finalStatus"
+        }
+      },
+      {
+        "id": "done_cancelPatient.dayEventType",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_cancelPatient",
+          "outputId": "dayEventType"
+        }
+      },
+      {
+        "id": "done_cancelPatient.reply1Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_cancelPatient",
+          "outputId": "reply1Received"
+        }
+      },
+      {
+        "id": "done_cancelPatient.emergencyOccurred",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_cancelPatient",
+          "outputId": "emergencyOccurred"
+        }
+      },
+      {
+        "id": "done_cancelPatient.reply2Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_cancelPatient",
+          "outputId": "reply2Received"
+        }
+      },
+      {
+        "id": "done_rescheduled.finalStatus",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_rescheduled",
+          "outputId": "finalStatus"
+        }
+      },
+      {
+        "id": "done_rescheduled.dayEventType",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_rescheduled",
+          "outputId": "dayEventType"
+        }
+      },
+      {
+        "id": "done_rescheduled.reply1Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_rescheduled",
+          "outputId": "reply1Received"
+        }
+      },
+      {
+        "id": "done_rescheduled.emergencyOccurred",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_rescheduled",
+          "outputId": "emergencyOccurred"
+        }
+      },
+      {
+        "id": "done_rescheduled.reply2Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_rescheduled",
+          "outputId": "reply2Received"
+        }
+      },
+      {
+        "id": "done_emerg1h.finalStatus",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_emerg1h",
+          "outputId": "finalStatus"
+        }
+      },
+      {
+        "id": "done_emerg1h.dayEventType",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_emerg1h",
+          "outputId": "dayEventType"
+        }
+      },
+      {
+        "id": "done_emerg1h.reply1Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_emerg1h",
+          "outputId": "reply1Received"
+        }
+      },
+      {
+        "id": "done_emerg1h.emergencyOccurred",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_emerg1h",
+          "outputId": "emergencyOccurred"
+        }
+      },
+      {
+        "id": "done_emerg1h.reply2Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_emerg1h",
+          "outputId": "reply2Received"
+        }
+      },
+      {
+        "id": "done_noEmerg.finalStatus",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noEmerg",
+          "outputId": "finalStatus"
+        }
+      },
+      {
+        "id": "done_noEmerg.dayEventType",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noEmerg",
+          "outputId": "dayEventType"
+        }
+      },
+      {
+        "id": "done_noEmerg.reply1Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noEmerg",
+          "outputId": "reply1Received"
+        }
+      },
+      {
+        "id": "done_noEmerg.emergencyOccurred",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noEmerg",
+          "outputId": "emergencyOccurred"
+        }
+      },
+      {
+        "id": "done_noEmerg.reply2Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_noEmerg",
+          "outputId": "reply2Received"
+        }
+      },
+      {
+        "id": "done_main.finalStatus",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_main",
+          "outputId": "finalStatus"
+        }
+      },
+      {
+        "id": "done_main.dayEventType",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_main",
+          "outputId": "dayEventType"
+        }
+      },
+      {
+        "id": "done_main.reply1Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_main",
+          "outputId": "reply1Received"
+        }
+      },
+      {
+        "id": "done_main.emergencyOccurred",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_main",
+          "outputId": "emergencyOccurred"
+        }
+      },
+      {
+        "id": "done_main.reply2Received",
+        "type": "string",
+        "binding": {
+          "nodeId": "done_main",
+          "outputId": "reply2Received"
+        }
+      }
+    ],
+    "variableUpdates": {
+      "checkDayEvents": [
+        {
+          "variableId": "dayEventType",
+          "expression": "=js:($vars.checkDayEvents.output || {}).eventType || \"\""
+        }
+      ],
+      "checkReply1": [
+        {
+          "variableId": "reply1Received",
+          "expression": "=js:($vars.checkReply1.output || {}).received === true"
+        }
+      ],
+      "checkEmerg": [
+        {
+          "variableId": "emergencyOccurred",
+          "expression": "=js:($vars.checkEmerg.output || {}).occurred === true"
+        }
+      ],
+      "checkReply2": [
+        {
+          "variableId": "reply2Received",
+          "expression": "=js:($vars.checkReply2.output || {}).received === true"
+        }
+      ]
+    }
+  },
+  "solutionId": "uip-sw-local://Folder/9de45f97-be7d-4156-9475-5c7b6def72bc",
+  "projectId": "5a9ed874-ebf3-4051-bba9-83d816ab6e12",
+  "layout": {
+    "nodes": {
+      "start": {
+        "position": {
+          "x": -192,
+          "y": 0
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "moveTriggerMail": {
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "bookingAgent": {
+        "position": {
+          "x": 192,
+          "y": 0
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "getAllRecords": {
+        "position": {
+          "x": 384,
+          "y": 0
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "sendConfirmMail": {
+        "position": {
+          "x": 576,
+          "y": 0
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "pollDayLoop": {
+        "position": {
+          "x": 768,
+          "y": -112
+        },
+        "size": {
+          "width": 560,
+          "height": 320
+        },
+        "collapsed": false
+      },
+      "delayDayPoll": {
+        "position": {
+          "x": 1424,
+          "y": 304
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "checkDayEvents": {
+        "position": {
+          "x": 1616,
+          "y": 304
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "routeDayEvent": {
+        "position": {
+          "x": 1424,
+          "y": -304
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "bufferBP1": {
+        "position": {
+          "x": 1616,
+          "y": -736
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "pollReplyLoop1": {
+        "position": {
+          "x": 1808,
+          "y": -848
+        },
+        "size": {
+          "width": 560,
+          "height": 320
+        },
+        "collapsed": false
+      },
+      "delayReply1": {
+        "position": {
+          "x": 2464,
+          "y": -592
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "checkReply1": {
+        "position": {
+          "x": 2656,
+          "y": -592
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "gotReply1": {
+        "position": {
+          "x": 2464,
+          "y": -880
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "analyseReply": {
+        "position": {
+          "x": 2656,
+          "y": -976
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "moveReplyMail": {
+        "position": {
+          "x": 3088,
+          "y": -976
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "isCancelled": {
+        "position": {
+          "x": 3504,
+          "y": -976
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "updCancelPatient": {
+        "position": {
+          "x": 3696,
+          "y": -1072
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "sendBookingMail": {
+        "position": {
+          "x": 3696,
+          "y": -880
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "updRescheduled": {
+        "position": {
+          "x": 3888,
+          "y": -880
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "updCancelNoReply": {
+        "position": {
+          "x": 2656,
+          "y": -784
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "moveReminderMail": {
+        "position": {
+          "x": 1616,
+          "y": 112
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "dayOfConsult": {
+        "position": {
+          "x": 2048,
+          "y": -208
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "emergencyWatch": {
+        "position": {
+          "x": 1808,
+          "y": 304
+        },
+        "size": {
+          "width": 560,
+          "height": 320
+        },
+        "collapsed": false
+      },
+      "delayEmerg": {
+        "position": {
+          "x": 2464,
+          "y": 560
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "checkEmerg": {
+        "position": {
+          "x": 2656,
+          "y": 560
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "hadEmergency": {
+        "position": {
+          "x": 2464,
+          "y": 272
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "bufferBP2": {
+        "position": {
+          "x": 2656,
+          "y": 176
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "pollReplyLoop2": {
+        "position": {
+          "x": 2848,
+          "y": 64
+        },
+        "size": {
+          "width": 560,
+          "height": 320
+        },
+        "collapsed": false
+      },
+      "delayReply2": {
+        "position": {
+          "x": 3504,
+          "y": 272
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "checkReply2": {
+        "position": {
+          "x": 3696,
+          "y": 272
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "gotReply2": {
+        "position": {
+          "x": 3504,
+          "y": 80
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "updCancel1h": {
+        "position": {
+          "x": 3696,
+          "y": 80
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "outcomeOk": {
+        "position": {
+          "x": 2464,
+          "y": -208
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "terminateFlow": {
+        "position": {
+          "x": 2656,
+          "y": -16
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "decisionTests": {
+        "position": {
+          "x": 2656,
+          "y": -400
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "labTestRequest": {
+        "position": {
+          "x": 3088,
+          "y": -400
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "joinTests": {
+        "position": {
+          "x": 3504,
+          "y": -400
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "decisionMeds": {
+        "position": {
+          "x": 2656,
+          "y": -208
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "pharmacyOrder": {
+        "position": {
+          "x": 3088,
+          "y": -208
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "joinMeds": {
+        "position": {
+          "x": 3504,
+          "y": -208
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "mergeOrders": {
+        "position": {
+          "x": 3696,
+          "y": -400
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "apptCompleted": {
+        "position": {
+          "x": 3888,
+          "y": -400
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "done_reschedCancel": {
+        "position": {
+          "x": 1616,
+          "y": -304
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "done_noReply": {
+        "position": {
+          "x": 3088,
+          "y": -784
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "done_cancelPatient": {
+        "position": {
+          "x": 3888,
+          "y": -1072
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "done_rescheduled": {
+        "position": {
+          "x": 4080,
+          "y": -880
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "done_emerg1h": {
+        "position": {
+          "x": 3888,
+          "y": 80
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "done_noEmerg": {
+        "position": {
+          "x": 2656,
+          "y": 368
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "done_main": {
+        "position": {
+          "x": 4080,
+          "y": -400
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      }
+    }
+  },
+  "subflows": {
+    "dayOfConsult": {
+      "nodes": [
+        {
+          "id": "dcStart",
+          "type": "core.trigger.manual",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Start"
+          },
+          "inputs": {
+            "entryPointId": "5f1c2b7e-9a44-4d7c-8b2e-3d6a1f0c9e21",
+            "isDefaultEntryPoint": true
+          },
+          "outputs": {
+            "output": {
+              "type": "object",
+              "description": "Data passed when manually triggering the workflow.",
+              "source": "null",
+              "var": "output"
+            }
+          }
+        },
+        {
+          "id": "checkInTask",
+          "type": "core.logic.mock",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Check In Action App (mock HITL)"
+          },
+          "inputs": {},
+          "outputs": {
+            "output": {
+              "type": "object",
+              "description": "Mock output value",
+              "source": "null",
+              "var": "output"
+            }
+          }
+        },
+        {
+          "id": "routeCheckin",
+          "type": "core.logic.switch",
+          "typeVersion": "1.1",
+          "display": {
+            "label": "Check-in?"
+          },
+          "inputs": {
+            "cases": [
+              {
+                "id": "checkedIn",
+                "label": "Checked in",
+                "expression": "(($vars.checkInTask.output || {status: \"checkedIn\"}).status) === \"checkedIn\""
+              },
+              {
+                "id": "timedOut",
+                "label": "24h timeout",
+                "expression": "(($vars.checkInTask.output || {}).status) === \"timedOut\""
+              }
+            ]
+          }
+        },
+        {
+          "id": "updCheckedin",
+          "type": "core.logic.mock",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Update Status Checkedin (mock)"
+          },
+          "inputs": {},
+          "outputs": {
+            "output": {
+              "type": "object",
+              "description": "Mock output value",
+              "source": "null",
+              "var": "output"
+            }
+          }
+        },
+        {
+          "id": "medReportAgent",
+          "type": "core.logic.mock",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Medical Report Agent (mock)"
+          },
+          "inputs": {},
+          "outputs": {
+            "output": {
+              "type": "object",
+              "description": "Mock output value",
+              "source": "null",
+              "var": "output"
+            }
+          }
+        },
+        {
+          "id": "doctorNotes",
+          "type": "core.logic.mock",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Take Doctor Notes (mock HITL)"
+          },
+          "inputs": {},
+          "outputs": {
+            "output": {
+              "type": "object",
+              "description": "Mock output value",
+              "source": "null",
+              "var": "output"
+            }
+          }
+        },
+        {
+          "id": "updCancelCheckin",
+          "type": "core.logic.mock",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Update Appointment Cancelled (mock)"
+          },
+          "inputs": {},
+          "outputs": {
+            "output": {
+              "type": "object",
+              "description": "Mock output value",
+              "source": "null",
+              "var": "output"
+            }
+          }
+        },
+        {
+          "id": "updAbandoned",
+          "type": "core.logic.mock",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Update Appointment Abandoned (mock)"
+          },
+          "inputs": {},
+          "outputs": {
+            "output": {
+              "type": "object",
+              "description": "Mock output value",
+              "source": "null",
+              "var": "output"
+            }
+          }
+        },
+        {
+          "id": "dcEndCompleted",
+          "type": "core.control.end",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Completed"
+          },
+          "inputs": {},
+          "outputs": {
+            "outcome": {
+              "source": "=js:\"completed\""
+            },
+            "testsNeeded": {
+              "source": "=js:(($vars.doctorNotes.output || {}).testsNeeded) === true"
+            },
+            "medsNeeded": {
+              "source": "=js:(($vars.doctorNotes.output || {}).medsNeeded) === true"
+            }
+          }
+        },
+        {
+          "id": "dcEndCancelled",
+          "type": "core.control.end",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Cancelled"
+          },
+          "inputs": {},
+          "outputs": {
+            "outcome": {
+              "source": "=js:\"cancelled\""
+            },
+            "testsNeeded": {
+              "source": "=js:false"
+            },
+            "medsNeeded": {
+              "source": "=js:false"
+            }
+          }
+        },
+        {
+          "id": "dcEndAbandoned",
+          "type": "core.control.end",
+          "typeVersion": "1.0",
+          "display": {
+            "label": "Abandoned"
+          },
+          "inputs": {},
+          "outputs": {
+            "outcome": {
+              "source": "=js:\"abandoned\""
+            },
+            "testsNeeded": {
+              "source": "=js:false"
+            },
+            "medsNeeded": {
+              "source": "=js:false"
+            }
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "dc-e1",
+          "sourceNodeId": "dcStart",
+          "sourcePort": "output",
+          "targetNodeId": "checkInTask",
+          "targetPort": "input"
+        },
+        {
+          "id": "dc-e2",
+          "sourceNodeId": "checkInTask",
+          "sourcePort": "output",
+          "targetNodeId": "routeCheckin",
+          "targetPort": "input"
+        },
+        {
+          "id": "dc-e3",
+          "sourceNodeId": "routeCheckin",
+          "sourcePort": "case-checkedIn",
+          "targetNodeId": "updCheckedin",
+          "targetPort": "input"
+        },
+        {
+          "id": "dc-e4",
+          "sourceNodeId": "routeCheckin",
+          "sourcePort": "case-timedOut",
+          "targetNodeId": "updAbandoned",
+          "targetPort": "input"
+        },
+        {
+          "id": "dc-e5",
+          "sourceNodeId": "routeCheckin",
+          "sourcePort": "default",
+          "targetNodeId": "updCancelCheckin",
+          "targetPort": "input"
+        },
+        {
+          "id": "dc-e6",
+          "sourceNodeId": "updCheckedin",
+          "sourcePort": "output",
+          "targetNodeId": "medReportAgent",
+          "targetPort": "input"
+        },
+        {
+          "id": "dc-e7",
+          "sourceNodeId": "medReportAgent",
+          "sourcePort": "output",
+          "targetNodeId": "doctorNotes",
+          "targetPort": "input"
+        },
+        {
+          "id": "dc-e8",
+          "sourceNodeId": "doctorNotes",
+          "sourcePort": "output",
+          "targetNodeId": "dcEndCompleted",
+          "targetPort": "input"
+        },
+        {
+          "id": "dc-e9",
+          "sourceNodeId": "updCancelCheckin",
+          "sourcePort": "output",
+          "targetNodeId": "dcEndCancelled",
+          "targetPort": "input"
+        },
+        {
+          "id": "dc-e10",
+          "sourceNodeId": "updAbandoned",
+          "sourcePort": "output",
+          "targetNodeId": "dcEndAbandoned",
+          "targetPort": "input"
+        }
+      ],
+      "variables": {
+        "globals": [
+          {
+            "id": "outcome",
+            "direction": "out",
+            "type": "string",
+            "defaultValue": ""
+          },
+          {
+            "id": "testsNeeded",
+            "direction": "out",
+            "type": "boolean",
+            "defaultValue": false
+          },
+          {
+            "id": "medsNeeded",
+            "direction": "out",
+            "type": "boolean",
+            "defaultValue": false
+          }
+        ],
+        "nodes": [
+          {
+            "id": "dcStart.output",
+            "type": "object",
+            "description": "Data passed when manually triggering the workflow.",
+            "binding": {
+              "nodeId": "dcStart",
+              "outputId": "output"
+            }
+          },
+          {
+            "id": "checkInTask.output",
+            "type": "object",
+            "description": "Mock output value",
+            "binding": {
+              "nodeId": "checkInTask",
+              "outputId": "output"
+            }
+          },
+          {
+            "id": "routeCheckin.matchedCase",
+            "type": "string",
+            "description": "The label of the matched case",
+            "binding": {
+              "nodeId": "routeCheckin",
+              "outputId": "matchedCase"
+            }
+          },
+          {
+            "id": "routeCheckin.matchedCaseId",
+            "type": "string",
+            "description": "The ID of the matched case (\"default\" for the default branch)",
+            "binding": {
+              "nodeId": "routeCheckin",
+              "outputId": "matchedCaseId"
+            }
+          },
+          {
+            "id": "updCheckedin.output",
+            "type": "object",
+            "description": "Mock output value",
+            "binding": {
+              "nodeId": "updCheckedin",
+              "outputId": "output"
+            }
+          },
+          {
+            "id": "medReportAgent.output",
+            "type": "object",
+            "description": "Mock output value",
+            "binding": {
+              "nodeId": "medReportAgent",
+              "outputId": "output"
+            }
+          },
+          {
+            "id": "doctorNotes.output",
+            "type": "object",
+            "description": "Mock output value",
+            "binding": {
+              "nodeId": "doctorNotes",
+              "outputId": "output"
+            }
+          },
+          {
+            "id": "updCancelCheckin.output",
+            "type": "object",
+            "description": "Mock output value",
+            "binding": {
+              "nodeId": "updCancelCheckin",
+              "outputId": "output"
+            }
+          },
+          {
+            "id": "updAbandoned.output",
+            "type": "object",
+            "description": "Mock output value",
+            "binding": {
+              "nodeId": "updAbandoned",
+              "outputId": "output"
+            }
+          },
+          {
+            "id": "dcEndCompleted.outcome",
+            "type": "string",
+            "binding": {
+              "nodeId": "dcEndCompleted",
+              "outputId": "outcome"
+            }
+          },
+          {
+            "id": "dcEndCompleted.testsNeeded",
+            "type": "string",
+            "binding": {
+              "nodeId": "dcEndCompleted",
+              "outputId": "testsNeeded"
+            }
+          },
+          {
+            "id": "dcEndCompleted.medsNeeded",
+            "type": "string",
+            "binding": {
+              "nodeId": "dcEndCompleted",
+              "outputId": "medsNeeded"
+            }
+          },
+          {
+            "id": "dcEndCancelled.outcome",
+            "type": "string",
+            "binding": {
+              "nodeId": "dcEndCancelled",
+              "outputId": "outcome"
+            }
+          },
+          {
+            "id": "dcEndCancelled.testsNeeded",
+            "type": "string",
+            "binding": {
+              "nodeId": "dcEndCancelled",
+              "outputId": "testsNeeded"
+            }
+          },
+          {
+            "id": "dcEndCancelled.medsNeeded",
+            "type": "string",
+            "binding": {
+              "nodeId": "dcEndCancelled",
+              "outputId": "medsNeeded"
+            }
+          },
+          {
+            "id": "dcEndAbandoned.outcome",
+            "type": "string",
+            "binding": {
+              "nodeId": "dcEndAbandoned",
+              "outputId": "outcome"
+            }
+          },
+          {
+            "id": "dcEndAbandoned.testsNeeded",
+            "type": "string",
+            "binding": {
+              "nodeId": "dcEndAbandoned",
+              "outputId": "testsNeeded"
+            }
+          },
+          {
+            "id": "dcEndAbandoned.medsNeeded",
+            "type": "string",
+            "binding": {
+              "nodeId": "dcEndAbandoned",
+              "outputId": "medsNeeded"
+            }
+          }
+        ]
+      },
+      "layout": {
+        "nodes": {
+          "dcStart": {
+            "position": {
+              "x": 0,
+              "y": 0
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "checkInTask": {
+            "position": {
+              "x": 192,
+              "y": 0
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "routeCheckin": {
+            "position": {
+              "x": 384,
+              "y": 0
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "updCheckedin": {
+            "position": {
+              "x": 576,
+              "y": -192
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "medReportAgent": {
+            "position": {
+              "x": 768,
+              "y": -192
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "doctorNotes": {
+            "position": {
+              "x": 960,
+              "y": -192
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "updCancelCheckin": {
+            "position": {
+              "x": 576,
+              "y": 192
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "updAbandoned": {
+            "position": {
+              "x": 576,
+              "y": 0
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "dcEndCompleted": {
+            "position": {
+              "x": 1152,
+              "y": -192
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "dcEndCancelled": {
+            "position": {
+              "x": 768,
+              "y": 192
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
+          "dcEndAbandoned": {
+            "position": {
+              "x": 768,
+              "y": 0
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          }
+        }
+      }
+    }
+  }
+}

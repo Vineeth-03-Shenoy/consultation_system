@@ -1,0 +1,19 @@
+# Agent/assistant context files
+CLAUDE.md
+**/CLAUDE.md
+AGENTS.md
+**/AGENTS.md
+.claude/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Logs & temp
+*.log
+*.tmp
+temp/
+tmp/

@@ -1,0 +1,1140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:uipath="http://uipath.org/schema/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="sample-diagram" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" exporter="UiPath (https://bpmn.uipath.com)" exporterVersion="57c0c273">
+  <bpmn:process id="Process_1" name="Agentic Consultation Management Process" isExecutable="false">
+    <bpmn:startEvent id="Event_start" name="App Trigger">
+      <bpmn:documentation>Triggers the Agentic process with arguments passed from the App</bpmn:documentation>
+      <bpmn:extensionElements>
+        <uipath:entryPointId value="eb6db2ce-30c4-4e1b-911c-fb01c06e73a4" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>edge_Event_start-Activity_Uh1awM</bpmn:outgoing>
+      <bpmn:messageEventDefinition />
+    </bpmn:startEvent>
+    <bpmn:sendTask id="Activity_Uh1awM" name="Move Trigger Mail to Processed">
+      <bpmn:documentation>Move the Booking mail to subfolder "Processed"</bpmn:documentation>
+      <bpmn:incoming>edge_Event_start-Activity_Uh1awM</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_Uh1awM-Activity_8VX6LqJAeLhN</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="Activity_8VX6Lq" name="Booking Agent">
+      <bpmn:documentation>Agent creates a Time Slot in the Doctor Schedule based on the Patient history and probable priority</bpmn:documentation>
+      <bpmn:incoming>edge_Activity_Uh1awM-Activity_8VX6LqJAeLhN</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_8VX6Lq-Activity_9LBURiGoLZZZ</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_9LBURi" name="Get All Records">
+      <bpmn:documentation>Gets Patient, Doctor, Appointment, and Schedule Records from Data Fabric</bpmn:documentation>
+      <bpmn:incoming>edge_Activity_8VX6Lq-Activity_9LBURiGoLZZZ</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_9LBURi-Activity_gT68HLqYLSD9</bpmn:outgoing>
+      <bpmn:dataInputAssociation id="edge_Tb7bTk">
+        <bpmn:sourceRef>Data_BbgBoq</bpmn:sourceRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_gT68HL" name="Send Confirmation Mail">
+      <bpmn:documentation>Sends a Confirmation Mail to the patient</bpmn:documentation>
+      <bpmn:incoming>edge_Activity_9LBURi-Activity_gT68HLqYLSD9</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_gT68HL-Gateway_vavdRTi7FrvC</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:eventBasedGateway id="Gateway_vavdRT" name="Wait for Appointment Day">
+      <bpmn:incoming>edge_Activity_gT68HL-Gateway_vavdRTi7FrvC</bpmn:incoming>
+      <bpmn:outgoing>edge_5nrvvV</bpmn:outgoing>
+      <bpmn:outgoing>edge_Gateway_vavdRT-Event_8kSUMw</bpmn:outgoing>
+      <bpmn:outgoing>edge_wokxUB</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="Event_Gtk6Ph" name="Doctor Emergency">
+      <bpmn:incoming>edge_5nrvvV</bpmn:incoming>
+      <bpmn:outgoing>edge_Event_Gtk6Ph-Activity_QaC6Lg</bpmn:outgoing>
+      <bpmn:messageEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="Activity_QaC6Lg" name="Buffer for Best Practice">
+      <bpmn:incoming>edge_Event_Gtk6Ph-Activity_QaC6Lg</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_QaC6Lg-Gateway_7xQ2sp</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:eventBasedGateway id="Gateway_7xQ2sp" name="Wait for Patient Reply">
+      <bpmn:incoming>edge_Activity_QaC6Lg-Gateway_7xQ2sp</bpmn:incoming>
+      <bpmn:outgoing>edge_Gateway_7xQ2sp-Event_vAokbg</bpmn:outgoing>
+      <bpmn:outgoing>edge_Gateway_7xQ2sp-Event_ZJEYbq</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="Event_vAokbg" name="Reply Received">
+      <bpmn:incoming>edge_Gateway_7xQ2sp-Event_vAokbg</bpmn:incoming>
+      <bpmn:incoming>edge_bArT5u</bpmn:incoming>
+      <bpmn:outgoing>edge_Event_vAokbg-Activity_WTNPmCZ6nA7K</bpmn:outgoing>
+      <bpmn:messageEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="Event_ZJEYbq" name="8 Hour Wait">
+      <bpmn:incoming>edge_Gateway_7xQ2sp-Event_ZJEYbq</bpmn:incoming>
+      <bpmn:outgoing>edge_Event_ZJEYbq-Activity_DlJ1KWn8Aa4x</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT8H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_PgwmOv">
+      <bpmn:incoming>edge_Activity_DlJ1KW-Event_PgwmOvHPKwLM</bpmn:incoming>
+      <bpmn:incoming>edge_Activity_tMQxxt-Event_PgwmOvIdUwno</bpmn:incoming>
+      <bpmn:incoming>edge_VO6yvY</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="Event_8kSUMw" name="Reschedule/Cancel before Appointment">
+      <bpmn:incoming>edge_Gateway_vavdRT-Event_8kSUMw</bpmn:incoming>
+      <bpmn:outgoing>edge_Event_8kSUMw-Event_UnRY835zoTQU</bpmn:outgoing>
+      <bpmn:messageEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_UnRY83">
+      <bpmn:incoming>edge_Event_8kSUMw-Event_UnRY835zoTQU</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_DlJ1KW" name="Update Appointment status as Cancelled">
+      <bpmn:incoming>edge_Event_ZJEYbq-Activity_DlJ1KWn8Aa4x</bpmn:incoming>
+      <bpmn:incoming>edge_Uf0QY5</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_DlJ1KW-Event_PgwmOvHPKwLM</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="edge_iMwGXq">
+        <bpmn:targetRef>Data_U7Ka4u</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_WTNPmC" name="Analyse the Patient&#39;s Reply">
+      <bpmn:incoming>edge_Event_vAokbg-Activity_WTNPmCZ6nA7K</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_WTNPmC-Activity_JIwwOXZ8EbXP</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_xGKKkl" name="Cancelled?" default="edge_Gateway_xGKKkl-Activity_vqKnFsoSsu5s">
+      <bpmn:incoming>edge_Activity_JIwwOX-Gateway_xGKKklMvKCER</bpmn:incoming>
+      <bpmn:outgoing>edge_Gateway_xGKKkl-Activity_vqKnFsoSsu5s</bpmn:outgoing>
+      <bpmn:outgoing>edge_Gateway_xGKKkl-Activity_O6Ncww</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_vqKnFs" name="Send Booking Mail">
+      <bpmn:incoming>edge_Gateway_xGKKkl-Activity_vqKnFsoSsu5s</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_vqKnFs-Activity_tMQxxt6wTftD</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_tMQxxt" name="Update Appointment status as Rescheduled">
+      <bpmn:incoming>edge_Activity_vqKnFs-Activity_tMQxxt6wTftD</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_tMQxxt-Event_PgwmOvIdUwno</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="edge_SuD0He">
+        <bpmn:targetRef>Data_U7Ka4u</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_O6Ncww" name="Update Appointment as Cancelled by patient">
+      <bpmn:incoming>edge_Gateway_xGKKkl-Activity_O6Ncww</bpmn:incoming>
+      <bpmn:outgoing>edge_VO6yvY</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="edge_89KrXW">
+        <bpmn:targetRef>Data_U7Ka4u</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:dataOutputAssociation id="edge_dAEiGB">
+        <bpmn:targetRef>Data_U7Ka4u</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="Activity_JIwwOX" name="Move Reply   Mail to Processed">
+      <bpmn:incoming>edge_Activity_WTNPmC-Activity_JIwwOXZ8EbXP</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_JIwwOX-Gateway_xGKKklMvKCER</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="Event_CIxuYJ" name="Catch Final Reminder">
+      <bpmn:incoming>edge_wokxUB</bpmn:incoming>
+      <bpmn:outgoing>edge_Event_CIxuYJ-Activity_IrhwqZ</bpmn:outgoing>
+      <bpmn:messageEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sendTask id="Activity_IrhwqZ" name="Move Reminder Mail to Processed">
+      <bpmn:incoming>edge_Event_CIxuYJ-Activity_IrhwqZ</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_IrhwqZ-Event_1ZvSCN</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Event_1ZvSCN">
+      <bpmn:incoming>edge_Activity_vnhWYx-Event_1ZvSCNKnCCdP</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:subProcess id="Activity_cglzX1" name="Day Of Consultation">
+      <bpmn:incoming>edge_Activity_IrhwqZ-Event_1ZvSCN</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_cglzX1-Gateway_LvqhHOrksfoz</bpmn:outgoing>
+      <bpmn:startEvent id="Event_0o0lvh">
+        <bpmn:outgoing>edge_Event_0o0lvh-Activity_KjEOU0</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:userTask id="Activity_KjEOU0" name="Check In Action App">
+        <bpmn:incoming>edge_Event_0o0lvh-Activity_KjEOU0</bpmn:incoming>
+        <bpmn:outgoing>edge_Activity_KjEOU0-Gateway_N69hWX</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:boundaryEvent id="Event_9SADMl" name="24 Hour Timeout" attachedToRef="Activity_KjEOU0">
+        <bpmn:outgoing>edge_Event_9SADMl-Activity_96UWms</bpmn:outgoing>
+        <bpmn:timerEventDefinition>
+          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT24H</bpmn:timeDuration>
+        </bpmn:timerEventDefinition>
+      </bpmn:boundaryEvent>
+      <bpmn:exclusiveGateway id="Gateway_N69hWX" name="Check-in ?" default="edge_Gateway_N69hWX-Activity_FHPWT2">
+        <bpmn:incoming>edge_Activity_KjEOU0-Gateway_N69hWX</bpmn:incoming>
+        <bpmn:outgoing>edge_Gateway_N69hWX-Activity_QqTgTw</bpmn:outgoing>
+        <bpmn:outgoing>edge_Gateway_N69hWX-Activity_FHPWT2</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="Activity_QqTgTw" name="Update Appointment Status to Checkedin">
+        <bpmn:incoming>edge_Gateway_N69hWX-Activity_QqTgTw</bpmn:incoming>
+        <bpmn:outgoing>edge_Activity_QqTgTw-Activity_MarN3m</bpmn:outgoing>
+        <bpmn:dataOutputAssociation id="edge_jTcKmh">
+          <bpmn:targetRef>Data_T3SmWj</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="Activity_MarN3m" name="Medical Report Agent">
+        <bpmn:incoming>edge_Activity_QqTgTw-Activity_MarN3m</bpmn:incoming>
+        <bpmn:outgoing>edge_Activity_MarN3m-Activity_90reDX</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="Activity_90reDX" name="Take Doctor Notes">
+        <bpmn:incoming>edge_Activity_MarN3m-Activity_90reDX</bpmn:incoming>
+        <bpmn:outgoing>edge_Activity_90reDX-Event_r8P77s</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:endEvent id="Event_r8P77s">
+        <bpmn:incoming>edge_Activity_90reDX-Event_r8P77s</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:serviceTask id="Activity_96UWms" name="Update appointment as Abandoned">
+        <bpmn:incoming>edge_Event_9SADMl-Activity_96UWms</bpmn:incoming>
+        <bpmn:outgoing>edge_Activity_96UWms-Event_KWnWUz</bpmn:outgoing>
+        <bpmn:dataOutputAssociation id="edge_FBvBtW">
+          <bpmn:targetRef>Data_T3SmWj</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_KWnWUz" name="Terminate Instance">
+        <bpmn:incoming>edge_Activity_96UWms-Event_KWnWUz</bpmn:incoming>
+        <bpmn:incoming>edge_rbmCm5</bpmn:incoming>
+        <bpmn:terminateEventDefinition />
+      </bpmn:endEvent>
+      <bpmn:serviceTask id="Activity_FHPWT2" name="Update Appointment to Cancelled">
+        <bpmn:incoming>edge_Gateway_N69hWX-Activity_FHPWT2</bpmn:incoming>
+        <bpmn:outgoing>edge_rbmCm5</bpmn:outgoing>
+        <bpmn:dataOutputAssociation id="edge_Wi9ABd">
+          <bpmn:targetRef>Data_T3SmWj</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="edge_Event_0o0lvh-Activity_KjEOU0" sourceRef="Event_0o0lvh" targetRef="Activity_KjEOU0" />
+      <bpmn:sequenceFlow id="edge_Activity_KjEOU0-Gateway_N69hWX" sourceRef="Activity_KjEOU0" targetRef="Gateway_N69hWX" />
+      <bpmn:sequenceFlow id="edge_Gateway_N69hWX-Activity_QqTgTw" name="Yes" sourceRef="Gateway_N69hWX" targetRef="Activity_QqTgTw">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=vars.vf6uyYT04.Equals("Checkin")</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="edge_Activity_QqTgTw-Activity_MarN3m" sourceRef="Activity_QqTgTw" targetRef="Activity_MarN3m" />
+      <bpmn:sequenceFlow id="edge_Activity_MarN3m-Activity_90reDX" sourceRef="Activity_MarN3m" targetRef="Activity_90reDX" />
+      <bpmn:sequenceFlow id="edge_Activity_90reDX-Event_r8P77s" sourceRef="Activity_90reDX" targetRef="Event_r8P77s" />
+      <bpmn:sequenceFlow id="edge_Activity_96UWms-Event_KWnWUz" sourceRef="Activity_96UWms" targetRef="Event_KWnWUz" />
+      <bpmn:sequenceFlow id="edge_Gateway_N69hWX-Activity_FHPWT2" name="No" sourceRef="Gateway_N69hWX" targetRef="Activity_FHPWT2" />
+      <bpmn:sequenceFlow id="edge_rbmCm5" sourceRef="Activity_FHPWT2" targetRef="Event_KWnWUz" />
+      <bpmn:association id="edge_Activity_MarN3m-Text_DBknuW" sourceRef="Activity_MarN3m" targetRef="Text_DBknuW" />
+      <bpmn:textAnnotation id="Text_DBknuW">
+        <bpmn:text>Based on the Reason of Visit; Agent retrieves, analyses and summarizes the Consultation History of the Patient. It will also find out relevant Test reports for Doctor's reference.  Makes use of Perplexity AI Web Summary to provide recommendation to the Doctor .</bpmn:text>
+      </bpmn:textAnnotation>
+    </bpmn:subProcess>
+    <bpmn:boundaryEvent id="Event_h0Ijo8" name="Doctor Emergency on Consultation Day" attachedToRef="Activity_cglzX1">
+      <bpmn:outgoing>edge_d2TzQz</bpmn:outgoing>
+      <bpmn:messageEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:task id="Activity_1M98YH" name="Buffer for Best Practice">
+      <bpmn:incoming>edge_d2TzQz</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_1M98YH-Gateway_JJvRh2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:eventBasedGateway id="Gateway_JJvRh2" name="Wait For Patient Reply">
+      <bpmn:incoming>edge_Activity_1M98YH-Gateway_JJvRh2</bpmn:incoming>
+      <bpmn:outgoing>edge_bArT5u</bpmn:outgoing>
+      <bpmn:outgoing>edge_Gateway_JJvRh2-Event_Gri5eK</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:intermediateCatchEvent id="Event_Gri5eK" name="1 Hour Wait">
+      <bpmn:incoming>edge_Gateway_JJvRh2-Event_Gri5eK</bpmn:incoming>
+      <bpmn:outgoing>edge_Uf0QY5</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT1H</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:inclusiveGateway id="Gateway_LvqhHO">
+      <bpmn:incoming>edge_Activity_cglzX1-Gateway_LvqhHOrksfoz</bpmn:incoming>
+      <bpmn:outgoing>edge_Gateway_LvqhHO-Gateway_hDkVrhTU1HZy</bpmn:outgoing>
+      <bpmn:outgoing>edge_enB1ZO</bpmn:outgoing>
+      <bpmn:outgoing>edge_jqilbF</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:userTask id="Activity_Fc0lw5" name="Lab Test Request">
+      <bpmn:incoming>edge_enB1ZO</bpmn:incoming>
+      <bpmn:outgoing>edge_4NqBN7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_XDknUN" name="Pharmacy Order Request">
+      <bpmn:incoming>edge_jqilbF</bpmn:incoming>
+      <bpmn:outgoing>edge_81ijEN</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:inclusiveGateway id="Gateway_hDkVrh">
+      <bpmn:incoming>edge_Gateway_LvqhHO-Gateway_hDkVrhTU1HZy</bpmn:incoming>
+      <bpmn:incoming>edge_4NqBN7</bpmn:incoming>
+      <bpmn:incoming>edge_81ijEN</bpmn:incoming>
+      <bpmn:outgoing>edge_Gateway_hDkVrh-Activity_vnhWYxGOH3ur</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:serviceTask id="Activity_vnhWYx" name="Appointment Completed">
+      <bpmn:incoming>edge_Gateway_hDkVrh-Activity_vnhWYxGOH3ur</bpmn:incoming>
+      <bpmn:outgoing>edge_Activity_vnhWYx-Event_1ZvSCNKnCCdP</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="edge_BL3OVD">
+        <bpmn:targetRef>Data_0Fxrzu</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:dataStoreReference id="Data_BbgBoq" name="Data Fabric Entities" />
+    <bpmn:dataStoreReference id="Data_U7Ka4u" name="Appointment Entity in Data Fabric" />
+    <bpmn:dataStoreReference id="Data_T3SmWj" name="Appointment Entity in Data Fabric" />
+    <bpmn:dataStoreReference id="Data_0Fxrzu" name="Appointment Entity in Data Fabric" />
+    <bpmn:sequenceFlow id="edge_Event_start-Activity_Uh1awM" sourceRef="Event_start" targetRef="Activity_Uh1awM" />
+    <bpmn:sequenceFlow id="edge_Activity_Uh1awM-Activity_8VX6LqJAeLhN" sourceRef="Activity_Uh1awM" targetRef="Activity_8VX6Lq" />
+    <bpmn:association id="edge_Activity_Uh1awM-Text_CWSvrA" sourceRef="Activity_Uh1awM" targetRef="Text_CWSvrA" />
+    <bpmn:association id="edge_Activity_8VX6Lq-Text_rPeIMx" sourceRef="Activity_8VX6Lq" targetRef="Text_rPeIMx" />
+    <bpmn:sequenceFlow id="edge_Activity_8VX6Lq-Activity_9LBURiGoLZZZ" sourceRef="Activity_8VX6Lq" targetRef="Activity_9LBURi" />
+    <bpmn:association id="edge_Activity_9LBURi-Text_f6HIx6" sourceRef="Activity_9LBURi" targetRef="Text_f6HIx6" />
+    <bpmn:sequenceFlow id="edge_Activity_9LBURi-Activity_gT68HLqYLSD9" sourceRef="Activity_9LBURi" targetRef="Activity_gT68HL" />
+    <bpmn:association id="edge_Activity_gT68HL-Text_rEp8OC" sourceRef="Activity_gT68HL" targetRef="Text_rEp8OC" />
+    <bpmn:sequenceFlow id="edge_Activity_gT68HL-Gateway_vavdRTi7FrvC" sourceRef="Activity_gT68HL" targetRef="Gateway_vavdRT" />
+    <bpmn:sequenceFlow id="edge_5nrvvV" sourceRef="Gateway_vavdRT" targetRef="Event_Gtk6Ph" />
+    <bpmn:sequenceFlow id="edge_Event_Gtk6Ph-Activity_QaC6Lg" sourceRef="Event_Gtk6Ph" targetRef="Activity_QaC6Lg" />
+    <bpmn:sequenceFlow id="edge_Activity_QaC6Lg-Gateway_7xQ2sp" sourceRef="Activity_QaC6Lg" targetRef="Gateway_7xQ2sp" />
+    <bpmn:association id="edge_Gateway_vavdRT-Text_5EayD2" sourceRef="Gateway_vavdRT" targetRef="Text_5EayD2" />
+    <bpmn:association id="edge_Event_Gtk6Ph-Text_iEIcAu" sourceRef="Event_Gtk6Ph" targetRef="Text_iEIcAu" />
+    <bpmn:sequenceFlow id="edge_Gateway_7xQ2sp-Event_vAokbg" sourceRef="Gateway_7xQ2sp" targetRef="Event_vAokbg" />
+    <bpmn:sequenceFlow id="edge_Gateway_7xQ2sp-Event_ZJEYbq" sourceRef="Gateway_7xQ2sp" targetRef="Event_ZJEYbq" />
+    <bpmn:association id="edge_Event_ZJEYbq-Text_q7N9Ff" sourceRef="Event_ZJEYbq" targetRef="Text_q7N9Ff" />
+    <bpmn:association id="edge_Event_vAokbg-Text_MDf07U" sourceRef="Event_vAokbg" targetRef="Text_MDf07U" />
+    <bpmn:sequenceFlow id="edge_Gateway_vavdRT-Event_8kSUMw" sourceRef="Gateway_vavdRT" targetRef="Event_8kSUMw" />
+    <bpmn:association id="edge_Event_8kSUMw-Text_LRaOwA" sourceRef="Event_8kSUMw" targetRef="Text_LRaOwA" />
+    <bpmn:sequenceFlow id="edge_Event_ZJEYbq-Activity_DlJ1KWn8Aa4x" sourceRef="Event_ZJEYbq" targetRef="Activity_DlJ1KW" />
+    <bpmn:sequenceFlow id="edge_Activity_DlJ1KW-Event_PgwmOvHPKwLM" sourceRef="Activity_DlJ1KW" targetRef="Event_PgwmOv" />
+    <bpmn:association id="edge_Activity_DlJ1KW-Text_uADp0k" sourceRef="Activity_DlJ1KW" targetRef="Text_uADp0k" />
+    <bpmn:sequenceFlow id="edge_Event_vAokbg-Activity_WTNPmCZ6nA7K" sourceRef="Event_vAokbg" targetRef="Activity_WTNPmC" />
+    <bpmn:association id="edge_Activity_WTNPmC-Text_Sg0BX9" sourceRef="Activity_WTNPmC" targetRef="Text_Sg0BX9" />
+    <bpmn:sequenceFlow id="edge_Gateway_xGKKkl-Activity_vqKnFsoSsu5s" name="No" sourceRef="Gateway_xGKKkl" targetRef="Activity_vqKnFs" />
+    <bpmn:sequenceFlow id="edge_Activity_vqKnFs-Activity_tMQxxt6wTftD" sourceRef="Activity_vqKnFs" targetRef="Activity_tMQxxt" />
+    <bpmn:sequenceFlow id="edge_Activity_tMQxxt-Event_PgwmOvIdUwno" sourceRef="Activity_tMQxxt" targetRef="Event_PgwmOv" />
+    <bpmn:sequenceFlow id="edge_Gateway_xGKKkl-Activity_O6Ncww" name="Yes" sourceRef="Gateway_xGKKkl" targetRef="Activity_O6Ncww">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=vars.v4fb4pgby</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="edge_VO6yvY" sourceRef="Activity_O6Ncww" targetRef="Event_PgwmOv" />
+    <bpmn:sequenceFlow id="edge_Activity_WTNPmC-Activity_JIwwOXZ8EbXP" sourceRef="Activity_WTNPmC" targetRef="Activity_JIwwOX" />
+    <bpmn:sequenceFlow id="edge_Activity_JIwwOX-Gateway_xGKKklMvKCER" sourceRef="Activity_JIwwOX" targetRef="Gateway_xGKKkl" />
+    <bpmn:association id="edge_Activity_JIwwOX-Text_7IR6oQ" sourceRef="Activity_JIwwOX" targetRef="Text_7IR6oQ" />
+    <bpmn:association id="edge_Activity_vqKnFs-Text_CTl3OT" sourceRef="Activity_vqKnFs" targetRef="Text_CTl3OT" />
+    <bpmn:sequenceFlow id="edge_Event_8kSUMw-Event_UnRY835zoTQU" sourceRef="Event_8kSUMw" targetRef="Event_UnRY83" />
+    <bpmn:sequenceFlow id="edge_wokxUB" sourceRef="Gateway_vavdRT" targetRef="Event_CIxuYJ" />
+    <bpmn:association id="edge_Event_CIxuYJ-Text_GdbH8H" sourceRef="Event_CIxuYJ" targetRef="Text_GdbH8H" />
+    <bpmn:sequenceFlow id="edge_Event_CIxuYJ-Activity_IrhwqZ" sourceRef="Event_CIxuYJ" targetRef="Activity_IrhwqZ" />
+    <bpmn:sequenceFlow id="edge_Activity_IrhwqZ-Event_1ZvSCN" sourceRef="Activity_IrhwqZ" targetRef="Activity_cglzX1" />
+    <bpmn:sequenceFlow id="edge_Event_9SADMl-Activity_96UWms" sourceRef="Event_9SADMl" targetRef="Activity_96UWms" />
+    <bpmn:sequenceFlow id="edge_d2TzQz" sourceRef="Event_h0Ijo8" targetRef="Activity_1M98YH" />
+    <bpmn:sequenceFlow id="edge_Activity_1M98YH-Gateway_JJvRh2" sourceRef="Activity_1M98YH" targetRef="Gateway_JJvRh2" />
+    <bpmn:sequenceFlow id="edge_bArT5u" sourceRef="Gateway_JJvRh2" targetRef="Event_vAokbg" />
+    <bpmn:sequenceFlow id="edge_Gateway_JJvRh2-Event_Gri5eK" sourceRef="Gateway_JJvRh2" targetRef="Event_Gri5eK" />
+    <bpmn:sequenceFlow id="edge_Uf0QY5" sourceRef="Event_Gri5eK" targetRef="Activity_DlJ1KW" />
+    <bpmn:sequenceFlow id="edge_Activity_cglzX1-Gateway_LvqhHOrksfoz" sourceRef="Activity_cglzX1" targetRef="Gateway_LvqhHO" />
+    <bpmn:sequenceFlow id="edge_Gateway_LvqhHO-Gateway_hDkVrhTU1HZy" name="None" sourceRef="Gateway_LvqhHO" targetRef="Gateway_hDkVrh">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=! vars.vfrFyqsJo &amp;&amp; !vars.vnN7rixju</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="edge_enB1ZO" name="Tests" sourceRef="Gateway_LvqhHO" targetRef="Activity_Fc0lw5">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=vars.vfrFyqsJo</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="edge_jqilbF" name="Medicines" sourceRef="Gateway_LvqhHO" targetRef="Activity_XDknUN">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=vars.vnN7rixju</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="edge_4NqBN7" sourceRef="Activity_Fc0lw5" targetRef="Gateway_hDkVrh" />
+    <bpmn:sequenceFlow id="edge_81ijEN" sourceRef="Activity_XDknUN" targetRef="Gateway_hDkVrh" />
+    <bpmn:sequenceFlow id="edge_Gateway_hDkVrh-Activity_vnhWYxGOH3ur" sourceRef="Gateway_hDkVrh" targetRef="Activity_vnhWYx" />
+    <bpmn:sequenceFlow id="edge_Activity_vnhWYx-Event_1ZvSCNKnCCdP" sourceRef="Activity_vnhWYx" targetRef="Event_1ZvSCN" />
+    <bpmn:association id="edge_Activity_KjEOU0-Text_9iHk48" sourceRef="Activity_KjEOU0" targetRef="Text_9iHk48" />
+    <bpmn:association id="edge_Activity_90reDX-Text_yYzX2M" sourceRef="Activity_90reDX" targetRef="Text_yYzX2M" />
+    <bpmn:association id="edge_Activity_vnhWYx-Text_hcsmUn" sourceRef="Activity_vnhWYx" targetRef="Text_hcsmUn" />
+    <bpmn:association id="edge_Activity_Fc0lw5-Text_ROj6GW" sourceRef="Activity_Fc0lw5" targetRef="Text_ROj6GW" />
+    <bpmn:association id="edge_Activity_XDknUN-Text_joen3u" sourceRef="Activity_XDknUN" targetRef="Text_joen3u" />
+    <bpmn:association id="edge_Activity_QaC6Lg-Text_qOD9Jw" sourceRef="Activity_QaC6Lg" targetRef="Text_qOD9Jw" />
+    <bpmn:association id="edge_WeiLoa" sourceRef="Activity_1M98YH" targetRef="Text_qOD9Jw" />
+    <bpmn:textAnnotation id="Text_CWSvrA">
+      <bpmn:text>Move the Booking mail to subfolder "Processed"</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_rPeIMx">
+      <bpmn:text>Agent creates a Time Slot in the Doctor Schedule based on the Patient history and probable priority</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_f6HIx6">
+      <bpmn:text> Gets Patient, Doctor, Appointment, and Schedule Records from Data Fabric</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_rEp8OC">
+      <bpmn:text>Sends a Confirmation Mail to the patient </bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_5EayD2">
+      <bpmn:text>Wait for Appointment Day or a Reschedule Mail</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_iEIcAu">
+      <bpmn:text>Catch the Email Sent as a Reschedule Request to the Patient</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_q7N9Ff">
+      <bpmn:text>Wait for Patient's Response for 8 hours.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_MDf07U">
+      <bpmn:text>Patient's Response Received to the Reschedule Request</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_LRaOwA">
+      <bpmn:text>Catch the Reschedule/Cancel mail sent by the bot on Patient's Request before the day of Appointment</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_uADp0k">
+      <bpmn:text>Update the Appointment Status to "Cancelled" due to No response from Patient </bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_Sg0BX9">
+      <bpmn:text>Analyse the Patient's Reply using Generative AI and identify the Option selected</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_7IR6oQ">
+      <bpmn:text>Moves Mail from RescheduleByDoctorsRequest to Processed</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_CTl3OT">
+      <bpmn:text>Sends the Booking Mail to Trigger a Separate Instance</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_GdbH8H">
+      <bpmn:text>Catches the Final Reminder sent to the patient on the Day of the Appointment</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_9iHk48">
+      <bpmn:text>Check-In Action App waits for Receptionist to Check-in the patient, take the reason for visit and submit any test report</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_yYzX2M">
+      <bpmn:text>Consultation Action App that provides Helpful and relevant data for the Doctor. It takes in the Doctor Notes. Optionally Takes Tests suggested and Prescribed Meds.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_hcsmUn">
+      <bpmn:text>Updates the Appointment Status to Completed along with EndTime</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_ROj6GW">
+      <bpmn:text>Creates an Action App task for the Lab Receptionist to initiate, process and Submit Tests suggested by the Doctor</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_joen3u">
+      <bpmn:text>Creates an Action App task for the Pharmacist to initiate, pack and bill the medicines prescribed by the Doctor</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="Text_qOD9Jw">
+      <bpmn:text>BPMN logic does not allow Intermediate trigger to be connected to an Event Gateway.</bpmn:text>
+    </bpmn:textAnnotation>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="S_Event_start" bpmnElement="Event_start">
+        <dc:Bounds x="157.9048202603833" y="202.00054656922683" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157.9048202603833" y="243.00054656922683" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_Uh1awM" bpmnElement="Activity_Uh1awM">
+        <dc:Bounds x="243.9048202603833" y="180.00054656922683" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="243.9048202603833" y="265.0005465692268" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_8VX6Lq" bpmnElement="Activity_8VX6Lq">
+        <dc:Bounds x="409.6908230685664" y="180.00054656922683" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="409.6908230685664" y="265.0005465692268" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_CWSvrA" bpmnElement="Text_CWSvrA">
+        <dc:Bounds x="226.4048202603833" y="60.330512884182866" width="135" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="226.4048202603833" y="145.33051288418287" width="135" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_rPeIMx" bpmnElement="Text_rPeIMx">
+        <dc:Bounds x="396.1908230685664" y="13.225958533156529" width="127" height="115" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="396.1908230685664" y="133.22595853315653" width="127" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_9LBURi" bpmnElement="Activity_9LBURi">
+        <dc:Bounds x="569.6343647773202" y="180.00054656922683" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="569.6343647773202" y="265.0005465692268" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_f6HIx6" bpmnElement="Text_f6HIx6">
+        <dc:Bounds x="551.6343647773202" y="60.330512884182866" width="136" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="551.6343647773202" y="145.33051288418287" width="136" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_gT68HL" bpmnElement="Activity_gT68HL">
+        <dc:Bounds x="732.0838424713678" y="180.00054656922683" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="732.0838424713678" y="265.0005465692268" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_rEp8OC" bpmnElement="Text_rEp8OC">
+        <dc:Bounds x="732.0838424713678" y="60.330512884182866" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="732.0838424713678" y="145.33051288418287" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_vavdRT" bpmnElement="Gateway_vavdRT">
+        <dc:Bounds x="951.7763182276108" y="195.6390158215458" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="951.7763182276108" y="250.6390158215458" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_Gtk6Ph" bpmnElement="Event_Gtk6Ph">
+        <dc:Bounds x="1079.9657101806897" y="-89.52771245874897" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1079.9657101806897" y="-48.527712458748965" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_QaC6Lg" bpmnElement="Activity_QaC6Lg">
+        <dc:Bounds x="1165.9657101806897" y="-111.52771245874897" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1165.9657101806897" y="-26.527712458748965" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_7xQ2sp" bpmnElement="Gateway_7xQ2sp">
+        <dc:Bounds x="1367.2906726060748" y="-96.52771245874897" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1367.2906726060748" y="-41.527712458748965" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_5EayD2" bpmnElement="Text_5EayD2">
+        <dc:Bounds x="850.0747866311215" y="6.98528682730668" width="113" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850.0747866311215" y="91.98528682730668" width="113" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_iEIcAu" bpmnElement="Text_iEIcAu">
+        <dc:Bounds x="1047.9657101806897" y="-202.3853710005285" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1047.9657101806897" y="-117.3853710005285" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_vAokbg" bpmnElement="Event_vAokbg">
+        <dc:Bounds x="1508.189013560466" y="-89.52771245874897" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1508.189013560466" y="-48.527712458748965" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_ZJEYbq" bpmnElement="Event_ZJEYbq">
+        <dc:Bounds x="1538.575359185597" y="-215.26461882077797" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1538.575359185597" y="-174.26461882077797" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_q7N9Ff" bpmnElement="Text_q7N9Ff">
+        <dc:Bounds x="1493.075359185597" y="-303.03784289387744" width="127" height="45" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1493.075359185597" y="-253.03784289387744" width="127" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_PgwmOv" bpmnElement="Event_PgwmOv">
+        <dc:Bounds x="2151.452393027879" y="-215.26461882077797" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2151.452393027879" y="-174.26461882077797" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_MDf07U" bpmnElement="Text_MDf07U">
+        <dc:Bounds x="1372.3896498669994" y="31.50230023801791" width="134" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1372.3896498669994" y="116.50230023801791" width="134" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_8kSUMw" bpmnElement="Event_8kSUMw">
+        <dc:Bounds x="1078.2019460982867" y="202.8349550696651" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1078.2019460982867" y="243.8349550696651" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_LRaOwA" bpmnElement="Text_LRaOwA">
+        <dc:Bounds x="1012.2019460982867" y="61.16492138462115" width="168" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1012.2019460982867" y="146.16492138462115" width="168" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_UnRY83" bpmnElement="Event_UnRY83">
+        <dc:Bounds x="1170.5742492877998" y="202.8349550696651" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1170.5742492877998" y="243.8349550696651" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_DlJ1KW" bpmnElement="Activity_DlJ1KW">
+        <dc:Bounds x="1701.7121803778625" y="-237.26461882077797" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1701.7121803778625" y="-152.26461882077797" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_uADp0k" bpmnElement="Text_uADp0k">
+        <dc:Bounds x="1672.2121803778625" y="-367.6896953813855" width="159" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1672.2121803778625" y="-282.6896953813855" width="159" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_WTNPmC" bpmnElement="Activity_WTNPmC">
+        <dc:Bounds x="1608.981782641802" y="-111.52771245874898" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1608.981782641802" y="-26.52771245874898" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_Sg0BX9" bpmnElement="Text_Sg0BX9">
+        <dc:Bounds x="1579.981782641802" y="12.97228754125102" width="158" height="69" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1579.981782641802" y="86.97228754125102" width="158" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_xGKKkl" bpmnElement="Gateway_xGKKkl">
+        <dc:Bounds x="1981.528769092963" y="-96.52771245874897" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1981.528769092963" y="-41.527712458748965" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_vqKnFs" bpmnElement="Activity_vqKnFs">
+        <dc:Bounds x="2119.452393027879" y="7.472287541251021" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2119.452393027879" y="92.47228754125102" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_tMQxxt" bpmnElement="Activity_tMQxxt">
+        <dc:Bounds x="2266.5713594310255" y="-111.52771245874897" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2266.5713594310255" y="-26.527712458748965" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_O6Ncww" bpmnElement="Activity_O6Ncww">
+        <dc:Bounds x="2119.452393027879" y="-111.52771245874897" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2119.452393027879" y="-26.527712458748965" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_JIwwOX" bpmnElement="Activity_JIwwOX">
+        <dc:Bounds x="1805.925106612388" y="-111.52771245874897" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1805.925106612388" y="-26.527712458748965" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_7IR6oQ" bpmnElement="Text_7IR6oQ">
+        <dc:Bounds x="1790.425106612388" y="7.472287541251021" width="131" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1790.425106612388" y="92.47228754125102" width="131" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_CTl3OT" bpmnElement="Text_CTl3OT">
+        <dc:Bounds x="2101.452393027879" y="134.85755396779314" width="136" height="67" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2101.452393027879" y="206.85755396779314" width="136" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_CIxuYJ" bpmnElement="Event_CIxuYJ">
+        <dc:Bounds x="1071.7868839461519" y="511.55190820160885" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1071.7868839461519" y="552.5519082016089" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_GdbH8H" bpmnElement="Text_GdbH8H">
+        <dc:Bounds x="1012.2868839461519" y="390.5519082016092" width="155" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1012.2868839461519" y="475.5519082016092" width="155" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_IrhwqZ" bpmnElement="Activity_IrhwqZ">
+        <dc:Bounds x="1157.7868839461519" y="489.55190820160885" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1157.7868839461519" y="574.5519082016089" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_1ZvSCN" bpmnElement="Event_1ZvSCN">
+        <dc:Bounds x="3056.5628472122758" y="507.78036474466967" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3056.5628472122758" y="548.7803647446697" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_cglzX1" bpmnElement="Activity_cglzX1" isExpanded="true">
+        <dc:Bounds x="1388.290672606075" y="379.55190820160885" width="975" height="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1388.290672606075" y="684.5519082016089" width="975" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_0o0lvh" bpmnElement="Event_0o0lvh">
+        <dc:Bounds x="1438.290672606075" y="429.55190820160885" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1438.290672606075" y="470.55190820160885" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_KjEOU0" bpmnElement="Activity_KjEOU0">
+        <dc:Bounds x="1524.290672606075" y="407.55190820160885" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1524.290672606075" y="492.55190820160885" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_9SADMl" bpmnElement="Event_9SADMl">
+        <dc:Bounds x="1533.947485652461" y="469.55190820160885" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1533.947485652461" y="510.55190820160885" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_N69hWX" bpmnElement="Gateway_N69hWX">
+        <dc:Bounds x="1674.290672606075" y="422.55190820160885" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1674.290672606075" y="477.55190820160885" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_QqTgTw" bpmnElement="Activity_QqTgTw">
+        <dc:Bounds x="1811.2906726060748" y="407.55190820160885" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1811.2906726060748" y="492.55190820160885" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_MarN3m" bpmnElement="Activity_MarN3m">
+        <dc:Bounds x="1961.2906726060748" y="407.55190820160885" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1961.2906726060748" y="492.55190820160885" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_90reDX" bpmnElement="Activity_90reDX">
+        <dc:Bounds x="2111.290672606075" y="407.55190820160885" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2111.290672606075" y="492.55190820160885" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_r8P77s" bpmnElement="Event_r8P77s">
+        <dc:Bounds x="2282.290672606075" y="429.55190820160885" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2282.290672606075" y="470.55190820160885" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_96UWms" bpmnElement="Activity_96UWms">
+        <dc:Bounds x="1502.9474856524612" y="566.5519082016086" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1502.9474856524612" y="651.5519082016086" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_KWnWUz" bpmnElement="Event_KWnWUz">
+        <dc:Bounds x="1652.9474856524612" y="588.5519082016086" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1652.9474856524612" y="629.5519082016086" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_FHPWT2" bpmnElement="Activity_FHPWT2">
+        <dc:Bounds x="1750.2906726060753" y="566.5519082016086" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1750.2906726060753" y="651.5519082016086" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_h0Ijo8" bpmnElement="Event_h0Ijo8">
+        <dc:Bounds x="1370.290672606075" y="366.2188013232296" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1370.290672606075" y="407.2188013232296" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_DBknuW" bpmnElement="Text_DBknuW">
+        <dc:Bounds x="1779.2906726060748" y="208.55190820160885" width="234" height="138" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1779.2906726060748" y="351.55190820160885" width="234" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_9iHk48" bpmnElement="Text_9iHk48">
+        <dc:Bounds x="1465.790672606075" y="277.0304450677801" width="217" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1465.790672606075" y="362.0304450677801" width="217" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_yYzX2M" bpmnElement="Text_yYzX2M">
+        <dc:Bounds x="2053.790672606075" y="258.049304002495" width="215" height="103" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2053.790672606075" y="366.049304002495" width="215" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_1M98YH" bpmnElement="Activity_1M98YH">
+        <dc:Bounds x="1338.290672606075" y="162.5477213545238" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1338.290672606075" y="247.5477213545238" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_JJvRh2" bpmnElement="Gateway_JJvRh2">
+        <dc:Bounds x="1501.189013560466" y="177.5477213545238" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1501.189013560466" y="232.5477213545238" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Event_Gri5eK" bpmnElement="Event_Gri5eK">
+        <dc:Bounds x="1623.7777388894388" y="184.5477213545238" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1623.7777388894388" y="225.5477213545238" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_LvqhHO" bpmnElement="Gateway_LvqhHO">
+        <dc:Bounds x="2449.1795316903313" y="500.78036474466967" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2449.1795316903313" y="555.7803647446697" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_Fc0lw5" bpmnElement="Activity_Fc0lw5">
+        <dc:Bounds x="2610.2686651998492" y="345.74111972123984" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2610.2686651998492" y="430.74111972123984" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_XDknUN" bpmnElement="Activity_XDknUN">
+        <dc:Bounds x="2610.2686651998492" y="616.833931500538" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2610.2686651998492" y="701.833931500538" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Gateway_hDkVrh" bpmnElement="Gateway_hDkVrh">
+        <dc:Bounds x="2771.0893390172587" y="500.78036474466967" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2771.0893390172587" y="555.7803647446697" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Activity_vnhWYx" bpmnElement="Activity_vnhWYx">
+        <dc:Bounds x="2895.2290754054034" y="485.78036474466967" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2895.2290754054034" y="570.7803647446697" width="100" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_hcsmUn" bpmnElement="Text_hcsmUn">
+        <dc:Bounds x="2877.2290754054034" y="364.95835169546564" width="136" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2877.2290754054034" y="449.95835169546564" width="136" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_ROj6GW" bpmnElement="Text_ROj6GW">
+        <dc:Bounds x="2574.2686651998492" y="214.1047574838176" width="172" height="96" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2574.2686651998492" y="315.1047574838176" width="172" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_joen3u" bpmnElement="Text_joen3u">
+        <dc:Bounds x="2376.112450008372" y="214.6047574838176" width="185" height="95" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2376.112450008372" y="314.6047574838176" width="185" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Text_qOD9Jw" bpmnElement="Text_qOD9Jw">
+        <dc:Bounds x="1188.608673919262" y="46.50230023801791" width="150" height="74" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1188.608673919262" y="125.50230023801791" width="150" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Data_BbgBoq" bpmnElement="Data_BbgBoq">
+        <dc:Bounds x="594.6343647773202" y="319" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="594.6343647773202" y="374" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Data_U7Ka4u" bpmnElement="Data_U7Ka4u">
+        <dc:Bounds x="1953.0429798312919" y="-316.24519455176227" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1953.0429798312919" y="-261.24519455176227" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Data_T3SmWj" bpmnElement="Data_T3SmWj">
+        <dc:Bounds x="1836.2906726060748" y="694.9232131330048" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1836.2906726060748" y="749.9232131330048" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_Data_0Fxrzu" bpmnElement="Data_0Fxrzu">
+        <dc:Bounds x="2920.2290754054034" y="609.5519082016083" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2920.2290754054034" y="664.5519082016083" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_start-Activity_Uh1awM" bpmnElement="edge_Event_start-Activity_Uh1awM">
+        <di:waypoint x="194" y="220" />
+        <di:waypoint x="244" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_Uh1awM-Activity_8VX6LqJAeLhN" bpmnElement="edge_Activity_Uh1awM-Activity_8VX6LqJAeLhN">
+        <di:waypoint x="344" y="220" />
+        <di:waypoint x="410" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_Uh1awM-Text_CWSvrA" bpmnElement="edge_Activity_Uh1awM-Text_CWSvrA">
+        <di:waypoint x="293.9048202603833" y="180.00054656922683" />
+        <di:waypoint x="293.9048202603833" y="140.33051288418287" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_8VX6Lq-Text_rPeIMx" bpmnElement="edge_Activity_8VX6Lq-Text_rPeIMx">
+        <di:waypoint x="459.6908230685664" y="180.00054656922683" />
+        <di:waypoint x="459.6908230685664" y="128.22595853315653" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_8VX6Lq-Activity_9LBURiGoLZZZ" bpmnElement="edge_Activity_8VX6Lq-Activity_9LBURiGoLZZZ">
+        <di:waypoint x="510" y="220" />
+        <di:waypoint x="570" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_9LBURi-Text_f6HIx6" bpmnElement="edge_Activity_9LBURi-Text_f6HIx6">
+        <di:waypoint x="619.6343647773202" y="180.00054656922683" />
+        <di:waypoint x="619.6343647773202" y="140.33051288418287" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_9LBURi-Activity_gT68HLqYLSD9" bpmnElement="edge_Activity_9LBURi-Activity_gT68HLqYLSD9">
+        <di:waypoint x="670" y="220" />
+        <di:waypoint x="732" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_gT68HL-Text_rEp8OC" bpmnElement="edge_Activity_gT68HL-Text_rEp8OC">
+        <di:waypoint x="782.0838424713678" y="180.00054656922683" />
+        <di:waypoint x="782.0838424713678" y="140.33051288418287" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_gT68HL-Gateway_vavdRTi7FrvC" bpmnElement="edge_Activity_gT68HL-Gateway_vavdRTi7FrvC">
+        <di:waypoint x="832" y="220" />
+        <di:waypoint x="952" y="221" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_5nrvvV" bpmnElement="edge_5nrvvV">
+        <di:waypoint x="977" y="196" />
+        <di:waypoint x="977" y="-72" />
+        <di:waypoint x="1080" y="-72" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_Gtk6Ph-Activity_QaC6Lg" bpmnElement="edge_Event_Gtk6Ph-Activity_QaC6Lg">
+        <di:waypoint x="1116" y="-72" />
+        <di:waypoint x="1166" y="-72" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_QaC6Lg-Gateway_7xQ2sp" bpmnElement="edge_Activity_QaC6Lg-Gateway_7xQ2sp">
+        <di:waypoint x="1266" y="-72" />
+        <di:waypoint x="1367" y="-72" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_vavdRT-Text_5EayD2" bpmnElement="edge_Gateway_vavdRT-Text_5EayD2">
+        <di:waypoint x="970" y="196" />
+        <di:waypoint x="940" y="87" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_Gtk6Ph-Text_iEIcAu" bpmnElement="edge_Event_Gtk6Ph-Text_iEIcAu">
+        <di:waypoint x="1097.9657101806897" y="-89.52771245874897" />
+        <di:waypoint x="1097.9657101806897" y="-122.3853710005285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_7xQ2sp-Event_vAokbg" bpmnElement="edge_Gateway_7xQ2sp-Event_vAokbg">
+        <di:waypoint x="1417" y="-72" />
+        <di:waypoint x="1508" y="-72" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_7xQ2sp-Event_ZJEYbq" bpmnElement="edge_Gateway_7xQ2sp-Event_ZJEYbq">
+        <di:waypoint x="1392" y="-97" />
+        <di:waypoint x="1392" y="-197" />
+        <di:waypoint x="1539" y="-197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_ZJEYbq-Text_q7N9Ff" bpmnElement="edge_Event_ZJEYbq-Text_q7N9Ff">
+        <di:waypoint x="1556.575359185597" y="-215.26461882077797" />
+        <di:waypoint x="1556.575359185597" y="-258.03784289387744" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_vAokbg-Text_MDf07U" bpmnElement="edge_Event_vAokbg-Text_MDf07U">
+        <di:waypoint x="1511.024611406302" y="-53.527712458748965" />
+        <di:waypoint x="1467.1587788373306" y="31.502300238017902" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_vavdRT-Event_8kSUMw" bpmnElement="edge_Gateway_vavdRT-Event_8kSUMw">
+        <di:waypoint x="1002" y="221" />
+        <di:waypoint x="1078" y="221" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_8kSUMw-Text_LRaOwA" bpmnElement="edge_Event_8kSUMw-Text_LRaOwA">
+        <di:waypoint x="1096.2019460982867" y="202.8349550696651" />
+        <di:waypoint x="1096.2019460982867" y="141.16492138462115" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_ZJEYbq-Activity_DlJ1KWn8Aa4x" bpmnElement="edge_Event_ZJEYbq-Activity_DlJ1KWn8Aa4x">
+        <di:waypoint x="1575" y="-197" />
+        <di:waypoint x="1702" y="-197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_DlJ1KW-Event_PgwmOvHPKwLM" bpmnElement="edge_Activity_DlJ1KW-Event_PgwmOvHPKwLM">
+        <di:waypoint x="1802" y="-197" />
+        <di:waypoint x="2151" y="-197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_DlJ1KW-Text_uADp0k" bpmnElement="edge_Activity_DlJ1KW-Text_uADp0k">
+        <di:waypoint x="1751.7121803778625" y="-237.26461882077797" />
+        <di:waypoint x="1751.7121803778625" y="-287.6896953813855" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_vAokbg-Activity_WTNPmCZ6nA7K" bpmnElement="edge_Event_vAokbg-Activity_WTNPmCZ6nA7K">
+        <di:waypoint x="1544" y="-72" />
+        <di:waypoint x="1609" y="-72" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_WTNPmC-Text_Sg0BX9" bpmnElement="edge_Activity_WTNPmC-Text_Sg0BX9">
+        <di:waypoint x="1658.981782641802" y="-31.52771245874898" />
+        <di:waypoint x="1658.981782641802" y="12.97228754125102" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_xGKKkl-Activity_vqKnFsoSsu5s" bpmnElement="edge_Gateway_xGKKkl-Activity_vqKnFsoSsu5s">
+        <di:waypoint x="2007" y="-47" />
+        <di:waypoint x="2007" y="47" />
+        <di:waypoint x="2119" y="47" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_vqKnFs-Activity_tMQxxt6wTftD" bpmnElement="edge_Activity_vqKnFs-Activity_tMQxxt6wTftD">
+        <di:waypoint x="2219" y="47" />
+        <di:waypoint x="2316" y="47" />
+        <di:waypoint x="2317" y="-32" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_tMQxxt-Event_PgwmOvIdUwno" bpmnElement="edge_Activity_tMQxxt-Event_PgwmOvIdUwno">
+        <di:waypoint x="2317" y="-112" />
+        <di:waypoint x="2317" y="-197" />
+        <di:waypoint x="2187" y="-197" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_xGKKkl-Activity_O6Ncww" bpmnElement="edge_Gateway_xGKKkl-Activity_O6Ncww">
+        <di:waypoint x="2032" y="-72" />
+        <di:waypoint x="2119" y="-72" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_VO6yvY" bpmnElement="edge_VO6yvY">
+        <di:waypoint x="2169" y="-112" />
+        <di:waypoint x="2169" y="-179" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_WTNPmC-Activity_JIwwOXZ8EbXP" bpmnElement="edge_Activity_WTNPmC-Activity_JIwwOXZ8EbXP">
+        <di:waypoint x="1709" y="-72" />
+        <di:waypoint x="1806" y="-72" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_JIwwOX-Gateway_xGKKklMvKCER" bpmnElement="edge_Activity_JIwwOX-Gateway_xGKKklMvKCER">
+        <di:waypoint x="1906" y="-72" />
+        <di:waypoint x="1982" y="-72" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_JIwwOX-Text_7IR6oQ" bpmnElement="edge_Activity_JIwwOX-Text_7IR6oQ">
+        <di:waypoint x="1855.925106612388" y="-31.527712458748965" />
+        <di:waypoint x="1855.925106612388" y="7.472287541251021" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_vqKnFs-Text_CTl3OT" bpmnElement="edge_Activity_vqKnFs-Text_CTl3OT">
+        <di:waypoint x="2169.452393027879" y="87.47228754125102" />
+        <di:waypoint x="2169.452393027879" y="134.85755396779314" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_8kSUMw-Event_UnRY835zoTQU" bpmnElement="edge_Event_8kSUMw-Event_UnRY835zoTQU">
+        <di:waypoint x="1114" y="221" />
+        <di:waypoint x="1171" y="221" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_wokxUB" bpmnElement="edge_wokxUB">
+        <di:waypoint x="977" y="246" />
+        <di:waypoint x="977" y="530" />
+        <di:waypoint x="1072" y="530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_CIxuYJ-Text_GdbH8H" bpmnElement="edge_Event_CIxuYJ-Text_GdbH8H">
+        <di:waypoint x="1089.7868839461519" y="511.55190820160885" />
+        <di:waypoint x="1089.7868839461519" y="470.5519082016092" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_CIxuYJ-Activity_IrhwqZ" bpmnElement="edge_Event_CIxuYJ-Activity_IrhwqZ">
+        <di:waypoint x="1108" y="530" />
+        <di:waypoint x="1158" y="530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_IrhwqZ-Event_1ZvSCN" bpmnElement="edge_Activity_IrhwqZ-Event_1ZvSCN">
+        <di:waypoint x="1258" y="530" />
+        <di:waypoint x="1388" y="530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_0o0lvh-Activity_KjEOU0" bpmnElement="edge_Event_0o0lvh-Activity_KjEOU0">
+        <di:waypoint x="1474" y="448" />
+        <di:waypoint x="1524" y="448" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_KjEOU0-Gateway_N69hWX" bpmnElement="edge_Activity_KjEOU0-Gateway_N69hWX">
+        <di:waypoint x="1624" y="448" />
+        <di:waypoint x="1674" y="448" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_N69hWX-Activity_QqTgTw" bpmnElement="edge_Gateway_N69hWX-Activity_QqTgTw">
+        <di:waypoint x="1724" y="448" />
+        <di:waypoint x="1811" y="448" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_QqTgTw-Activity_MarN3m" bpmnElement="edge_Activity_QqTgTw-Activity_MarN3m">
+        <di:waypoint x="1911" y="448" />
+        <di:waypoint x="1961" y="448" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_MarN3m-Activity_90reDX" bpmnElement="edge_Activity_MarN3m-Activity_90reDX">
+        <di:waypoint x="2061" y="448" />
+        <di:waypoint x="2111" y="448" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_90reDX-Event_r8P77s" bpmnElement="edge_Activity_90reDX-Event_r8P77s">
+        <di:waypoint x="2211" y="448" />
+        <di:waypoint x="2282" y="448" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Event_9SADMl-Activity_96UWms" bpmnElement="edge_Event_9SADMl-Activity_96UWms">
+        <di:waypoint x="1552" y="506" />
+        <di:waypoint x="1552" y="536" />
+        <di:waypoint x="1553" y="536" />
+        <di:waypoint x="1553" y="567" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_96UWms-Event_KWnWUz" bpmnElement="edge_Activity_96UWms-Event_KWnWUz">
+        <di:waypoint x="1603" y="607" />
+        <di:waypoint x="1653" y="607" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_N69hWX-Activity_FHPWT2" bpmnElement="edge_Gateway_N69hWX-Activity_FHPWT2">
+        <di:waypoint x="1699" y="473" />
+        <di:waypoint x="1699" y="520" />
+        <di:waypoint x="1800" y="520" />
+        <di:waypoint x="1800" y="567" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_rbmCm5" bpmnElement="edge_rbmCm5">
+        <di:waypoint x="1750" y="607" />
+        <di:waypoint x="1689" y="607" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_d2TzQz" bpmnElement="edge_d2TzQz">
+        <di:waypoint x="1388" y="366" />
+        <di:waypoint x="1388" y="243" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_1M98YH-Gateway_JJvRh2" bpmnElement="edge_Activity_1M98YH-Gateway_JJvRh2">
+        <di:waypoint x="1438" y="203" />
+        <di:waypoint x="1501" y="203" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_bArT5u" bpmnElement="edge_bArT5u">
+        <di:waypoint x="1526" y="178" />
+        <di:waypoint x="1526" y="-54" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_JJvRh2-Event_Gri5eK" bpmnElement="edge_Gateway_JJvRh2-Event_Gri5eK">
+        <di:waypoint x="1551" y="203" />
+        <di:waypoint x="1624" y="203" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Uf0QY5" bpmnElement="edge_Uf0QY5">
+        <di:waypoint x="1660" y="203" />
+        <di:waypoint x="1752" y="203" />
+        <di:waypoint x="1752" y="-157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_cglzX1-Gateway_LvqhHOrksfoz" bpmnElement="edge_Activity_cglzX1-Gateway_LvqhHOrksfoz">
+        <di:waypoint x="2363" y="525" />
+        <di:waypoint x="2449" y="525" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_LvqhHO-Gateway_hDkVrhTU1HZy" bpmnElement="edge_Gateway_LvqhHO-Gateway_hDkVrhTU1HZy">
+        <di:waypoint x="2499" y="526" />
+        <di:waypoint x="2771" y="526" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_enB1ZO" bpmnElement="edge_enB1ZO">
+        <di:waypoint x="2474" y="501" />
+        <di:waypoint x="2474" y="386" />
+        <di:waypoint x="2610" y="386" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_jqilbF" bpmnElement="edge_jqilbF">
+        <di:waypoint x="2474" y="551" />
+        <di:waypoint x="2474" y="657" />
+        <di:waypoint x="2610" y="657" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_4NqBN7" bpmnElement="edge_4NqBN7">
+        <di:waypoint x="2710" y="386" />
+        <di:waypoint x="2796" y="386" />
+        <di:waypoint x="2796" y="501" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_81ijEN" bpmnElement="edge_81ijEN">
+        <di:waypoint x="2710" y="657" />
+        <di:waypoint x="2796" y="657" />
+        <di:waypoint x="2796" y="551" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Gateway_hDkVrh-Activity_vnhWYxGOH3ur" bpmnElement="edge_Gateway_hDkVrh-Activity_vnhWYxGOH3ur">
+        <di:waypoint x="2821" y="526" />
+        <di:waypoint x="2895" y="526" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_vnhWYx-Event_1ZvSCNKnCCdP" bpmnElement="edge_Activity_vnhWYx-Event_1ZvSCNKnCCdP">
+        <di:waypoint x="2995" y="526" />
+        <di:waypoint x="3057" y="526" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_KjEOU0-Text_9iHk48" bpmnElement="edge_Activity_KjEOU0-Text_9iHk48">
+        <di:waypoint x="1574.290672606075" y="407.55190820160885" />
+        <di:waypoint x="1574.290672606075" y="357.0304450677801" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_90reDX-Text_yYzX2M" bpmnElement="edge_Activity_90reDX-Text_yYzX2M">
+        <di:waypoint x="2161.290672606075" y="407.55190820160885" />
+        <di:waypoint x="2161.290672606075" y="361.049304002495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_vnhWYx-Text_hcsmUn" bpmnElement="edge_Activity_vnhWYx-Text_hcsmUn">
+        <di:waypoint x="2945.2290754054034" y="485.78036474466967" />
+        <di:waypoint x="2945.2290754054034" y="444.95835169546564" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_Fc0lw5-Text_ROj6GW" bpmnElement="edge_Activity_Fc0lw5-Text_ROj6GW">
+        <di:waypoint x="2660.2686651998492" y="345.74111972123984" />
+        <di:waypoint x="2660.2686651998492" y="310.1047574838176" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_XDknUN-Text_joen3u" bpmnElement="edge_Activity_XDknUN-Text_joen3u">
+        <di:waypoint x="2638.1903112442283" y="616.833931500538" />
+        <di:waypoint x="2494.276170075462" y="309.6047574838176" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_MarN3m-Text_DBknuW" bpmnElement="edge_Activity_MarN3m-Text_DBknuW">
+        <di:waypoint x="1965.7461181506294" y="407.55190820160885" />
+        <di:waypoint x="1957.3291341445363" y="346.55190820160885" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Activity_QaC6Lg-Text_qOD9Jw" bpmnElement="edge_Activity_QaC6Lg-Text_qOD9Jw">
+        <di:waypoint x="1232.1117607147933" y="-31.527712458748965" />
+        <di:waypoint x="1248.2840676100016" y="46.50230023801791" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_WeiLoa" bpmnElement="edge_WeiLoa">
+        <di:waypoint x="1338.290672606075" y="169.64585020205914" />
+        <di:waypoint x="1286.8202676579897" y="120.50230023801791" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Tb7bTk" bpmnElement="edge_Tb7bTk">
+        <di:waypoint x="619.6343647773202" y="319" />
+        <di:waypoint x="619.6343647773202" y="260.0005465692268" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_iMwGXq" bpmnElement="edge_iMwGXq">
+        <di:waypoint x="1802" y="-218" />
+        <di:waypoint x="1953" y="-281" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_SuD0He" bpmnElement="edge_SuD0He">
+        <di:waypoint x="2267" y="-105" />
+        <di:waypoint x="2003" y="-275" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_dAEiGB" bpmnElement="edge_dAEiGB">
+        <di:waypoint x="2135" y="-112" />
+        <di:waypoint x="2000" y="-266" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_FBvBtW" bpmnElement="edge_FBvBtW">
+        <di:waypoint x="1602.9474856524612" y="626.5579133133455" />
+        <di:waypoint x="1836.2906726060748" y="713.9743785198344" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_Wi9ABd" bpmnElement="edge_Wi9ABd">
+        <di:waypoint x="1827.9014451514643" y="646.5519082016086" />
+        <di:waypoint x="1840.5059802603969" y="694.9232131330048" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_jTcKmh" bpmnElement="edge_jTcKmh">
+        <di:waypoint x="1861.2906726060748" y="487.55190820160885" />
+        <di:waypoint x="1861.2906726060748" y="694.9232131330048" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_edge_BL3OVD" bpmnElement="edge_BL3OVD">
+        <di:waypoint x="2945.2290754054034" y="565.7803647446697" />
+        <di:waypoint x="2945.2290754054034" y="609.5519082016083" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

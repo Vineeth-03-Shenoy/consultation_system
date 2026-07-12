@@ -1,0 +1,12 @@
+{
+  "DocVersion": "1.0.0",
+  "StudioMinVersion": "2025.10.0",
+  "SolutionId": "9de45f97-be7d-4156-9475-5c7b6def72bc",
+  "Projects": [
+    {
+      "Type": "Flow",
+      "ProjectRelativePath": "AgenticConsultationManagement/project.uiproj",
+      "Id": "5a9ed874-ebf3-4051-bba9-83d816ab6e12"
+    }
+  ]
+}
