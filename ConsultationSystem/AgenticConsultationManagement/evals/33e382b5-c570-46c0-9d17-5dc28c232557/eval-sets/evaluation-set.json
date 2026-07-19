@@ -8,9 +8,109 @@
     "exact-match-evaluator",
     "llm-judge-trajectory-evaluator"
   ],
-  "evaluations": [],
-  "selectedEntrypoint": "start",
+  "evaluations": [
+    {
+      "id": "3f9d217b-d42d-4deb-ac9b-b4539d0c6e0a",
+      "name": "clean-booking-mail",
+      "inputs": {
+        "bookingRequest": {
+          "Subject": "Book Consultation",
+          "Body": "PatientID:0001\nDate:2026-07-25\nTime:14:30",
+          "From": {
+            "Email": "vineethshenoy22@gmail.com"
+          }
+        }
+      },
+      "expectedOutput": {
+        "finalStatus": "Completed"
+      },
+      "evaluationCriterias": {
+        "exact-match-eval-001": {
+          "expectedOutput": {
+            "finalStatus": "Completed"
+          }
+        },
+        "llm-judge-eval-001": {
+          "expectedOutput": {
+            "finalStatus": "Completed"
+          }
+        },
+        "llm-judge-trajectory-eval-001": {
+          "expectedAgentBehavior": "The flow should follow the captured successful path and complete with the expected result."
+        }
+      },
+      "createdAt": "2026-07-19T16:57:00.682Z",
+      "updatedAt": "2026-07-19T16:57:00.682Z"
+    },
+    {
+      "id": "50435c50-869b-4810-92ad-71f044db01f5",
+      "name": "freeform-booking-mail",
+      "inputs": {
+        "bookingRequest": {
+          "Subject": "Book Consultation",
+          "Body": "Hi, I would like to come in on 25th July 2026 at 2:30 pm. My patient id is 0001. Thanks!",
+          "From": {
+            "Email": "vineethshenoy22@gmail.com"
+          }
+        }
+      },
+      "expectedOutput": {
+        "finalStatus": "Completed"
+      },
+      "evaluationCriterias": {
+        "exact-match-eval-001": {
+          "expectedOutput": {
+            "finalStatus": "Completed"
+          }
+        },
+        "llm-judge-eval-001": {
+          "expectedOutput": {
+            "finalStatus": "Completed"
+          }
+        },
+        "llm-judge-trajectory-eval-001": {
+          "expectedAgentBehavior": "The flow should follow the captured successful path and complete with the expected result."
+        }
+      },
+      "createdAt": "2026-07-19T16:57:03.188Z",
+      "updatedAt": "2026-07-19T16:57:03.188Z"
+    },
+    {
+      "id": "b264fd05-06df-451d-94a2-75de0866aef8",
+      "name": "missing-patient-id",
+      "inputs": {
+        "bookingRequest": {
+          "Subject": "Book Consultation",
+          "Body": "I want an appointment on 2026-07-25 at 14:30",
+          "From": {
+            "Email": "vineethshenoy22@gmail.com"
+          }
+        }
+      },
+      "expectedOutput": {
+        "finalStatus": "Terminated"
+      },
+      "evaluationCriterias": {
+        "exact-match-eval-001": {
+          "expectedOutput": {
+            "finalStatus": "Terminated"
+          }
+        },
+        "llm-judge-eval-001": {
+          "expectedOutput": {
+            "finalStatus": "Terminated"
+          }
+        },
+        "llm-judge-trajectory-eval-001": {
+          "expectedAgentBehavior": "The flow should follow the captured successful path and complete with the expected result."
+        }
+      },
+      "createdAt": "2026-07-19T16:57:05.594Z",
+      "updatedAt": "2026-07-19T16:57:05.594Z"
+    }
+  ],
+  "selectedEntrypoint": "emailReceived1",
   "fileName": "evaluation-set.json",
   "createdAt": "2026-07-12T17:35:40.005Z",
-  "updatedAt": "2026-07-12T17:35:40.005Z"
+  "updatedAt": "2026-07-19T16:57:05.594Z"
 }

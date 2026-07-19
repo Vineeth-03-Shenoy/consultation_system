@@ -130,11 +130,13 @@ Booking Agent inline (parse mail → structured booking) → Data Fabric `Appoin
 **Phase 2 — The waiting game. ✅ mostly built (2026-07-19).**
 Reply Analysis Agent live (inline, classifies cancel/reschedule/confirm from the patient's reply, sourced via Gmail *Get Newest Email*); reschedule/cancel branches now write **real Appointment status** to Data Fabric (`CancelledByPatient` / `Rescheduled` / `CancelledNoReply` / `CancelledEmergency`) via 4 update-entity-record nodes keyed on `createAppointment1.output.Id`; reschedule confirmation mail sent for real. **Still simulated:** the *detection* of the reply/reminder/emergency events themselves — the poll loops with mock check-scripts remain (the approved script-based-loop stand-in). Two housekeeping mail-moves (`moveReplyMail`, `moveReminderMail`) stay mock because they need a real inbound message-id, which only exists once detection is real — see PM question #1 (wait-for-event race).
 
-**Phase 3 — Day of consultation.**
-Check-In Action App + 24h SLA, doctor notes task, Medical Report Agent, ConsultationRecords writes.
+**Phase 3 — Day of consultation. ✅ mostly built (2026-07-19).**
+The `dayOfConsult` subflow now receives typed context (`appointmentRecordId`, `patientId`, `patientEmail`, `appointmentDate`, `appointmentRecords`) from the parent; all three status writes are **real** Data Fabric updates (`CheckedIn` / `Cancelled` / `Abandoned`); the **Medical Report Agent** is live as the 3rd inline agent (pre-consultation brief from reason-for-visit + patient history → `report`/`recommendations`); a new **ConsultationRecords** entity is written after doctor notes; and `apptCompleted` writes `Completed` + `endTime` for real. **Still mocked:** Check-In and Doctor Notes — these are Action Apps (Action Center HITL), a separate product build outside the flow file; the mocks keep the happy path runnable.
 
-**Phase 4 — Fulfilment + quality.**
-Lab/pharmacy approval tasks, agent eval sets wired as regression gates, simulations for repeatable demos.
+**Phase 4 — Fulfilment + quality. 🔶 eval gate seeded (2026-07-19).**
+The eval set (`eval-set-001`, entrypoint `emailReceived1`) now carries 3 booking-intake data points (clean contract mail, free-form phrasing, missing patient id) against the existing llm-judge/exact-match/trajectory evaluators — runs execute in Studio Web after upload (not yet run). Lab/pharmacy approval tasks remain mock for the same Action-App reason as Phase 3.
+
+**BPMN-annotation realignment (2026-07-19).** Three divergences closed: (1) *Get All Records* is now a real Data Fabric **read** (`query-entity-records` on Appointments) feeding the Booking Agent — creation stays a separate explicit write; (2) the **Booking Agent now selects the time slot** (30-min slots, 09:00–17:00, conflict-avoidance + priority from patient history) instead of only parsing the mail; (3) *Send Booking Mail* now sends a **booking-format mail to the clinic's own trigger address**, spawning a fresh flow instance for the rescheduled appointment (BPMN's re-trigger semantics). Note the read sits *before* the agent (BPMN draws it after) — the agent can't use records it hasn't received; flagged for the PM discussion.
 
 **Phase 5 — Hardening (post-challenge).**
 Error ports on every connector node with compensation mails, per-node connections, deploy pipeline (`pack → publish → deploy`) — *only on explicit go*.
@@ -159,10 +161,13 @@ Each phase ends the same way: `validate` clean → `format` → commit → demo.
 | Poll-loop approximation diverges from BPMN semantics | Explicitly flagged; PM questions #1/#2; upgrade path to wait-for-event nodes |
 | Shared Gmail connection across nodes (validator warning) | Accepted for demo (same account); split per node in Phase 5 |
 | Long-running state across days | Maestro is built for this — but verify Delay durability (PM question #6) |
+| `bookingAgent.valid=false` is not yet consumed — an unparseable mail still reaches the create step | Known gap, deliberate for demo scope; fix = decision node on `valid` routing to a human escalation task (Phase 4/5) |
+| Self-addressed re-trigger mail may not fire the Gmail trigger (Gmail can skip filters on self-sent mail) | Verify with clinic mailbox; fallback = second address or label applied by the send itself |
 
 ## 7. Current State Snapshot (for the meeting)
 
 - ✅ Full BPMN topology implemented and **validated** in one Maestro Flow (+ 1 subflow), pushed to [GitHub](https://github.com/Vineeth-03-Shenoy/consultation_system)
 - ✅ Real Gmail **trigger** + **move-email** working end-to-end in debug
-- ✅ Eval scaffold (llm-judge + trajectory) in place
-- 🔜 Phase 1 slice: Booking Agent + Data Fabric + confirmation mail
+- ✅ Phase 1–3 built for real: 3 inline agents (Booking w/ slot selection, Reply Analysis, Medical Report), DF read + create + 8 status writes across Appointments/ConsultationRecords, confirmation + re-trigger mails
+- ✅ Eval set seeded with 3 booking-intake data points (Studio Web run pending upload)
+- 🔶 Still mocked (all for the same two product gaps): 4 Action-App HITL tasks (check-in, doctor notes, lab, pharmacy) and the 4 event-detection poll-check scripts (the wait-for-event race — PM question #1); 2 reply/reminder mail-moves blocked on real inbound message-ids from that detection
