@@ -53,65 +53,6 @@
       }
     },
     {
-      "id": "normalizeMail",
-      "type": "core.action.script",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Normalize Trigger Mail"
-      },
-      "inputs": {
-        "script": "const o = $vars.emailReceived1.output || {}; const m = o.bookingRequest || o; return { ID: m.ID, Subject: m.Subject, Body: m.Body, From: m.From || {} };"
-      },
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "The return value of the script",
-          "source": "=result.response",
-          "var": "output"
-        },
-        "error": {
-          "type": "object",
-          "description": "Error information if the node fails",
-          "source": "=Error",
-          "var": "error",
-          "schema": {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "type": "object",
-            "required": [
-              "code",
-              "message",
-              "detail",
-              "category",
-              "status"
-            ],
-            "properties": {
-              "code": {
-                "type": "string",
-                "description": "Error code as a string"
-              },
-              "message": {
-                "type": "string",
-                "description": "High-level error message"
-              },
-              "detail": {
-                "type": "string",
-                "description": "Detailed error description"
-              },
-              "category": {
-                "type": "string",
-                "description": "Error category"
-              },
-              "status": {
-                "type": "integer",
-                "description": "HTTP status code"
-              }
-            },
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    {
       "id": "moveTriggerMailToProcessedMock1",
       "type": "uipath.connector.uipath-google-gmail.move-email",
       "typeVersion": "1.0.0",
@@ -130,10 +71,10 @@
           "method": "POST",
           "endpoint": "/MoveEmail",
           "queryParameters": {
-            "id": "=js:($vars.emailReceived1.output.ID)",
+            "id": "=js:(($vars.emailReceived1.output.bookingRequest || $vars.emailReceived1.output || {}).ID)",
             "addLabelId": "Label_1174611446414526976"
           },
-          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"MoveEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"MoveEmail\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/MoveEmail\",\"unifiedTypesCompatible\":true},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":[],\"connectorName\":\"Gmail\",\"maxPageSize\":500,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[],\"cachedBrowserItems\":[[\"addLabelId\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"Processed_ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"Processed_ConsultationBooking\"],[\"name\",\"Processed_ConsultationBooking\"],[\"id\",\"Label_1174611446414526976\"],[\"type\",\"user\"],[\"referenceID\",\"processed_consultationbooking\"]],\"id\":\"Label_1174611446414526976\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[\"id\"],\"objectDisplayName\":\"Move Email\",\"eventMode\":null,\"eventOperation\":null,\"hasBreakingChanges\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"id\\\":string;\\\"labelIds\\\":string[];\\\"threadId\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"threadId\":{\"title\":\"Email thread identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the email thread.\"},\"labelIds[*]\":{\"title\":\"Email label identifiers\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"description\":\"A list of identifiers for labels associated with the email.\"},\"id\":{\"title\":\"Email message identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the specific email message.\"}},\"definitions\":{}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"id\",\"name\":\"id\",\"displayName\":\"Email to move\",\"description\":\"The email ID to move\",\"type\":\"string\",\"sortOrder\":2,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"addLabelId\",\"name\":\"addLabelId\",\"displayName\":\"To email folder or label\",\"description\":\"The folder or label where to move the email message\",\"type\":\"string\",\"sortOrder\":3,\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\",\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":[],\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"out_id\",\"name\":\"id\",\"displayName\":\"Email message identifier\",\"description\":\"A unique identifier for the specific email message.\",\"type\":\"string\",\"primaryKey\":true,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"19468958b5e51c05\"},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"MoveEmail\",\"name\":\"MoveEmail\",\"displayName\":\"Email\",\"description\":\"\",\"type\":\"GeneratedMoveEmail\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"jitInputField\":null,\"inputMode\":null,\"searchableFields\":[],\"hasUnifiedTypes\":true,\"jitTypeHash\":null}}}",
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"executionType\":null,\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"MoveEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"MoveEmail\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/MoveEmail\",\"unifiedTypesCompatible\":true},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":[],\"connectorName\":\"Gmail\",\"maxPageSize\":500,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[],\"cachedBrowserItems\":[[\"addLabelId\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"Processed_ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"Processed_ConsultationBooking\"],[\"name\",\"Processed_ConsultationBooking\"],[\"id\",\"Label_1174611446414526976\"],[\"type\",\"user\"],[\"referenceID\",\"processed_consultationbooking\"]],\"id\":\"Label_1174611446414526976\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[\"id\"],\"objectDisplayName\":\"Move Email\",\"baseObject\":null,\"eventMode\":null,\"eventOperation\":null,\"language\":\"en-US\",\"hasBreakingChanges\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"id\\\":string;\\\"labelIds\\\":string[];\\\"threadId\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"threadId\":{\"title\":\"Email thread identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the email thread.\"},\"labelIds[*]\":{\"title\":\"Email label identifiers\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"description\":\"A list of identifiers for labels associated with the email.\"},\"id\":{\"title\":\"Email message identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the specific email message.\"}},\"definitions\":{}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"id\",\"name\":\"id\",\"displayName\":\"Email to move\",\"description\":\"The email ID to move\",\"type\":\"string\",\"sortOrder\":2,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"addLabelId\",\"name\":\"addLabelId\",\"displayName\":\"To email folder or label\",\"description\":\"The folder or label where to move the email message\",\"type\":\"string\",\"sortOrder\":3,\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\",\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":[],\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"out_id\",\"name\":\"id\",\"displayName\":\"Email message identifier\",\"description\":\"A unique identifier for the specific email message.\",\"type\":\"string\",\"primaryKey\":true,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"19468958b5e51c05\"},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"MoveEmail\",\"name\":\"MoveEmail\",\"displayName\":\"Email\",\"description\":\"\",\"type\":\"GeneratedMoveEmail\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"jitInputField\":null,\"inputMode\":null,\"searchableFields\":[],\"hasUnifiedTypes\":true,\"jitTypeHash\":null}}}",
           "uiPathActivityTypeId": "7dce485b-164a-3bd6-9600-00750b64bef9",
           "errorState": {
             "issues": []
@@ -211,13 +152,13 @@
           {
             "id": "emailReceived1__output__Subject",
             "type": "string",
-            "binding": "=$vars.emailReceived1.output.Subject",
+            "binding": "=($vars.emailReceived1.output.bookingRequest || $vars.emailReceived1.output || {}).Subject",
             "description": "Bound from $vars.emailReceived1.output.Subject"
           },
           {
             "id": "emailReceived1__output__Body",
             "type": "string",
-            "binding": "=$vars.emailReceived1.output.Body",
+            "binding": "=($vars.emailReceived1.output.bookingRequest || $vars.emailReceived1.output || {}).Body",
             "description": "Bound from $vars.emailReceived1.output.Body"
           },
           {
@@ -292,7 +233,7 @@
             "patientId": "=js:$vars.bookingAgent.output.patientId",
             "appointmentDate": "=js:$vars.bookingAgent.output.appointmentDate",
             "appointmentTime": "=js:$vars.bookingAgent.output.appointmentTime",
-            "patientEmail": "=js:$vars.emailReceived1.output.From.Email",
+            "patientEmail": "=js:((($vars.emailReceived1.output.bookingRequest || $vars.emailReceived1.output || {}).From || {}).Email)",
             "status": "Booked",
             "notes": "=js:$vars.bookingAgent.output.reason"
           },
@@ -702,7 +643,7 @@
       "inputs": {
         "appointmentRecordId": "=js:$vars.createAppointment1.output.Id",
         "patientId": "=js:$vars.bookingAgent.output.patientId",
-        "patientEmail": "=js:$vars.emailReceived1.output.From.Email",
+        "patientEmail": "=js:((($vars.emailReceived1.output.bookingRequest || $vars.emailReceived1.output || {}).From || {}).Email)",
         "appointmentDate": "=js:$vars.bookingAgent.output.appointmentDate",
         "appointmentRecords": "=js:$vars.getAllRecordsDataFabric1.output"
       },
@@ -1523,7 +1464,7 @@
             "SaveAsDraft": false
           },
           "bodyParameters": {
-            "To": "=js:($vars.emailReceived1.output.From.Email)",
+            "To": "=js:((($vars.emailReceived1.output.bookingRequest || $vars.emailReceived1.output || {}).From || {}).Email)",
             "Subject": "=js:(`Consultation Confirmed - ${$vars.bookingAgent.output.appointmentDate} at ${$vars.bookingAgent.output.appointmentTime}`)",
             "Body": "=js:(`Dear Patient ${$vars.bookingAgent.output.patientId},\n\nYour consultation has been booked.\n\nDate: ${$vars.bookingAgent.output.appointmentDate}\nTime: ${$vars.bookingAgent.output.appointmentTime}\n\nPlease reply to this email if you need to reschedule or cancel.\n\nRegards,\nConsultation Clinic`)",
             "Importance": "normal"
@@ -2297,20 +2238,6 @@
   ],
   "edges": [
     {
-      "id": "e1",
-      "sourceNodeId": "emailReceived1",
-      "sourcePort": "output",
-      "targetNodeId": "normalizeMail",
-      "targetPort": "input"
-    },
-    {
-      "id": "e1b",
-      "sourceNodeId": "normalizeMail",
-      "sourcePort": "success",
-      "targetNodeId": "moveTriggerMailToProcessedMock1",
-      "targetPort": "input"
-    },
-    {
       "id": "e2",
       "sourceNodeId": "moveTriggerMailToProcessedMock1",
       "sourcePort": "output",
@@ -2708,6 +2635,13 @@
       "sourcePort": "output",
       "targetNodeId": "analyseReply",
       "targetPort": "input"
+    },
+    {
+      "id": "emailReceived1-output-moveTriggerMailToProcessedMock1-input",
+      "sourceNodeId": "emailReceived1",
+      "sourcePort": "output",
+      "targetNodeId": "moveTriggerMailToProcessedMock1",
+      "targetPort": "input"
     }
   ],
   "definitions": [
@@ -2880,154 +2814,6 @@
             }
           ]
         }
-      }
-    },
-    {
-      "nodeType": "core.action.script",
-      "version": "1.0",
-      "category": "data-operations",
-      "description": "Run custom JavaScript code",
-      "tags": [
-        "code",
-        "javascript",
-        "python"
-      ],
-      "sortOrder": 35,
-      "supportsErrorHandling": true,
-      "display": {
-        "label": "Script",
-        "icon": "code"
-      },
-      "handleConfiguration": [
-        {
-          "position": "left",
-          "handles": [
-            {
-              "id": "input",
-              "type": "target",
-              "handleType": "input"
-            }
-          ]
-        },
-        {
-          "position": "right",
-          "handles": [
-            {
-              "id": "success",
-              "type": "source",
-              "handleType": "output"
-            },
-            {
-              "id": "error",
-              "label": "Error",
-              "type": "source",
-              "handleType": "output",
-              "visible": "{inputs.errorHandlingEnabled}",
-              "constraints": {
-                "maxConnections": 1
-              }
-            }
-          ]
-        }
-      ],
-      "debug": {
-        "runtime": "clientScript"
-      },
-      "model": {
-        "type": "bpmn:ScriptTask"
-      },
-      "inputDefinition": {
-        "type": "object",
-        "properties": {
-          "script": {
-            "type": "string",
-            "minLength": 1,
-            "errorMessage": "A script function is required",
-            "validationSeverity": "warning"
-          }
-        },
-        "required": [
-          "script"
-        ]
-      },
-      "inputDefaults": {
-        "script": ""
-      },
-      "outputDefinition": {
-        "output": {
-          "type": "object",
-          "description": "The return value of the script",
-          "source": "=result.response",
-          "var": "output"
-        },
-        "error": {
-          "type": "object",
-          "description": "Error information if the node fails",
-          "source": "=Error",
-          "var": "error",
-          "schema": {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "type": "object",
-            "required": [
-              "code",
-              "message",
-              "detail",
-              "category",
-              "status"
-            ],
-            "properties": {
-              "code": {
-                "type": "string",
-                "description": "Error code as a string"
-              },
-              "message": {
-                "type": "string",
-                "description": "High-level error message"
-              },
-              "detail": {
-                "type": "string",
-                "description": "Detailed error description"
-              },
-              "category": {
-                "type": "string",
-                "description": "Error category"
-              },
-              "status": {
-                "type": "integer",
-                "description": "HTTP status code"
-              }
-            },
-            "additionalProperties": false
-          }
-        }
-      },
-      "form": {
-        "id": "script-properties",
-        "title": "Script configuration",
-        "sections": [
-          {
-            "id": "script",
-            "title": "Script",
-            "collapsible": true,
-            "defaultExpanded": true,
-            "fields": [
-              {
-                "name": "inputs.script",
-                "type": "custom",
-                "component": "script-editor",
-                "componentProps": {
-                  "language": "javascript",
-                  "returnType": "any",
-                  "validationMode": "script",
-                  "minHeight": 200,
-                  "placeholder": " // Return an object with your result\nreturn {\n  message: \"Web request response\",\n  data: $vars.httpRequest1.output\n                  };"
-                },
-                "label": "Code",
-                "description": "JavaScript expression that returns a result object"
-              }
-            ]
-          }
-        ]
       }
     },
     {
@@ -4378,6 +4164,154 @@
                     }
                   }
                 ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "nodeType": "core.action.script",
+      "version": "1.0",
+      "category": "data-operations",
+      "description": "Run custom JavaScript code",
+      "tags": [
+        "code",
+        "javascript",
+        "python"
+      ],
+      "sortOrder": 35,
+      "supportsErrorHandling": true,
+      "display": {
+        "label": "Script",
+        "icon": "code"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "success",
+              "type": "source",
+              "handleType": "output"
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "debug": {
+        "runtime": "clientScript"
+      },
+      "model": {
+        "type": "bpmn:ScriptTask"
+      },
+      "inputDefinition": {
+        "type": "object",
+        "properties": {
+          "script": {
+            "type": "string",
+            "minLength": 1,
+            "errorMessage": "A script function is required",
+            "validationSeverity": "warning"
+          }
+        },
+        "required": [
+          "script"
+        ]
+      },
+      "inputDefaults": {
+        "script": ""
+      },
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "form": {
+        "id": "script-properties",
+        "title": "Script configuration",
+        "sections": [
+          {
+            "id": "script",
+            "title": "Script",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "name": "inputs.script",
+                "type": "custom",
+                "component": "script-editor",
+                "componentProps": {
+                  "language": "javascript",
+                  "returnType": "any",
+                  "validationMode": "script",
+                  "minHeight": 200,
+                  "placeholder": " // Return an object with your result\nreturn {\n  message: \"Web request response\",\n  data: $vars.httpRequest1.output\n                  };"
+                },
+                "label": "Code",
+                "description": "JavaScript expression that returns a result object"
               }
             ]
           }
@@ -5913,58 +5847,6 @@
       }
     ],
     "nodes": [
-      {
-        "id": "normalizeMail.output",
-        "type": "object",
-        "description": "The return value of the script",
-        "binding": {
-          "nodeId": "normalizeMail",
-          "outputId": "output"
-        }
-      },
-      {
-        "id": "normalizeMail.error",
-        "type": "object",
-        "schema": {
-          "$schema": "http://json-schema.org/draft-07/schema#",
-          "type": "object",
-          "required": [
-            "code",
-            "message",
-            "detail",
-            "category",
-            "status"
-          ],
-          "properties": {
-            "code": {
-              "type": "string",
-              "description": "Error code as a string"
-            },
-            "message": {
-              "type": "string",
-              "description": "High-level error message"
-            },
-            "detail": {
-              "type": "string",
-              "description": "Detailed error description"
-            },
-            "category": {
-              "type": "string",
-              "description": "Error category"
-            },
-            "status": {
-              "type": "integer",
-              "description": "HTTP status code"
-            }
-          },
-          "additionalProperties": false
-        },
-        "description": "Error information if the node fails",
-        "binding": {
-          "nodeId": "normalizeMail",
-          "outputId": "error"
-        }
-      },
       {
         "id": "moveTriggerMailToProcessedMock1.error",
         "type": "object",
@@ -7669,18 +7551,7 @@
     "nodes": {
       "emailReceived1": {
         "position": {
-          "x": -192,
-          "y": 0
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "normalizeMail": {
-        "position": {
-          "x": 0,
+          "x": -16,
           "y": 0
         },
         "size": {
@@ -7691,7 +7562,7 @@
       },
       "moveTriggerMailToProcessedMock1": {
         "position": {
-          "x": 192,
+          "x": 176,
           "y": 0
         },
         "size": {
@@ -7702,7 +7573,7 @@
       },
       "bookingAgent": {
         "position": {
-          "x": 576,
+          "x": 560,
           "y": 0
         },
         "size": {
@@ -7713,7 +7584,7 @@
       },
       "createAppointment1": {
         "position": {
-          "x": 960,
+          "x": 944,
           "y": 0
         },
         "size": {
@@ -7724,19 +7595,19 @@
       },
       "pollDayLoop": {
         "position": {
-          "x": 1344,
+          "x": 1328,
           "y": -112
         },
         "size": {
-          "width": 560,
+          "width": 576,
           "height": 320
         },
         "collapsed": false
       },
       "delayDayPoll": {
         "position": {
-          "x": 2000,
-          "y": 288
+          "x": 144,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -7746,8 +7617,8 @@
       },
       "checkDayEvents": {
         "position": {
-          "x": 2432,
-          "y": 288
+          "x": 336,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -7758,7 +7629,7 @@
       "routeDayEvent": {
         "position": {
           "x": 2000,
-          "y": -272
+          "y": -32
         },
         "size": {
           "width": 96,
@@ -7769,18 +7640,18 @@
       "pollReplyLoop1": {
         "position": {
           "x": 2192,
-          "y": -768
+          "y": -512
         },
         "size": {
-          "width": 560,
+          "width": 576,
           "height": 320
         },
         "collapsed": false
       },
       "delayReply1": {
         "position": {
-          "x": 3088,
-          "y": -512
+          "x": 144,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -7790,8 +7661,8 @@
       },
       "checkReply1": {
         "position": {
-          "x": 3504,
-          "y": -512
+          "x": 336,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -7801,8 +7672,8 @@
       },
       "gotReply1": {
         "position": {
-          "x": 3088,
-          "y": -800
+          "x": 3104,
+          "y": -400
         },
         "size": {
           "width": 96,
@@ -7812,8 +7683,8 @@
       },
       "moveReplyMail": {
         "position": {
-          "x": 4352,
-          "y": -896
+          "x": 4400,
+          "y": -496
         },
         "size": {
           "width": 96,
@@ -7823,8 +7694,8 @@
       },
       "isCancelled": {
         "position": {
-          "x": 4544,
-          "y": -896
+          "x": 4592,
+          "y": -496
         },
         "size": {
           "width": 96,
@@ -7835,7 +7706,7 @@
       "moveReminderMail": {
         "position": {
           "x": 2432,
-          "y": 96
+          "y": 416
         },
         "size": {
           "width": 96,
@@ -7845,8 +7716,8 @@
       },
       "dayOfConsult": {
         "position": {
-          "x": 3088,
-          "y": -320
+          "x": 3104,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -7856,19 +7727,19 @@
       },
       "emergencyWatch": {
         "position": {
-          "x": 2848,
-          "y": 400
+          "x": 2864,
+          "y": 624
         },
         "size": {
-          "width": 560,
+          "width": 576,
           "height": 320
         },
         "collapsed": false
       },
       "delayEmerg": {
         "position": {
-          "x": 3504,
-          "y": 672
+          "x": 144,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -7878,8 +7749,8 @@
       },
       "checkEmerg": {
         "position": {
-          "x": 3936,
-          "y": 672
+          "x": 336,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -7889,8 +7760,8 @@
       },
       "hadEmergency": {
         "position": {
-          "x": 3504,
-          "y": 336
+          "x": 3536,
+          "y": 736
         },
         "size": {
           "width": 96,
@@ -7900,19 +7771,19 @@
       },
       "pollReplyLoop2": {
         "position": {
-          "x": 3696,
-          "y": 64
+          "x": 3728,
+          "y": 464
         },
         "size": {
-          "width": 560,
+          "width": 576,
           "height": 320
         },
         "collapsed": false
       },
       "delayReply2": {
         "position": {
-          "x": 4352,
-          "y": 272
+          "x": 144,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -7922,8 +7793,8 @@
       },
       "checkReply2": {
         "position": {
-          "x": 4544,
-          "y": 272
+          "x": 336,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -7933,8 +7804,8 @@
       },
       "gotReply2": {
         "position": {
-          "x": 4352,
-          "y": 80
+          "x": 4400,
+          "y": 576
         },
         "size": {
           "width": 96,
@@ -7944,8 +7815,8 @@
       },
       "outcomeOk": {
         "position": {
-          "x": 3504,
-          "y": -320
+          "x": 3536,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -7955,8 +7826,8 @@
       },
       "terminateFlow": {
         "position": {
-          "x": 3936,
-          "y": -128
+          "x": 3968,
+          "y": 272
         },
         "size": {
           "width": 96,
@@ -7966,8 +7837,8 @@
       },
       "decisionTests": {
         "position": {
-          "x": 3936,
-          "y": -512
+          "x": 3968,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -7977,8 +7848,8 @@
       },
       "labTestRequest": {
         "position": {
-          "x": 4352,
-          "y": -512
+          "x": 4400,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -7988,8 +7859,8 @@
       },
       "joinTests": {
         "position": {
-          "x": 4544,
-          "y": -512
+          "x": 4592,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -7999,8 +7870,8 @@
       },
       "decisionMeds": {
         "position": {
-          "x": 3936,
-          "y": -320
+          "x": 3968,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -8010,8 +7881,8 @@
       },
       "pharmacyOrder": {
         "position": {
-          "x": 4352,
-          "y": -320
+          "x": 4400,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -8021,8 +7892,8 @@
       },
       "joinMeds": {
         "position": {
-          "x": 4544,
-          "y": -320
+          "x": 4592,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -8032,8 +7903,8 @@
       },
       "mergeOrders": {
         "position": {
-          "x": 4736,
-          "y": -512
+          "x": 4784,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -8043,8 +7914,8 @@
       },
       "apptCompleted": {
         "position": {
-          "x": 4928,
-          "y": -512
+          "x": 4976,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -8055,7 +7926,7 @@
       "done_reschedCancel": {
         "position": {
           "x": 2432,
-          "y": -224
+          "y": 64
         },
         "size": {
           "width": 96,
@@ -8065,8 +7936,8 @@
       },
       "done_noReply": {
         "position": {
-          "x": 3936,
-          "y": -704
+          "x": 3968,
+          "y": -304
         },
         "size": {
           "width": 96,
@@ -8076,8 +7947,8 @@
       },
       "done_cancelPatient": {
         "position": {
-          "x": 4928,
-          "y": -992
+          "x": 4976,
+          "y": -592
         },
         "size": {
           "width": 96,
@@ -8087,8 +7958,8 @@
       },
       "done_rescheduled": {
         "position": {
-          "x": 5120,
-          "y": -800
+          "x": 5168,
+          "y": -400
         },
         "size": {
           "width": 96,
@@ -8098,8 +7969,8 @@
       },
       "done_emerg1h": {
         "position": {
-          "x": 4736,
-          "y": 80
+          "x": 4784,
+          "y": 576
         },
         "size": {
           "width": 96,
@@ -8109,8 +7980,8 @@
       },
       "done_noEmerg": {
         "position": {
-          "x": 3936,
-          "y": 480
+          "x": 3968,
+          "y": 880
         },
         "size": {
           "width": 96,
@@ -8120,8 +7991,8 @@
       },
       "done_main": {
         "position": {
-          "x": 5120,
-          "y": -512
+          "x": 5168,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -8131,7 +8002,7 @@
       },
       "sendEmail1": {
         "position": {
-          "x": 1152,
+          "x": 1136,
           "y": 0
         },
         "size": {
@@ -8142,8 +8013,8 @@
       },
       "updateEntityRecord1": {
         "position": {
-          "x": 4736,
-          "y": -992
+          "x": 4784,
+          "y": -592
         },
         "size": {
           "width": 96,
@@ -8153,8 +8024,8 @@
       },
       "updateEntityRecord2": {
         "position": {
-          "x": 4928,
-          "y": -800
+          "x": 4976,
+          "y": -400
         },
         "size": {
           "width": 96,
@@ -8164,8 +8035,8 @@
       },
       "updateEntityRecord3": {
         "position": {
-          "x": 3504,
-          "y": -704
+          "x": 3536,
+          "y": -304
         },
         "size": {
           "width": 96,
@@ -8175,8 +8046,8 @@
       },
       "updateEntityRecord4": {
         "position": {
-          "x": 4544,
-          "y": 80
+          "x": 4592,
+          "y": 576
         },
         "size": {
           "width": 96,
@@ -8186,8 +8057,8 @@
       },
       "getNewestEmail1": {
         "position": {
-          "x": 3504,
-          "y": -896
+          "x": 3536,
+          "y": -496
         },
         "size": {
           "width": 96,
@@ -8197,8 +8068,8 @@
       },
       "sendEmail2": {
         "position": {
-          "x": 4736,
-          "y": -800
+          "x": 4784,
+          "y": -400
         },
         "size": {
           "width": 96,
@@ -8208,8 +8079,8 @@
       },
       "analyseReply": {
         "position": {
-          "x": 3840,
-          "y": -896
+          "x": 3872,
+          "y": -496
         },
         "size": {
           "width": 288,
@@ -8219,7 +8090,7 @@
       },
       "getAllRecordsDataFabric1": {
         "position": {
-          "x": 384,
+          "x": 368,
           "y": 0
         },
         "size": {
