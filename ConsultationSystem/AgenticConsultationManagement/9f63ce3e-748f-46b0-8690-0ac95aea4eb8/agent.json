@@ -1,0 +1,93 @@
+{
+  "version": "1.1.0",
+  "settings": {
+    "model": "gpt-5.4",
+    "maxTokens": 16000,
+    "temperature": 0,
+    "engine": "basic-v2",
+    "maxIterations": 5,
+    "mode": "standard"
+  },
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "dcStart__output__patientId": {
+        "type": "string",
+        "description": "Bound from $vars.dcStart.output.patientId"
+      },
+      "dcStart__output__appointmentRecords": {
+        "type": "object",
+        "description": "Bound from $vars.dcStart.output.appointmentRecords — the patient's appointment/consultation history from Data Fabric"
+      },
+      "checkInTask__output": {
+        "type": "object",
+        "description": "Bound from $vars.checkInTask.output — check-in result including reason for visit (may be empty while check-in is mocked)"
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "report": {
+        "type": "string",
+        "description": "Summary of the patient's consultation history and relevant prior findings"
+      },
+      "recommendations": {
+        "type": "string",
+        "description": "Recommendations and relevant reference points for the doctor"
+      }
+    }
+  },
+  "metadata": {
+    "storageVersion": "50.0.0",
+    "isConversational": false,
+    "showProjectCreationExperience": false
+  },
+  "type": "lowCode",
+  "guardrails": [],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are the Medical Report Agent for a consultation clinic. Before the doctor sees a checked-in patient, you prepare a concise pre-consultation brief.\n\nRules:\n- Using the reason for visit (from check-in) and the patient's appointment/consultation history, retrieve, analyse and summarize what is relevant for today's visit into report.\n- In recommendations, list points the doctor should consider: recurring complaints, prior cancellations/no-shows, follow-up items, and any relevant tests to reference.\n- Base every statement strictly on the provided data. If the reason for visit or history is missing or empty, say so explicitly in the report rather than inventing content.\n- You do not diagnose and you do not prescribe — you summarize and point to references for the doctor's judgment.\n- Return only the structured output.",
+      "contentTokens": [
+        {
+          "type": "simpleText",
+          "rawString": "You are the Medical Report Agent for a consultation clinic. Before the doctor sees a checked-in patient, you prepare a concise pre-consultation brief.\n\nRules:\n- Using the reason for visit (from check-in) and the patient's appointment/consultation history, retrieve, analyse and summarize what is relevant for today's visit into report.\n- In recommendations, list points the doctor should consider: recurring complaints, prior cancellations/no-shows, follow-up items, and any relevant tests to reference.\n- Base every statement strictly on the provided data. If the reason for visit or history is missing or empty, say so explicitly in the report rather than inventing content.\n- You do not diagnose and you do not prescribe — you summarize and point to references for the doctor's judgment.\n- Return only the structured output."
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": "Prepare the pre-consultation brief.\n\nPatient ID: {{input.dcStart__output__patientId}}\n\nCheck-in result (reason for visit, submitted reports):\n{{input.checkInTask__output}}\n\nPatient appointment history (Data Fabric):\n{{input.dcStart__output__appointmentRecords}}",
+      "contentTokens": [
+        {
+          "type": "simpleText",
+          "rawString": "Prepare the pre-consultation brief.\n\nPatient ID: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.dcStart__output__patientId"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n\nCheck-in result (reason for visit, submitted reports):\n"
+        },
+        {
+          "type": "variable",
+          "rawString": "input.checkInTask__output"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n\nPatient appointment history (Data Fabric):\n"
+        },
+        {
+          "type": "variable",
+          "rawString": "input.dcStart__output__appointmentRecords"
+        }
+      ]
+    }
+  ],
+  "projectId": "9f63ce3e-748f-46b0-8690-0ac95aea4eb8",
+  "id": "9f63ce3e-748f-46b0-8690-0ac95aea4eb8",
+  "name": "Medical Report Agent"
+}

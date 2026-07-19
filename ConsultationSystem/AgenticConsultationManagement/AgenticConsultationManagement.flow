@@ -640,7 +640,13 @@
         "label": "Day Of Consultation",
         "icon": "layers"
       },
-      "inputs": {},
+      "inputs": {
+        "appointmentRecordId": "=js:$vars.createAppointment1.output.Id",
+        "patientId": "=js:$vars.bookingAgent.output.patientId",
+        "patientEmail": "=js:$vars.emailReceived1.output.From.Email",
+        "appointmentDate": "=js:$vars.bookingAgent.output.appointmentDate",
+        "appointmentRecords": "=js:$vars.getAllRecordsDataFabric1.output"
+      },
       "outputs": {
         "error": {
           "type": "object",
@@ -1141,18 +1147,83 @@
     },
     {
       "id": "apptCompleted",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
+      "type": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+      "typeVersion": "1.0.0",
       "display": {
-        "label": "Appointment Completed (mock)"
+        "label": "Update Appointment Completed"
       },
-      "inputs": {},
+      "inputs": {
+        "detail": {
+          "connector": "uipath-uipath-dataservice",
+          "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+          "method": "PUT",
+          "endpoint": "/v2/{entityName}/UpdateEntityRecord",
+          "bodyParameters": {
+            "status": "Completed",
+            "endTime": "=js:new Date().toISOString()"
+          },
+          "queryParameters": {
+            "recordId": "=js:$vars.createAppointment1.output.Id",
+            "expansionLevel": "3"
+          },
+          "pathParameters": {
+            "entityName": "Appointments"
+          },
+          "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+          "errorState": {
+            "issues": []
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"UpdateEntityRecordV2\",\"operation\":\"replace\",\"httpMethod\":\"PUT\",\"path\":\"/v2/{entityName}/UpdateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
+        }
+      },
       "outputs": {
         "output": {
           "type": "object",
           "description": "Mock output value",
-          "source": "null",
+          "source": "=result.response",
           "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
         }
       }
     },
@@ -4772,6 +4843,222 @@
       }
     },
     {
+      "nodeType": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+      "version": "1.0.0",
+      "category": "connector.72495",
+      "tags": [
+        "connector",
+        "activity"
+      ],
+      "sortOrder": 515,
+      "supportsErrorHandling": true,
+      "description": "(UiPath Data Fabric) Updates an existing record in a Data Fabric entity",
+      "display": {
+        "label": "Update Entity Record",
+        "description": "(UiPath Data Fabric) Updates an existing record in a Data Fabric entity",
+        "icon": "https://staging.uipath.com/ee592586-d464-411d-8c04-487e05e39950/studio_/typecache/icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input",
+              "label": ""
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output",
+              "label": ""
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:SendTask",
+        "serviceType": "Intsvc.ActivityExecution",
+        "bindings": {
+          "resource": "connection",
+          "resourceKey": "",
+          "values": [
+            {
+              "name": "uipath-uipath-dataservice connection",
+              "propertyAttribute": "ConnectionId"
+            },
+            {
+              "name": "FolderKey",
+              "propertyAttribute": "FolderKey"
+            }
+          ]
+        },
+        "context": [
+          {
+            "name": "connectorKey",
+            "type": "string",
+            "value": "uipath-uipath-dataservice"
+          },
+          {
+            "name": "operation",
+            "type": "string"
+          },
+          {
+            "name": "objectName",
+            "value": "UpdateEntityRecordV2",
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "value": "PUT"
+          },
+          {
+            "name": "connection",
+            "type": "string",
+            "value": "<bindings.uipath-uipath-dataservice connection>"
+          },
+          {
+            "name": "folderKey",
+            "type": "string",
+            "value": "<bindings.FolderKey>"
+          },
+          {
+            "name": "activityConfigurationVersion",
+            "type": "string",
+            "value": "v1"
+          },
+          {
+            "name": "metadata",
+            "body": {
+              "telemetryData": {
+                "connectorKey": "uipath-uipath-dataservice",
+                "connectorName": "Update Entity Record"
+              },
+              "inputMetadata": {},
+              "errorState": {
+                "hasError": true
+              }
+            },
+            "type": "json"
+          }
+        ]
+      },
+      "form": {
+        "id": "connector-properties",
+        "title": "Connector configuration",
+        "sections": [
+          {
+            "id": "connector",
+            "title": "Connector",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "label": "",
+                "name": "inputs.detail",
+                "type": "custom",
+                "component": "dap-config",
+                "componentProps": {
+                  "connectorDetail": {
+                    "isAppActivity": false,
+                    "packageId": "72495",
+                    "svgIconUrl": "icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg",
+                    "displayName": "Update Entity Record",
+                    "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
+                    "description": "Updates an existing record in a Data Fabric entity",
+                    "category": "",
+                    "activityColor": "#E56D5C",
+                    "configuration": "{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"}",
+                    "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+                    "isExperimental": false,
+                    "helpUrlTemplate": "https://docs.uipath.com/{0}/activities/other/latest/integration-service/uipath-uipath-dataservice-Update-Entity-Record",
+                    "isEnabled": true,
+                    "targetPlatform": "CrossPlatform",
+                    "isAdvanced": false,
+                    "isRestricted": false,
+                    "hasWpfOnlyDesigner": false,
+                    "tags": [
+                      ""
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inputDefinition": {},
+      "inputDefaults": {},
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "debug": {
+        "runtime": "bpmnEngine"
+      }
+    },
+    {
       "nodeType": "core.control.end",
       "version": "1.0",
       "category": "control-flow",
@@ -4964,222 +5251,6 @@
                     "hasWpfOnlyDesigner": false,
                     "tags": [
                       "API.File.Upload.Optional"
-                    ]
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "inputDefinition": {},
-      "inputDefaults": {},
-      "outputDefinition": {
-        "output": {
-          "type": "object",
-          "description": "The return value of the connector.",
-          "source": "=result.response",
-          "var": "output"
-        },
-        "error": {
-          "type": "object",
-          "description": "Error information if the node fails",
-          "source": "=Error",
-          "var": "error",
-          "schema": {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "type": "object",
-            "required": [
-              "code",
-              "message",
-              "detail",
-              "category",
-              "status"
-            ],
-            "properties": {
-              "code": {
-                "type": "string",
-                "description": "Error code as a string"
-              },
-              "message": {
-                "type": "string",
-                "description": "High-level error message"
-              },
-              "detail": {
-                "type": "string",
-                "description": "Detailed error description"
-              },
-              "category": {
-                "type": "string",
-                "description": "Error category"
-              },
-              "status": {
-                "type": "integer",
-                "description": "HTTP status code"
-              }
-            },
-            "additionalProperties": false
-          }
-        }
-      },
-      "debug": {
-        "runtime": "bpmnEngine"
-      }
-    },
-    {
-      "nodeType": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
-      "version": "1.0.0",
-      "category": "connector.72495",
-      "tags": [
-        "connector",
-        "activity"
-      ],
-      "sortOrder": 515,
-      "supportsErrorHandling": true,
-      "description": "(UiPath Data Fabric) Updates an existing record in a Data Fabric entity",
-      "display": {
-        "label": "Update Entity Record",
-        "description": "(UiPath Data Fabric) Updates an existing record in a Data Fabric entity",
-        "icon": "https://staging.uipath.com/ee592586-d464-411d-8c04-487e05e39950/studio_/typecache/icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg"
-      },
-      "handleConfiguration": [
-        {
-          "position": "left",
-          "handles": [
-            {
-              "id": "input",
-              "type": "target",
-              "handleType": "input",
-              "label": ""
-            }
-          ]
-        },
-        {
-          "position": "right",
-          "handles": [
-            {
-              "id": "output",
-              "type": "source",
-              "handleType": "output",
-              "label": ""
-            },
-            {
-              "id": "error",
-              "label": "Error",
-              "type": "source",
-              "handleType": "output",
-              "visible": "{inputs.errorHandlingEnabled}",
-              "constraints": {
-                "maxConnections": 1
-              }
-            }
-          ]
-        }
-      ],
-      "model": {
-        "type": "bpmn:SendTask",
-        "serviceType": "Intsvc.ActivityExecution",
-        "bindings": {
-          "resource": "connection",
-          "resourceKey": "",
-          "values": [
-            {
-              "name": "uipath-uipath-dataservice connection",
-              "propertyAttribute": "ConnectionId"
-            },
-            {
-              "name": "FolderKey",
-              "propertyAttribute": "FolderKey"
-            }
-          ]
-        },
-        "context": [
-          {
-            "name": "connectorKey",
-            "type": "string",
-            "value": "uipath-uipath-dataservice"
-          },
-          {
-            "name": "operation",
-            "type": "string"
-          },
-          {
-            "name": "objectName",
-            "value": "UpdateEntityRecordV2",
-            "type": "string"
-          },
-          {
-            "name": "method",
-            "type": "string",
-            "value": "PUT"
-          },
-          {
-            "name": "connection",
-            "type": "string",
-            "value": "<bindings.uipath-uipath-dataservice connection>"
-          },
-          {
-            "name": "folderKey",
-            "type": "string",
-            "value": "<bindings.FolderKey>"
-          },
-          {
-            "name": "activityConfigurationVersion",
-            "type": "string",
-            "value": "v1"
-          },
-          {
-            "name": "metadata",
-            "body": {
-              "telemetryData": {
-                "connectorKey": "uipath-uipath-dataservice",
-                "connectorName": "Update Entity Record"
-              },
-              "inputMetadata": {},
-              "errorState": {
-                "hasError": true
-              }
-            },
-            "type": "json"
-          }
-        ]
-      },
-      "form": {
-        "id": "connector-properties",
-        "title": "Connector configuration",
-        "sections": [
-          {
-            "id": "connector",
-            "title": "Connector",
-            "collapsible": true,
-            "defaultExpanded": true,
-            "fields": [
-              {
-                "label": "",
-                "name": "inputs.detail",
-                "type": "custom",
-                "component": "dap-config",
-                "componentProps": {
-                  "connectorDetail": {
-                    "isAppActivity": false,
-                    "packageId": "72495",
-                    "svgIconUrl": "icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg",
-                    "displayName": "Update Entity Record",
-                    "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
-                    "description": "Updates an existing record in a Data Fabric entity",
-                    "category": "",
-                    "activityColor": "#E56D5C",
-                    "configuration": "{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"}",
-                    "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
-                    "isExperimental": false,
-                    "helpUrlTemplate": "https://docs.uipath.com/{0}/activities/other/latest/integration-service/uipath-uipath-dataservice-Update-Entity-Record",
-                    "isEnabled": true,
-                    "targetPlatform": "CrossPlatform",
-                    "isAdvanced": false,
-                    "isRestricted": false,
-                    "hasWpfOnlyDesigner": false,
-                    "tags": [
-                      ""
                     ]
                   }
                 }
@@ -6587,6 +6658,49 @@
         "binding": {
           "nodeId": "apptCompleted",
           "outputId": "output"
+        }
+      },
+      {
+        "id": "apptCompleted.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "apptCompleted",
+          "outputId": "error"
         }
       },
       {
@@ -8068,35 +8182,172 @@
         },
         {
           "id": "updCheckedin",
-          "type": "core.logic.mock",
-          "typeVersion": "1.0",
+          "type": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+          "typeVersion": "1.0.0",
           "display": {
-            "label": "Update Status Checkedin (mock)"
+            "label": "Update Status CheckedIn"
           },
-          "inputs": {},
+          "inputs": {
+            "detail": {
+              "connector": "uipath-uipath-dataservice",
+              "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+              "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+              "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+              "method": "PUT",
+              "endpoint": "/v2/{entityName}/UpdateEntityRecord",
+              "bodyParameters": {
+                "status": "CheckedIn"
+              },
+              "queryParameters": {
+                "recordId": "=js:$vars.dcStart.output.appointmentRecordId",
+                "expansionLevel": "3"
+              },
+              "pathParameters": {
+                "entityName": "Appointments"
+              },
+              "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+              "errorState": {
+                "issues": []
+              },
+              "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"UpdateEntityRecordV2\",\"operation\":\"replace\",\"httpMethod\":\"PUT\",\"path\":\"/v2/{entityName}/UpdateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
+            }
+          },
           "outputs": {
             "output": {
               "type": "object",
-              "description": "Mock output value",
-              "source": "null",
+              "description": "The return value of the connector.",
+              "source": "=result.response",
               "var": "output"
+            },
+            "error": {
+              "type": "object",
+              "description": "Error information if the node fails",
+              "schema": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "required": [
+                  "code",
+                  "message",
+                  "detail",
+                  "category",
+                  "status"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Error code as a string"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "High-level error message"
+                  },
+                  "detail": {
+                    "type": "string",
+                    "description": "Detailed error description"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Error category"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "description": "HTTP status code"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "source": "=Error",
+              "var": "error"
             }
           }
         },
         {
           "id": "medReportAgent",
-          "type": "core.logic.mock",
-          "typeVersion": "1.0",
+          "type": "uipath.agent.autonomous",
+          "typeVersion": "1.2",
           "display": {
-            "label": "Medical Report Agent (mock)"
+            "label": "Medical Report Agent",
+            "subLabel": ""
           },
-          "inputs": {},
+          "inputs": {
+            "source": "9f63ce3e-748f-46b0-8690-0ac95aea4eb8",
+            "agentInputVariables": [
+              {
+                "id": "dcStart__output__patientId",
+                "type": "string",
+                "binding": "=$vars.dcStart.output.patientId",
+                "description": "Bound from $vars.dcStart.output.patientId"
+              },
+              {
+                "id": "dcStart__output__appointmentRecords",
+                "type": "object",
+                "binding": "=$vars.dcStart.output.appointmentRecords",
+                "description": "Bound from $vars.dcStart.output.appointmentRecords"
+              },
+              {
+                "id": "checkInTask__output",
+                "type": "object",
+                "binding": "=$vars.checkInTask.output",
+                "description": "Bound from $vars.checkInTask.output"
+              }
+            ],
+            "agentOutputVariables": [
+              {
+                "id": "report",
+                "type": "string"
+              },
+              {
+                "id": "recommendations",
+                "type": "string"
+              }
+            ]
+          },
           "outputs": {
             "output": {
               "type": "object",
               "description": "Mock output value",
-              "source": "null",
+              "source": "=result.response",
               "var": "output"
+            },
+            "error": {
+              "type": "object",
+              "description": "Error information if the node fails",
+              "source": "=Error",
+              "var": "error",
+              "schema": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "required": [
+                  "code",
+                  "message",
+                  "detail",
+                  "category",
+                  "status"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Error code as a string"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "High-level error message"
+                  },
+                  "detail": {
+                    "type": "string",
+                    "description": "Detailed error description"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Error category"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "description": "HTTP status code"
+                  }
+                },
+                "additionalProperties": false
+              }
             }
           }
         },
@@ -8119,35 +8370,257 @@
         },
         {
           "id": "updCancelCheckin",
-          "type": "core.logic.mock",
-          "typeVersion": "1.0",
+          "type": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+          "typeVersion": "1.0.0",
           "display": {
-            "label": "Update Appointment Cancelled (mock)"
+            "label": "Update Appointment Cancelled"
           },
-          "inputs": {},
+          "inputs": {
+            "detail": {
+              "connector": "uipath-uipath-dataservice",
+              "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+              "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+              "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+              "method": "PUT",
+              "endpoint": "/v2/{entityName}/UpdateEntityRecord",
+              "bodyParameters": {
+                "status": "Cancelled"
+              },
+              "queryParameters": {
+                "recordId": "=js:$vars.dcStart.output.appointmentRecordId",
+                "expansionLevel": "3"
+              },
+              "pathParameters": {
+                "entityName": "Appointments"
+              },
+              "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+              "errorState": {
+                "issues": []
+              },
+              "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"UpdateEntityRecordV2\",\"operation\":\"replace\",\"httpMethod\":\"PUT\",\"path\":\"/v2/{entityName}/UpdateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
+            }
+          },
           "outputs": {
             "output": {
               "type": "object",
-              "description": "Mock output value",
-              "source": "null",
+              "description": "The return value of the connector.",
+              "source": "=result.response",
               "var": "output"
+            },
+            "error": {
+              "type": "object",
+              "description": "Error information if the node fails",
+              "schema": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "required": [
+                  "code",
+                  "message",
+                  "detail",
+                  "category",
+                  "status"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Error code as a string"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "High-level error message"
+                  },
+                  "detail": {
+                    "type": "string",
+                    "description": "Detailed error description"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Error category"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "description": "HTTP status code"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "source": "=Error",
+              "var": "error"
             }
           }
         },
         {
           "id": "updAbandoned",
-          "type": "core.logic.mock",
-          "typeVersion": "1.0",
+          "type": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+          "typeVersion": "1.0.0",
           "display": {
-            "label": "Update Appointment Abandoned (mock)"
+            "label": "Update Appointment Abandoned"
           },
-          "inputs": {},
+          "inputs": {
+            "detail": {
+              "connector": "uipath-uipath-dataservice",
+              "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+              "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+              "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+              "method": "PUT",
+              "endpoint": "/v2/{entityName}/UpdateEntityRecord",
+              "bodyParameters": {
+                "status": "Abandoned"
+              },
+              "queryParameters": {
+                "recordId": "=js:$vars.dcStart.output.appointmentRecordId",
+                "expansionLevel": "3"
+              },
+              "pathParameters": {
+                "entityName": "Appointments"
+              },
+              "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+              "errorState": {
+                "issues": []
+              },
+              "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"UpdateEntityRecordV2\",\"operation\":\"replace\",\"httpMethod\":\"PUT\",\"path\":\"/v2/{entityName}/UpdateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
+            }
+          },
           "outputs": {
             "output": {
               "type": "object",
-              "description": "Mock output value",
-              "source": "null",
+              "description": "The return value of the connector.",
+              "source": "=result.response",
               "var": "output"
+            },
+            "error": {
+              "type": "object",
+              "description": "Error information if the node fails",
+              "schema": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "required": [
+                  "code",
+                  "message",
+                  "detail",
+                  "category",
+                  "status"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Error code as a string"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "High-level error message"
+                  },
+                  "detail": {
+                    "type": "string",
+                    "description": "Detailed error description"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Error category"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "description": "HTTP status code"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "source": "=Error",
+              "var": "error"
+            }
+          }
+        },
+        {
+          "id": "createConsultRecord",
+          "type": "uipath.connector.uipath-uipath-dataservice.create-entity-record",
+          "typeVersion": "1.0.0",
+          "display": {
+            "label": "Create Consultation Record"
+          },
+          "inputs": {
+            "detail": {
+              "connector": "uipath-uipath-dataservice",
+              "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+              "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+              "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+              "method": "POST",
+              "endpoint": "/v2/{entityName}/CreateEntityRecord",
+              "pathParameters": {
+                "entityName": "ConsultationRecords"
+              },
+              "queryParameters": {
+                "expansionLevel": 3
+              },
+              "bodyParameters": {
+                "appointmentId": "=js:$vars.dcStart.output.appointmentRecordId",
+                "patientId": "=js:$vars.dcStart.output.patientId",
+                "notes": "=js:(($vars.doctorNotes.output || {}).notes) || \"\"",
+                "report": "=js:(($vars.medReportAgent.output || {}).report) || \"\"",
+                "recommendations": "=js:(($vars.medReportAgent.output || {}).recommendations) || \"\"",
+                "testsOrdered": "=js:String((($vars.doctorNotes.output || {}).testsNeeded) === true)",
+                "medsOrdered": "=js:String((($vars.doctorNotes.output || {}).medsNeeded) === true)"
+              },
+              "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"CreateEntityRecordCurated\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"CreateEntityRecordCurated\",\"operation\":\"create\",\"httpMethod\":\"POST\",\"path\":\"/v2/{entityName}/CreateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"ConsultationRecords\"]]},\"unifiedTypesCompatible\":true}}",
+              "uiPathActivityTypeId": "dfd2bc7a-ca4b-3316-8a1f-57c9e106dfbf",
+              "errorState": {
+                "issues": []
+              },
+              "telemetryData": {
+                "connectorKey": "uipath-uipath-dataservice",
+                "connectorName": "UiPath Data Fabric",
+                "operationType": "create",
+                "objectName": "CreateEntityRecordCurated",
+                "objectDisplayName": "Create Entity Record",
+                "primaryKeyName": ""
+              }
+            }
+          },
+          "outputs": {
+            "output": {
+              "type": "object",
+              "description": "The return value of the connector.",
+              "source": "=result.response",
+              "var": "output"
+            },
+            "error": {
+              "type": "object",
+              "description": "Error information if the node fails",
+              "source": "=Error",
+              "var": "error",
+              "schema": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "type": "object",
+                "required": [
+                  "code",
+                  "message",
+                  "detail",
+                  "category",
+                  "status"
+                ],
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Error code as a string"
+                  },
+                  "message": {
+                    "type": "string",
+                    "description": "High-level error message"
+                  },
+                  "detail": {
+                    "type": "string",
+                    "description": "Detailed error description"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Error category"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "description": "HTTP status code"
+                  }
+                },
+                "additionalProperties": false
+              }
             }
           }
         },
@@ -8258,7 +8731,7 @@
         {
           "id": "dc-e7",
           "sourceNodeId": "medReportAgent",
-          "sourcePort": "output",
+          "sourcePort": "success",
           "targetNodeId": "doctorNotes",
           "targetPort": "input"
         },
@@ -8266,7 +8739,7 @@
           "id": "dc-e8",
           "sourceNodeId": "doctorNotes",
           "sourcePort": "output",
-          "targetNodeId": "dcEndCompleted",
+          "targetNodeId": "createConsultRecord",
           "targetPort": "input"
         },
         {
@@ -8282,10 +8755,52 @@
           "sourcePort": "output",
           "targetNodeId": "dcEndAbandoned",
           "targetPort": "input"
+        },
+        {
+          "id": "dc-e8b",
+          "sourceNodeId": "createConsultRecord",
+          "sourcePort": "output",
+          "targetNodeId": "dcEndCompleted",
+          "targetPort": "input"
         }
       ],
       "variables": {
         "globals": [
+          {
+            "id": "appointmentRecordId",
+            "direction": "in",
+            "type": "string",
+            "defaultValue": "",
+            "triggerNodeId": "dcStart"
+          },
+          {
+            "id": "patientId",
+            "direction": "in",
+            "type": "string",
+            "defaultValue": "",
+            "triggerNodeId": "dcStart"
+          },
+          {
+            "id": "patientEmail",
+            "direction": "in",
+            "type": "string",
+            "defaultValue": "",
+            "triggerNodeId": "dcStart"
+          },
+          {
+            "id": "appointmentDate",
+            "direction": "in",
+            "type": "string",
+            "defaultValue": "",
+            "triggerNodeId": "dcStart"
+          },
+          {
+            "id": "appointmentRecords",
+            "direction": "in",
+            "type": "object",
+            "defaultValue": {},
+            "triggerNodeId": "dcStart"
+          },
           {
             "id": "outcome",
             "direction": "out",
@@ -8345,10 +8860,53 @@
           {
             "id": "updCheckedin.output",
             "type": "object",
-            "description": "Mock output value",
+            "description": "The return value of the connector.",
             "binding": {
               "nodeId": "updCheckedin",
               "outputId": "output"
+            }
+          },
+          {
+            "id": "updCheckedin.error",
+            "type": "object",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "required": [
+                "code",
+                "message",
+                "detail",
+                "category",
+                "status"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "description": "Error code as a string"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "High-level error message"
+                },
+                "detail": {
+                  "type": "string",
+                  "description": "Detailed error description"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Error category"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                }
+              },
+              "additionalProperties": false
+            },
+            "description": "Error information if the node fails",
+            "binding": {
+              "nodeId": "updCheckedin",
+              "outputId": "error"
             }
           },
           {
@@ -8358,6 +8916,49 @@
             "binding": {
               "nodeId": "medReportAgent",
               "outputId": "output"
+            }
+          },
+          {
+            "id": "medReportAgent.error",
+            "type": "object",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "required": [
+                "code",
+                "message",
+                "detail",
+                "category",
+                "status"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "description": "Error code as a string"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "High-level error message"
+                },
+                "detail": {
+                  "type": "string",
+                  "description": "Detailed error description"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Error category"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                }
+              },
+              "additionalProperties": false
+            },
+            "description": "Error information if the node fails",
+            "binding": {
+              "nodeId": "medReportAgent",
+              "outputId": "error"
             }
           },
           {
@@ -8372,19 +8973,157 @@
           {
             "id": "updCancelCheckin.output",
             "type": "object",
-            "description": "Mock output value",
+            "description": "The return value of the connector.",
             "binding": {
               "nodeId": "updCancelCheckin",
               "outputId": "output"
             }
           },
           {
+            "id": "updCancelCheckin.error",
+            "type": "object",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "required": [
+                "code",
+                "message",
+                "detail",
+                "category",
+                "status"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "description": "Error code as a string"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "High-level error message"
+                },
+                "detail": {
+                  "type": "string",
+                  "description": "Detailed error description"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Error category"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                }
+              },
+              "additionalProperties": false
+            },
+            "description": "Error information if the node fails",
+            "binding": {
+              "nodeId": "updCancelCheckin",
+              "outputId": "error"
+            }
+          },
+          {
             "id": "updAbandoned.output",
             "type": "object",
-            "description": "Mock output value",
+            "description": "The return value of the connector.",
             "binding": {
               "nodeId": "updAbandoned",
               "outputId": "output"
+            }
+          },
+          {
+            "id": "updAbandoned.error",
+            "type": "object",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "required": [
+                "code",
+                "message",
+                "detail",
+                "category",
+                "status"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "description": "Error code as a string"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "High-level error message"
+                },
+                "detail": {
+                  "type": "string",
+                  "description": "Detailed error description"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Error category"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                }
+              },
+              "additionalProperties": false
+            },
+            "description": "Error information if the node fails",
+            "binding": {
+              "nodeId": "updAbandoned",
+              "outputId": "error"
+            }
+          },
+          {
+            "id": "createConsultRecord.output",
+            "type": "object",
+            "description": "The return value of the connector.",
+            "binding": {
+              "nodeId": "createConsultRecord",
+              "outputId": "output"
+            }
+          },
+          {
+            "id": "createConsultRecord.error",
+            "type": "object",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "required": [
+                "code",
+                "message",
+                "detail",
+                "category",
+                "status"
+              ],
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "description": "Error code as a string"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "High-level error message"
+                },
+                "detail": {
+                  "type": "string",
+                  "description": "Detailed error description"
+                },
+                "category": {
+                  "type": "string",
+                  "description": "Error category"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP status code"
+                }
+              },
+              "additionalProperties": false
+            },
+            "description": "Error information if the node fails",
+            "binding": {
+              "nodeId": "createConsultRecord",
+              "outputId": "error"
             }
           },
           {
@@ -8513,14 +9252,14 @@
               "y": -192
             },
             "size": {
-              "width": 96,
+              "width": 288,
               "height": 96
             },
             "collapsed": false
           },
           "doctorNotes": {
             "position": {
-              "x": 960,
+              "x": 1152,
               "y": -192
             },
             "size": {
@@ -8551,9 +9290,20 @@
             },
             "collapsed": false
           },
+          "createConsultRecord": {
+            "position": {
+              "x": 1344,
+              "y": -192
+            },
+            "size": {
+              "width": 96,
+              "height": 96
+            },
+            "collapsed": false
+          },
           "dcEndCompleted": {
             "position": {
-              "x": 1152,
+              "x": 1536,
               "y": -192
             },
             "size": {
@@ -8564,7 +9314,7 @@
           },
           "dcEndCancelled": {
             "position": {
-              "x": 768,
+              "x": 864,
               "y": 192
             },
             "size": {
@@ -8575,7 +9325,7 @@
           },
           "dcEndAbandoned": {
             "position": {
-              "x": 768,
+              "x": 864,
               "y": 0
             },
             "size": {
