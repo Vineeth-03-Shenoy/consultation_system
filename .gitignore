@@ -12,6 +12,9 @@ desktop.ini
 .vscode/
 .idea/
 
+# Studio Web per-user local state
+ConsultationSystem/userProfile/
+
 # Logs & temp
 *.log
 *.tmp

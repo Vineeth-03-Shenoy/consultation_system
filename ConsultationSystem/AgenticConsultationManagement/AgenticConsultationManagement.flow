@@ -5,90 +5,285 @@
   "runtime": "maestro",
   "nodes": [
     {
-      "id": "start",
-      "type": "core.trigger.manual",
-      "typeVersion": "1.0",
+      "id": "emailReceived1",
+      "type": "uipath.connector.trigger.uipath-google-gmail.email-received",
+      "typeVersion": "1.0.0",
       "display": {
-        "label": "App Trigger"
+        "label": "Email Received",
+        "subLabel": "",
+        "shape": "circle",
+        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg"
       },
       "inputs": {
         "entryPointId": "a0320203-ebb2-454a-b090-1ab4cff1446c",
-        "isDefaultEntryPoint": true
+        "isDefaultEntryPoint": true,
+        "detail": {
+          "connector": "uipath-google-gmail",
+          "connectionId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+          "connectionResourceId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+          "connectionFolderKey": "bdd91426-3fa3-472e-846f-e091d3f5d315",
+          "eventParameters": {
+            "ParentFolders[*].ID": "Label_7937964960849497374"
+          },
+          "objectName": "Message",
+          "eventType": "EMAIL_RECEIVED",
+          "eventMode": "polling",
+          "filterExpression": "(ParentFolders[?ID=='Label_7937964960849497374'])",
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"executionType\":null,\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"Message\",\"activityType\":\"CuratedTrigger\",\"version\":\"1.0.0\",\"eventOperation\":\"EMAIL_RECEIVED\",\"eventMode\":\"polling\",\"supportsStreaming\":false},\"objectName\":\"Message\",\"packageVersion\":\"1.0.0\",\"httpMethod\":null,\"path\":null,\"filter\":null},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":null,\"connectorName\":\"Gmail\",\"maxPageSize\":null,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[[\"ParentFolders_array_sub_ID\",[{\"id\":\"Label_7937964960849497374\",\"displayColumns\":[\"ConsultationBooking\"],\"stringFormatDisplayColumns\":\"\"}]]],\"cachedBrowserItems\":[[\"ParentFolders_array_sub_ID\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"ConsultationBooking\"],[\"name\",\"ConsultationBooking\"],[\"id\",\"Label_7937964960849497374\"],[\"type\",\"user\"],[\"referenceID\",\"consultationbooking\"]],\"id\":\"Label_7937964960849497374\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[],\"objectDisplayName\":\"Normalizedmessage\",\"baseObject\":null,\"eventMode\":[\"polling\"],\"eventOperation\":null,\"language\":\"9d7d8b49-2d01-4e1e-9852-6df8e6167c15\",\"hasBreakingChanges\":false,\"debugDisabled\":false,\"hasStaticLeftOperandFilterBuilder\":false,\"isV2TriggerBaseUrl\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"Attachments\\\":{\\\"ID\\\":string;\\\"MIMEType\\\":string;\\\"Name\\\":string;\\\"Size\\\":number}[];\\\"BCC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Body\\\":string;\\\"CC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Categories\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"From\\\":{\\\"Email\\\":string;\\\"Name\\\":string};\\\"HasAttachments\\\":boolean;\\\"ID\\\":string;\\\"Importance\\\":string;\\\"ParentFolders\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"Sensitivity\\\":string;\\\"Subject\\\":string;\\\"ThreadID\\\":string;\\\"To\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Type\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"Attachments[*]\":{\"title\":\"Attachments\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Attachments[*]\"}},\"BCC[*]\":{\"title\":\"Bcc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/BCC[*]\"}},\"CC[*]\":{\"title\":\"Cc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/CC[*]\"}},\"HasAttachments\":{\"title\":\"With attachments only\",\"type\":\"boolean\"},\"Categories[*]\":{\"title\":\"Categories\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Categories[*]\"}},\"To[*]\":{\"title\":\"To\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/To[*]\"}},\"From\":{\"title\":\"From\",\"$ref\":\"#/definitions/From\"},\"Subject\":{\"title\":\"Subject\",\"type\":\"string\"},\"ParentFolders[*]\":{\"title\":\"Parent folders\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/ParentFolders[*]\"}},\"Importance\":{\"title\":\"Importance\",\"type\":\"string\"},\"Sensitivity\":{\"title\":\"Sensitivity\",\"type\":\"string\"},\"Type\":{\"title\":\"Type\",\"type\":\"string\"},\"ThreadID\":{\"title\":\"Thread\",\"type\":\"string\"},\"ID\":{\"title\":\"Id\",\"type\":\"string\"},\"Body\":{\"title\":\"Body\",\"type\":\"string\"}},\"definitions\":{\"Attachments[*]\":{\"type\":\"object\",\"properties\":{\"MIMEType\":{\"title\":\"Attachment mime type\",\"type\":\"string\"},\"ID\":{\"title\":\"Attachment ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Attachment name\",\"type\":\"string\"},\"Size\":{\"title\":\"Attachment size\",\"type\":\"integer\"}}},\"BCC[*]\":{\"type\":\"object\",\"properties\":{\"Name\":{\"title\":\"Bcc name\",\"type\":\"string\"},\"Email\":{\"title\":\"Bcc email\",\"type\":\"string\"}}},\"CC[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"Cc\",\"type\":\"string\"},\"Name\":{\"title\":\"Cc name\",\"type\":\"string\"}}},\"Categories[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Category ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Category name\",\"type\":\"string\"}}},\"To[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"To\",\"type\":\"string\"},\"Name\":{\"title\":\"Recipient name\",\"type\":\"string\"}}},\"From\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"From\",\"type\":\"string\"},\"Name\":{\"title\":\"Sender name\",\"type\":\"string\"}}},\"ParentFolders[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Email folder or label\",\"type\":\"string\"},\"Name\":{\"title\":\"Label\",\"type\":\"string\"}}}}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"id\":\"ParentFolders_array_sub_ID\",\"name\":\"ParentFolders[*].ID\",\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"type\":\"string\",\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"component\":\"FolderPicker\",\"textBlocks\":null,\"dictionaryWidget\":null,\"selection\":null,\"solutionResourceKind\":null,\"solutionResourceSubTypes\":null,\"exposeAsSubBinding\":true},\"fieldActions\":[],\"searchable\":false,\"searchableJoins\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"none\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":true,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"id\":\"Normalizedmessage\",\"name\":\"Normalizedmessage\",\"displayName\":\"Normalizedmessage\",\"description\":\"\",\"type\":\"GeneratedNormalizedMessage_Trigger\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":true,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"eventFields\":[{\"name\":\"BCC[*].Email\",\"displayName\":\"BCC email\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Body\",\"displayName\":\"Body\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"CC[*].Email\",\"displayName\":\"CC\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"From.Email\",\"displayName\":\"From\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ParentFolders[*].Name\",\"displayName\":\"Label\",\"type\":\"string\",\"reference\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\"},\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Subject\",\"displayName\":\"Subject\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ThreadID\",\"displayName\":\"Thread\",\"type\":\"string\",\"reference\":{\"objectName\":\"NormalizedMessage\",\"lookupNames\":[\"Subject\"],\"lookupValue\":\"ThreadID\",\"path\":\"/NormalizedMessage/{ThreadID}\"},\"sampleValue\":null,\"isCuratedEventField\":false,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"To[*].Email\",\"displayName\":\"To\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"HasAttachments\",\"displayName\":\"With attachments only\",\"type\":\"boolean\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"boolean\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Boolean\",\"assemblyQualifiedName\":\"Boolean\",\"isValueType\":true}}]},\"filterNeedsRefresh\":false,\"filterExpression\":null,\"obsoleteEventFields\":false,\"filterWidget\":null}}",
+          "uiPathActivityTypeId": "1d19e4f4-2817-3aeb-b71c-2dafca7b1da2",
+          "errorState": {
+            "issues": []
+          },
+          "telemetryData": {
+            "connectorKey": "uipath-google-gmail",
+            "connectorName": "Gmail",
+            "objectName": "Message",
+            "objectDisplayName": "Normalizedmessage",
+            "primaryKeyName": ""
+          }
+        }
       },
       "outputs": {
         "output": {
           "type": "object",
-          "description": "Data passed when manually triggering the workflow.",
-          "source": "null",
+          "description": "The return value of the connector trigger.",
+          "source": "=result.response",
           "var": "output"
         }
       }
     },
     {
-      "id": "moveTriggerMail",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
+      "id": "moveTriggerMailToProcessedMock1",
+      "type": "uipath.connector.uipath-google-gmail.move-email",
+      "typeVersion": "1.0.0",
       "display": {
-        "label": "Move Trigger Mail to Processed (mock)"
+        "label": "Move Trigger Mail to Processed",
+        "subLabel": "",
+        "shape": "circle",
+        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg"
       },
-      "inputs": {},
+      "inputs": {
+        "detail": {
+          "connector": "uipath-google-gmail",
+          "connectionId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+          "connectionResourceId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+          "connectionFolderKey": "bdd91426-3fa3-472e-846f-e091d3f5d315",
+          "method": "POST",
+          "endpoint": "/MoveEmail",
+          "queryParameters": {
+            "id": "=js:($vars.emailReceived1.output.ID)",
+            "addLabelId": "Label_1174611446414526976"
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"MoveEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"MoveEmail\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/MoveEmail\",\"unifiedTypesCompatible\":true},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":[],\"connectorName\":\"Gmail\",\"maxPageSize\":500,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[],\"cachedBrowserItems\":[[\"addLabelId\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"Processed_ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"Processed_ConsultationBooking\"],[\"name\",\"Processed_ConsultationBooking\"],[\"id\",\"Label_1174611446414526976\"],[\"type\",\"user\"],[\"referenceID\",\"processed_consultationbooking\"]],\"id\":\"Label_1174611446414526976\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[\"id\"],\"objectDisplayName\":\"Move Email\",\"eventMode\":null,\"eventOperation\":null,\"hasBreakingChanges\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"id\\\":string;\\\"labelIds\\\":string[];\\\"threadId\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"threadId\":{\"title\":\"Email thread identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the email thread.\"},\"labelIds[*]\":{\"title\":\"Email label identifiers\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"description\":\"A list of identifiers for labels associated with the email.\"},\"id\":{\"title\":\"Email message identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the specific email message.\"}},\"definitions\":{}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"id\":\"id\",\"name\":\"id\",\"displayName\":\"Email to move\",\"description\":\"The email ID to move\",\"type\":\"string\",\"sortOrder\":2,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"id\":\"addLabelId\",\"name\":\"addLabelId\",\"displayName\":\"To email folder or label\",\"description\":\"The folder or label where to move the email message\",\"type\":\"string\",\"sortOrder\":3,\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\",\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":[],\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"id\":\"out_id\",\"name\":\"id\",\"displayName\":\"Email message identifier\",\"description\":\"A unique identifier for the specific email message.\",\"type\":\"string\",\"primaryKey\":true,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"19468958b5e51c05\"},{\"typeScriptDefinition\":null,\"id\":\"MoveEmail\",\"name\":\"MoveEmail\",\"displayName\":\"Email\",\"description\":\"\",\"type\":\"GeneratedMoveEmail\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"jitInputField\":null,\"inputMode\":null,\"searchableFields\":[],\"hasUnifiedTypes\":true,\"jitTypeHash\":null}}}",
+          "uiPathActivityTypeId": "7dce485b-164a-3bd6-9600-00750b64bef9",
+          "errorState": {
+            "issues": []
+          },
+          "telemetryData": {
+            "connectorKey": "uipath-google-gmail",
+            "connectorName": "Gmail",
+            "operationType": "create",
+            "objectName": "MoveEmail",
+            "objectDisplayName": "Move Email",
+            "primaryKeyName": "id"
+          }
+        }
+      },
       "outputs": {
         "output": {
           "type": "object",
-          "description": "Mock output value",
-          "source": "null",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
           "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
         }
       }
     },
     {
       "id": "bookingAgent",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
+      "type": "uipath.agent.autonomous",
+      "typeVersion": "1.2",
       "display": {
-        "label": "Booking Agent (mock)"
+        "label": "Booking Agent",
+        "subLabel": ""
       },
-      "inputs": {},
+      "inputs": {
+        "source": "3ac7e75f-f015-4fc7-8ecc-64d909b57b5f",
+        "agentInputVariables": [
+          {
+            "id": "emailReceived1__output__Subject",
+            "type": "string",
+            "binding": "=$vars.emailReceived1.output.Subject",
+            "description": "Bound from $vars.emailReceived1.output.Subject"
+          },
+          {
+            "id": "emailReceived1__output__Body",
+            "type": "string",
+            "binding": "=$vars.emailReceived1.output.Body",
+            "description": "Bound from $vars.emailReceived1.output.Body"
+          }
+        ],
+        "agentOutputVariables": [
+          {
+            "id": "patientId",
+            "type": "string"
+          },
+          {
+            "id": "appointmentDate",
+            "type": "string"
+          },
+          {
+            "id": "appointmentTime",
+            "type": "string"
+          },
+          {
+            "id": "valid",
+            "type": "boolean"
+          },
+          {
+            "id": "reason",
+            "type": "string"
+          }
+        ]
+      },
       "outputs": {
         "output": {
           "type": "object",
-          "description": "Mock output value",
-          "source": "null",
+          "description": "Agent response",
+          "source": "=result.response",
           "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error"
         }
       }
     },
     {
-      "id": "getAllRecords",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
+      "id": "createAppointment1",
+      "type": "uipath.connector.uipath-uipath-dataservice.create-entity-record",
+      "typeVersion": "1.0.0",
       "display": {
-        "label": "Get All Records from Data Fabric (mock)"
+        "label": "Create Appointment Record",
+        "subLabel": "",
+        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg"
       },
-      "inputs": {},
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "Mock output value",
-          "source": "null",
-          "var": "output"
+      "inputs": {
+        "detail": {
+          "connector": "uipath-uipath-dataservice",
+          "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+          "method": "POST",
+          "endpoint": "/v2/{entityName}/CreateEntityRecord",
+          "bodyParameters": {
+            "patientId": "=js:$vars.bookingAgent.output.patientId",
+            "patientEmail": "=js:$vars.emailReceived1.output.From.Email",
+            "appointmentDate": "=js:$vars.bookingAgent.output.appointmentDate",
+            "appointmentTime": "=js:$vars.bookingAgent.output.appointmentTime",
+            "status": "Booked",
+            "notes": "=js:$vars.bookingAgent.output.valid ? \"Booked by Booking Agent\" : `Needs review: ${$vars.bookingAgent.output.reason}`"
+          },
+          "queryParameters": {
+            "expansionLevel": "3"
+          },
+          "pathParameters": {
+            "entityName": "Appointments"
+          },
+          "uiPathActivityTypeId": "dfd2bc7a-ca4b-3316-8a1f-57c9e106dfbf",
+          "errorState": {
+            "issues": []
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"CreateEntityRecordCurated\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"CreateEntityRecordCurated\",\"operation\":\"create\",\"httpMethod\":\"POST\",\"path\":\"/v2/{entityName}/CreateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
         }
-      }
-    },
-    {
-      "id": "sendConfirmMail",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Send Confirmation Mail (mock)"
       },
-      "inputs": {},
       "outputs": {
         "output": {
           "type": "object",
-          "description": "Mock output value",
-          "source": "null",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
           "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
         }
       }
     },
@@ -239,31 +434,6 @@
             "expression": "$vars.dayEventType === \"finalReminder\""
           }
         ]
-      }
-    },
-    {
-      "id": "bufferBP1",
-      "type": "core.action.script",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Buffer for Best Practice"
-      },
-      "inputs": {
-        "script": "return { buffered: true };"
-      },
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "The return value of the script",
-          "source": "=result.response",
-          "var": "output"
-        },
-        "error": {
-          "type": "object",
-          "description": "Error information if the script fails",
-          "source": "=Error",
-          "var": "error"
-        }
       }
     },
     {
@@ -743,31 +913,6 @@
       }
     },
     {
-      "id": "bufferBP2",
-      "type": "core.action.script",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Buffer for Best Practice 2"
-      },
-      "inputs": {
-        "script": "return { buffered: true };"
-      },
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "The return value of the script",
-          "source": "=result.response",
-          "var": "output"
-        },
-        "error": {
-          "type": "object",
-          "description": "Error information if the script fails",
-          "source": "=Error",
-          "var": "error"
-        }
-      }
-    },
-    {
       "id": "pollReplyLoop2",
       "type": "core.logic.loop",
       "typeVersion": "2.4",
@@ -942,19 +1087,24 @@
       "inputs": {},
       "outputs": {
         "finalStatus": {
-          "source": "=js:\"Terminated\""
+          "source": "=js:\"Terminated\"",
+          "type": "string"
         },
         "dayEventType": {
-          "source": "=js:$vars.dayEventType"
+          "source": "=js:$vars.dayEventType",
+          "type": "string"
         },
         "reply1Received": {
-          "source": "=js:$vars.reply1Received"
+          "source": "=js:$vars.reply1Received",
+          "type": "string"
         },
         "emergencyOccurred": {
-          "source": "=js:$vars.emergencyOccurred"
+          "source": "=js:$vars.emergencyOccurred",
+          "type": "string"
         },
         "reply2Received": {
-          "source": "=js:$vars.reply2Received"
+          "source": "=js:$vars.reply2Received",
+          "type": "string"
         }
       }
     },
@@ -1108,16 +1258,20 @@
           "type": "string"
         },
         "dayEventType": {
-          "source": "=js:$vars.dayEventType"
+          "source": "=js:$vars.dayEventType",
+          "type": "string"
         },
         "reply1Received": {
-          "source": "=js:$vars.reply1Received"
+          "source": "=js:$vars.reply1Received",
+          "type": "string"
         },
         "emergencyOccurred": {
-          "source": "=js:$vars.emergencyOccurred"
+          "source": "=js:$vars.emergencyOccurred",
+          "type": "string"
         },
         "reply2Received": {
-          "source": "=js:$vars.reply2Received"
+          "source": "=js:$vars.reply2Received",
+          "type": "string"
         }
       }
     },
@@ -1135,16 +1289,20 @@
           "type": "string"
         },
         "dayEventType": {
-          "source": "=js:$vars.dayEventType"
+          "source": "=js:$vars.dayEventType",
+          "type": "string"
         },
         "reply1Received": {
-          "source": "=js:$vars.reply1Received"
+          "source": "=js:$vars.reply1Received",
+          "type": "string"
         },
         "emergencyOccurred": {
-          "source": "=js:$vars.emergencyOccurred"
+          "source": "=js:$vars.emergencyOccurred",
+          "type": "string"
         },
         "reply2Received": {
-          "source": "=js:$vars.reply2Received"
+          "source": "=js:$vars.reply2Received",
+          "type": "string"
         }
       }
     },
@@ -1162,16 +1320,20 @@
           "type": "string"
         },
         "dayEventType": {
-          "source": "=js:$vars.dayEventType"
+          "source": "=js:$vars.dayEventType",
+          "type": "string"
         },
         "reply1Received": {
-          "source": "=js:$vars.reply1Received"
+          "source": "=js:$vars.reply1Received",
+          "type": "string"
         },
         "emergencyOccurred": {
-          "source": "=js:$vars.emergencyOccurred"
+          "source": "=js:$vars.emergencyOccurred",
+          "type": "string"
         },
         "reply2Received": {
-          "source": "=js:$vars.reply2Received"
+          "source": "=js:$vars.reply2Received",
+          "type": "string"
         }
       }
     },
@@ -1189,16 +1351,20 @@
           "type": "string"
         },
         "dayEventType": {
-          "source": "=js:$vars.dayEventType"
+          "source": "=js:$vars.dayEventType",
+          "type": "string"
         },
         "reply1Received": {
-          "source": "=js:$vars.reply1Received"
+          "source": "=js:$vars.reply1Received",
+          "type": "string"
         },
         "emergencyOccurred": {
-          "source": "=js:$vars.emergencyOccurred"
+          "source": "=js:$vars.emergencyOccurred",
+          "type": "string"
         },
         "reply2Received": {
-          "source": "=js:$vars.reply2Received"
+          "source": "=js:$vars.reply2Received",
+          "type": "string"
         }
       }
     },
@@ -1216,16 +1382,20 @@
           "type": "string"
         },
         "dayEventType": {
-          "source": "=js:$vars.dayEventType"
+          "source": "=js:$vars.dayEventType",
+          "type": "string"
         },
         "reply1Received": {
-          "source": "=js:$vars.reply1Received"
+          "source": "=js:$vars.reply1Received",
+          "type": "string"
         },
         "emergencyOccurred": {
-          "source": "=js:$vars.emergencyOccurred"
+          "source": "=js:$vars.emergencyOccurred",
+          "type": "string"
         },
         "reply2Received": {
-          "source": "=js:$vars.reply2Received"
+          "source": "=js:$vars.reply2Received",
+          "type": "string"
         }
       }
     },
@@ -1243,16 +1413,20 @@
           "type": "string"
         },
         "dayEventType": {
-          "source": "=js:$vars.dayEventType"
+          "source": "=js:$vars.dayEventType",
+          "type": "string"
         },
         "reply1Received": {
-          "source": "=js:$vars.reply1Received"
+          "source": "=js:$vars.reply1Received",
+          "type": "string"
         },
         "emergencyOccurred": {
-          "source": "=js:$vars.emergencyOccurred"
+          "source": "=js:$vars.emergencyOccurred",
+          "type": "string"
         },
         "reply2Received": {
-          "source": "=js:$vars.reply2Received"
+          "source": "=js:$vars.reply2Received",
+          "type": "string"
         }
       }
     },
@@ -1270,16 +1444,112 @@
           "type": "string"
         },
         "dayEventType": {
-          "source": "=js:$vars.dayEventType"
+          "source": "=js:$vars.dayEventType",
+          "type": "string"
         },
         "reply1Received": {
-          "source": "=js:$vars.reply1Received"
+          "source": "=js:$vars.reply1Received",
+          "type": "string"
         },
         "emergencyOccurred": {
-          "source": "=js:$vars.emergencyOccurred"
+          "source": "=js:$vars.emergencyOccurred",
+          "type": "string"
         },
         "reply2Received": {
-          "source": "=js:$vars.reply2Received"
+          "source": "=js:$vars.reply2Received",
+          "type": "string"
+        }
+      }
+    },
+    {
+      "id": "sendEmail1",
+      "type": "uipath.connector.uipath-google-gmail.send-email",
+      "typeVersion": "1.0.0",
+      "display": {
+        "label": "Send Email",
+        "subLabel": ""
+      },
+      "inputs": {
+        "detail": {
+          "connector": "uipath-google-gmail",
+          "connectionId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+          "connectionResourceId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+          "connectionFolderKey": "bdd91426-3fa3-472e-846f-e091d3f5d315",
+          "method": "POST",
+          "endpoint": "/SendEmail",
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"SendEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"SendEmail\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/SendEmail\",\"unifiedTypesCompatible\":true}}",
+          "uiPathActivityTypeId": "f2a5320d-a0d1-3aec-af8f-5b16ad9665a0",
+          "errorState": {
+            "issues": []
+          },
+          "telemetryData": {
+            "connectorKey": "uipath-google-gmail",
+            "operationType": "create",
+            "objectName": "SendEmail",
+            "primaryKeyName": ""
+          },
+          "queryParameters": {
+            "SaveAsDraft": false
+          },
+          "bodyParameters": {
+            "To": "=js:$vars.emailReceived1.output.From.Email",
+            "Subject": "=js:`Consultation Confirmed - ${$vars.bookingAgent.output.appointmentDate} at ${$vars.bookingAgent.output.appointmentTime}`",
+            "Body": "=js:`Dear Patient ${$vars.bookingAgent.output.patientId},\n\nYour consultation has been booked.\n\nDate: ${$vars.bookingAgent.output.appointmentDate}\nTime: ${$vars.bookingAgent.output.appointmentTime}\n\nPlease reply to this email if you need to reschedule or cancel.\n\nRegards,\nConsultation Clinic`"
+          },
+          "inputMetadata": {
+            "type": "multipart",
+            "multipart": {
+              "bodyFieldName": "body"
+            }
+          }
+        }
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
         }
       }
     }
@@ -1287,14 +1557,14 @@
   "edges": [
     {
       "id": "e1",
-      "sourceNodeId": "start",
+      "sourceNodeId": "emailReceived1",
       "sourcePort": "output",
-      "targetNodeId": "moveTriggerMail",
+      "targetNodeId": "moveTriggerMailToProcessedMock1",
       "targetPort": "input"
     },
     {
       "id": "e2",
-      "sourceNodeId": "moveTriggerMail",
+      "sourceNodeId": "moveTriggerMailToProcessedMock1",
       "sourcePort": "output",
       "targetNodeId": "bookingAgent",
       "targetPort": "input"
@@ -1302,20 +1572,20 @@
     {
       "id": "e3",
       "sourceNodeId": "bookingAgent",
-      "sourcePort": "output",
-      "targetNodeId": "getAllRecords",
+      "sourcePort": "success",
+      "targetNodeId": "createAppointment1",
       "targetPort": "input"
     },
     {
       "id": "e4",
-      "sourceNodeId": "getAllRecords",
+      "sourceNodeId": "createAppointment1",
       "sourcePort": "output",
-      "targetNodeId": "sendConfirmMail",
+      "targetNodeId": "sendEmail1",
       "targetPort": "input"
     },
     {
       "id": "e5",
-      "sourceNodeId": "sendConfirmMail",
+      "sourceNodeId": "sendEmail1",
       "sourcePort": "output",
       "targetNodeId": "pollDayLoop",
       "targetPort": "input"
@@ -1349,13 +1619,6 @@
       "targetPort": "input"
     },
     {
-      "id": "e10",
-      "sourceNodeId": "routeDayEvent",
-      "sourcePort": "case-doctorEmergency",
-      "targetNodeId": "bufferBP1",
-      "targetPort": "input"
-    },
-    {
       "id": "e11",
       "sourceNodeId": "routeDayEvent",
       "sourcePort": "case-rescheduleCancel",
@@ -1374,13 +1637,6 @@
       "sourceNodeId": "routeDayEvent",
       "sourcePort": "default",
       "targetNodeId": "done_reschedCancel",
-      "targetPort": "input"
-    },
-    {
-      "id": "e14",
-      "sourceNodeId": "bufferBP1",
-      "sourcePort": "success",
-      "targetNodeId": "pollReplyLoop1",
       "targetPort": "input"
     },
     {
@@ -1524,24 +1780,10 @@
       "targetPort": "input"
     },
     {
-      "id": "e35",
-      "sourceNodeId": "hadEmergency",
-      "sourcePort": "true",
-      "targetNodeId": "bufferBP2",
-      "targetPort": "input"
-    },
-    {
       "id": "e36",
       "sourceNodeId": "hadEmergency",
       "sourcePort": "false",
       "targetNodeId": "done_noEmerg",
-      "targetPort": "input"
-    },
-    {
-      "id": "e37",
-      "sourceNodeId": "bufferBP2",
-      "sourcePort": "success",
-      "targetNodeId": "pollReplyLoop2",
       "targetPort": "input"
     },
     {
@@ -1690,23 +1932,38 @@
       "sourcePort": "output",
       "targetNodeId": "done_main",
       "targetPort": "input"
+    },
+    {
+      "id": "routeDayEvent-case-doctorEmergency-pollReplyLoop1-input",
+      "sourceNodeId": "routeDayEvent",
+      "sourcePort": "case-doctorEmergency",
+      "targetNodeId": "pollReplyLoop1",
+      "targetPort": "input"
+    },
+    {
+      "id": "hadEmergency-true-pollReplyLoop2-input",
+      "sourceNodeId": "hadEmergency",
+      "sourcePort": "true",
+      "targetNodeId": "pollReplyLoop2",
+      "targetPort": "input"
     }
   ],
   "definitions": [
     {
-      "nodeType": "core.trigger.manual",
-      "version": "1.0",
-      "category": "trigger",
-      "description": "Start workflow manually",
+      "nodeType": "uipath.connector.trigger.uipath-google-gmail.email-received",
+      "version": "1.0.0",
+      "category": "trigger.113548",
       "tags": [
+        "connector",
         "trigger",
-        "start",
-        "manual"
+        "Trigger.Integrated"
       ],
-      "sortOrder": 40,
+      "sortOrder": 540,
+      "description": "(Gmail) Triggers when an email is received in your inbox.",
       "display": {
-        "label": "Manual trigger",
-        "icon": "play",
+        "label": "Email Received",
+        "description": "(Gmail) Triggers when an email is received in your inbox.",
+        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg",
         "shape": "circle"
       },
       "handleConfiguration": [
@@ -1730,13 +1987,124 @@
       ],
       "model": {
         "type": "bpmn:StartEvent",
-        "entryPointId": true
+        "entryPointId": true,
+        "serviceType": "Intsvc.EventTrigger",
+        "eventDefinition": "bpmn:MessageEventDefinition",
+        "bindings": {
+          "resource": "connection",
+          "resourceKey": "",
+          "values": [
+            {
+              "name": "uipath-google-gmail connection",
+              "propertyAttribute": "ConnectionId"
+            },
+            {
+              "name": "FolderKey",
+              "propertyAttribute": "FolderKey"
+            }
+          ]
+        },
+        "context": [
+          {
+            "name": "connectorKey",
+            "type": "string",
+            "value": "uipath-google-gmail"
+          },
+          {
+            "name": "operation",
+            "value": "EMAIL_RECEIVED",
+            "type": "string"
+          },
+          {
+            "name": "objectName",
+            "value": "Message",
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "type": "string"
+          },
+          {
+            "name": "connection",
+            "type": "string",
+            "value": "<bindings.uipath-google-gmail connection>"
+          },
+          {
+            "name": "folderKey",
+            "type": "string",
+            "value": "<bindings.FolderKey>"
+          },
+          {
+            "name": "activityConfigurationVersion",
+            "type": "string",
+            "value": "v1"
+          },
+          {
+            "name": "metadata",
+            "body": {
+              "telemetryData": {
+                "connectorKey": "uipath-google-gmail",
+                "connectorName": "Email Received"
+              },
+              "inputMetadata": {},
+              "errorState": {
+                "hasError": true
+              }
+            },
+            "type": "json"
+          }
+        ]
       },
+      "form": {
+        "id": "connector-properties",
+        "title": "Connector configuration",
+        "sections": [
+          {
+            "id": "connector",
+            "title": "Connector",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "label": "",
+                "name": "inputs.detail",
+                "type": "custom",
+                "component": "dap-config",
+                "componentProps": {
+                  "connectorDetail": {
+                    "type": "Integrated",
+                    "packageId": "113548",
+                    "svgIconUrl": "icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg",
+                    "displayName": "Email Received",
+                    "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorTriggerActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
+                    "description": "Triggers when an email is received in your inbox.",
+                    "category": "Gmail.Triggers",
+                    "activityColor": "#E56D5C",
+                    "configuration": "{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"Message\",\"activityType\":\"CuratedTrigger\",\"version\":\"1.0.0\",\"eventOperation\":\"EMAIL_RECEIVED\",\"eventMode\":\"polling\",\"supportsStreaming\":false}",
+                    "uiPathActivityTypeId": "1d19e4f4-2817-3aeb-b71c-2dafca7b1da2",
+                    "isExperimental": false,
+                    "helpUrlTemplate": "https://docs.uipath.com/{0}/activities/other/latest/integration-service/uipath-google-gmail-Email-Received",
+                    "isEnabled": true,
+                    "targetPlatform": "CrossPlatform",
+                    "isAdvanced": false,
+                    "isRestricted": false,
+                    "hasWpfOnlyDesigner": false,
+                    "tags": [
+                      "Trigger.Integrated"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inputDefinition": {},
       "outputDefinition": {
         "output": {
           "type": "object",
-          "description": "Data passed when manually triggering the workflow.",
-          "source": "null",
+          "description": "The return value of the connector trigger.",
+          "source": "=result.response",
           "var": "output"
         }
       },
@@ -1753,18 +2121,20 @@
       }
     },
     {
-      "nodeType": "core.logic.mock",
-      "version": "1.0",
-      "category": "control-flow",
-      "description": "Placeholder node for prototyping",
+      "nodeType": "uipath.connector.uipath-google-gmail.move-email",
+      "version": "1.0.0",
+      "category": "connector.113548",
       "tags": [
-        "blank",
-        "todo"
+        "connector",
+        "activity"
       ],
-      "sortOrder": 20,
+      "sortOrder": 515,
+      "supportsErrorHandling": true,
+      "description": "(Gmail) Move an email in Gmail to a folder or label",
       "display": {
-        "label": "Mock",
-        "icon": "square-dashed"
+        "label": "Move Email",
+        "description": "(Gmail) Move an email in Gmail to a folder or label",
+        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg"
       },
       "handleConfiguration": [
         {
@@ -1773,10 +2143,10 @@
             {
               "id": "input",
               "type": "target",
-              "handleType": "input"
+              "handleType": "input",
+              "label": ""
             }
-          ],
-          "visible": true
+          ]
         },
         {
           "position": "right",
@@ -1784,27 +2154,795 @@
             {
               "id": "output",
               "type": "source",
-              "handleType": "output"
+              "handleType": "output",
+              "label": ""
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
             }
-          ],
-          "visible": true
+          ]
         }
       ],
       "model": {
-        "type": "bpmn:Task"
+        "type": "bpmn:SendTask",
+        "serviceType": "Intsvc.ActivityExecution",
+        "bindings": {
+          "resource": "connection",
+          "resourceKey": "",
+          "values": [
+            {
+              "name": "uipath-google-gmail connection",
+              "propertyAttribute": "ConnectionId"
+            },
+            {
+              "name": "FolderKey",
+              "propertyAttribute": "FolderKey"
+            }
+          ]
+        },
+        "context": [
+          {
+            "name": "connectorKey",
+            "type": "string",
+            "value": "uipath-google-gmail"
+          },
+          {
+            "name": "operation",
+            "type": "string"
+          },
+          {
+            "name": "objectName",
+            "value": "MoveEmail",
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "value": "POST"
+          },
+          {
+            "name": "connection",
+            "type": "string",
+            "value": "<bindings.uipath-google-gmail connection>"
+          },
+          {
+            "name": "folderKey",
+            "type": "string",
+            "value": "<bindings.FolderKey>"
+          },
+          {
+            "name": "activityConfigurationVersion",
+            "type": "string",
+            "value": "v1"
+          },
+          {
+            "name": "metadata",
+            "body": {
+              "telemetryData": {
+                "connectorKey": "uipath-google-gmail",
+                "connectorName": "Move Email"
+              },
+              "inputMetadata": {},
+              "errorState": {
+                "hasError": true
+              }
+            },
+            "type": "json"
+          }
+        ]
+      },
+      "form": {
+        "id": "connector-properties",
+        "title": "Connector configuration",
+        "sections": [
+          {
+            "id": "connector",
+            "title": "Connector",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "label": "",
+                "name": "inputs.detail",
+                "type": "custom",
+                "component": "dap-config",
+                "componentProps": {
+                  "connectorDetail": {
+                    "isAppActivity": false,
+                    "packageId": "113548",
+                    "svgIconUrl": "icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg",
+                    "displayName": "Move Email",
+                    "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
+                    "description": "Move an email in Gmail to a folder or label",
+                    "category": "",
+                    "activityColor": "#E56D5C",
+                    "configuration": "{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"MoveEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"}",
+                    "uiPathActivityTypeId": "7dce485b-164a-3bd6-9600-00750b64bef9",
+                    "isExperimental": false,
+                    "helpUrlTemplate": "https://docs.uipath.com/{0}/activities/other/latest/integration-service/uipath-google-gmail-Move-Email",
+                    "isEnabled": true,
+                    "targetPlatform": "CrossPlatform",
+                    "isAdvanced": false,
+                    "isRestricted": false,
+                    "hasWpfOnlyDesigner": false,
+                    "tags": [
+                      ""
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inputDefinition": {},
+      "inputDefaults": {},
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "debug": {
+        "runtime": "bpmnEngine"
+      }
+    },
+    {
+      "nodeType": "uipath.agent.autonomous",
+      "version": "1.2",
+      "category": "agent",
+      "description": "AI agent that completes tasks autonomously",
+      "tags": [
+        "agentic",
+        "ai",
+        "autonomous",
+        "agent"
+      ],
+      "sortOrder": 5,
+      "supportsErrorHandling": true,
+      "display": {
+        "label": "Autonomous Agent",
+        "icon": "autonomous-agent",
+        "shape": "rectangle"
+      },
+      "handleConfiguration": [
+        {
+          "position": "top",
+          "handles": [
+            {
+              "id": "escalation",
+              "type": "source",
+              "handleType": "artifact",
+              "label": "Escalations",
+              "showButton": true,
+              "constraints": {
+                "allowedTargets": [
+                  {
+                    "nodeType": "uipath.agent.resource.escalation"
+                  },
+                  {
+                    "nodeType": "uipath.agent.resource.escalation.*"
+                  }
+                ],
+                "validationMessage": "Only Agent Escalation nodes can connect here",
+                "addNodePanel": {
+                  "searchScope": "deep",
+                  "searchProviders": []
+                }
+              }
+            }
+          ]
+        },
+        {
+          "position": "bottom",
+          "handles": [
+            {
+              "id": "context",
+              "type": "source",
+              "handleType": "artifact",
+              "label": "Context",
+              "showButton": true,
+              "constraints": {
+                "allowedTargets": [
+                  {
+                    "nodeType": "uipath.agent.resource.context.*"
+                  }
+                ],
+                "validationMessage": "Only Context resource nodes can connect here",
+                "addNodePanel": {
+                  "searchScope": "deep",
+                  "searchProviders": [],
+                  "refreshOnFocus": "context",
+                  "createNewActions": [
+                    {
+                      "label": "Create new Context",
+                      "icon": "external-link",
+                      "description": "Opens in a new tab",
+                      "urlTemplate": "/{org}/agents_/indexes/add",
+                      "categoryId": "agent"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "id": "tool",
+              "type": "source",
+              "handleType": "artifact",
+              "label": "Tools",
+              "showButton": true,
+              "constraints": {
+                "allowedTargets": [
+                  {
+                    "nodeType": "uipath.agent.resource.tool.*"
+                  }
+                ],
+                "validationMessage": "Only Tool resource nodes can connect here",
+                "addNodePanel": {
+                  "searchScope": "deep",
+                  "searchProviders": [],
+                  "refreshOnFocus": "mcp",
+                  "createNewActions": [
+                    {
+                      "label": "Create new MCP server",
+                      "icon": "plus",
+                      "urlTemplate": "/{org}/{tenant}/orchestrator_/mcp",
+                      "categoryId": "agent.tool.mcp"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "success",
+              "type": "source",
+              "handleType": "output",
+              "isDefaultForType": true
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "form": {
+        "id": "settings-form",
+        "title": "Agent settings",
+        "mode": "onChange",
+        "reValidateMode": "onChange",
+        "sections": [
+          {
+            "id": "section-1",
+            "title": "Agent settings",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "name": "inputs.model",
+                "type": "custom",
+                "component": "agent-model-picker",
+                "label": "Model",
+                "componentProps": {
+                  "placeholder": "gpt-4o-2024-11-20"
+                }
+              },
+              {
+                "name": "inputs.systemPrompt",
+                "type": "custom",
+                "component": "prompt-editor",
+                "label": "System prompt",
+                "componentProps": {
+                  "multiline": true,
+                  "minRows": 4,
+                  "maxRows": 20,
+                  "placeholder": "Enter the system prompt"
+                }
+              },
+              {
+                "name": "inputs.userPrompt",
+                "type": "custom",
+                "component": "prompt-editor",
+                "label": "User prompt",
+                "componentProps": {
+                  "multiline": true,
+                  "minRows": 3,
+                  "maxRows": 15,
+                  "placeholder": "Enter the user prompt"
+                }
+              }
+            ]
+          },
+          {
+            "id": "section-advanced",
+            "title": "Advanced settings",
+            "collapsible": true,
+            "defaultExpanded": false,
+            "fields": [
+              {
+                "name": "inputs.temperature",
+                "type": "slider",
+                "label": "Temperature",
+                "defaultValue": 0,
+                "min": 0,
+                "max": 1,
+                "step": 0.01
+              },
+              {
+                "name": "inputs.maxTokenPerResponse",
+                "type": "slider",
+                "label": "Max. tokens per response",
+                "defaultValue": 16384,
+                "min": 0,
+                "step": 1,
+                "maxRef": {
+                  "fromField": "inputs.modelMaxTokens",
+                  "fallback": 16384
+                }
+              },
+              {
+                "name": "inputs.maxIterations",
+                "type": "slider",
+                "label": "Max. iterations",
+                "defaultValue": 25,
+                "min": 1,
+                "max": 100,
+                "step": 1
+              }
+            ]
+          },
+          {
+            "id": "guardrails",
+            "collapsible": false,
+            "fields": [
+              {
+                "name": "inputs.guardrails",
+                "type": "custom",
+                "component": "guardrails-editor",
+                "label": "",
+                "componentProps": {
+                  "toolName": "Agent",
+                  "scope": "Agent"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inputDefinition": {
+        "type": "object",
+        "properties": {
+          "systemPrompt": {
+            "type": "string",
+            "minLength": 1,
+            "errorMessage": {
+              "minLength": "System prompt is required"
+            }
+          },
+          "userPrompt": {
+            "type": "string",
+            "minLength": 1,
+            "errorMessage": {
+              "minLength": "User prompt is required"
+            }
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "errorMessage": {
+              "minLength": "Model is required"
+            }
+          },
+          "temperature": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "maxTokenPerResponse": {
+            "type": "number",
+            "minimum": 0
+          },
+          "modelMaxTokens": {
+            "type": "number",
+            "minimum": 0
+          },
+          "maxIterations": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "guardrails": {
+            "type": "array"
+          },
+          "agentInputVariables": {
+            "type": "array"
+          },
+          "agentOutputVariables": {
+            "type": "array"
+          }
+        },
+        "required": [
+          "systemPrompt",
+          "userPrompt",
+          "model"
+        ]
+      },
+      "inputDefaults": {
+        "systemPrompt": "You are an agentic assistant.",
+        "userPrompt": "What is the current date?",
+        "model": "gpt-4o-2024-11-20",
+        "agentInputVariables": [],
+        "agentOutputVariables": [
+          {
+            "id": "content",
+            "type": "string"
+          }
+        ]
       },
       "outputDefinition": {
         "output": {
           "type": "object",
-          "description": "Mock output value",
-          "source": "null",
-          "var": "output"
+          "description": "Agent response",
+          "var": "output",
+          "properties": {
+            "content": {
+              "type": "string",
+              "description": "The agent response text"
+            }
+          }
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
         }
       },
-      "runtimeConstraints": {
-        "exclude": [
-          "api-function"
+      "model": {
+        "source": true,
+        "type": "bpmn:ServiceTask",
+        "serviceType": "Orchestrator.StartInlineAgentJob",
+        "version": "v2",
+        "context": [
+          {
+            "name": "_label",
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "name",
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "entryPoint",
+            "type": "string",
+            "value": ""
+          }
         ]
+      },
+      "debug": {
+        "runtime": "bpmnEngine"
+      }
+    },
+    {
+      "nodeType": "uipath.connector.uipath-uipath-dataservice.create-entity-record",
+      "version": "1.0.0",
+      "category": "connector.68054",
+      "tags": [
+        "connector",
+        "activity"
+      ],
+      "sortOrder": 515,
+      "supportsErrorHandling": true,
+      "description": "(UiPath Data Fabric) Creates a new record for the selected Entity in Data Fabric",
+      "display": {
+        "label": "Create Entity Record",
+        "description": "(UiPath Data Fabric) Creates a new record for the selected Entity in Data Fabric",
+        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input",
+              "label": ""
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output",
+              "label": ""
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:SendTask",
+        "serviceType": "Intsvc.ActivityExecution",
+        "bindings": {
+          "resource": "connection",
+          "resourceKey": "",
+          "values": [
+            {
+              "name": "uipath-uipath-dataservice connection",
+              "propertyAttribute": "ConnectionId"
+            },
+            {
+              "name": "FolderKey",
+              "propertyAttribute": "FolderKey"
+            }
+          ]
+        },
+        "context": [
+          {
+            "name": "connectorKey",
+            "type": "string",
+            "value": "uipath-uipath-dataservice"
+          },
+          {
+            "name": "operation",
+            "type": "string"
+          },
+          {
+            "name": "objectName",
+            "value": "CreateEntityRecordCurated",
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "value": "POST"
+          },
+          {
+            "name": "connection",
+            "type": "string",
+            "value": "<bindings.uipath-uipath-dataservice connection>"
+          },
+          {
+            "name": "folderKey",
+            "type": "string",
+            "value": "<bindings.FolderKey>"
+          },
+          {
+            "name": "activityConfigurationVersion",
+            "type": "string",
+            "value": "v1"
+          },
+          {
+            "name": "metadata",
+            "body": {
+              "telemetryData": {
+                "connectorKey": "uipath-uipath-dataservice",
+                "connectorName": "Create Entity Record"
+              },
+              "inputMetadata": {},
+              "errorState": {
+                "hasError": true
+              }
+            },
+            "type": "json"
+          }
+        ]
+      },
+      "form": {
+        "id": "connector-properties",
+        "title": "Connector configuration",
+        "sections": [
+          {
+            "id": "connector",
+            "title": "Connector",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "label": "",
+                "name": "inputs.detail",
+                "type": "custom",
+                "component": "dap-config",
+                "componentProps": {
+                  "connectorDetail": {
+                    "isAppActivity": false,
+                    "packageId": "68054",
+                    "svgIconUrl": "icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg",
+                    "displayName": "Create Entity Record",
+                    "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
+                    "description": "Creates a new record for the selected Entity in Data Fabric",
+                    "category": "",
+                    "activityColor": "#E56D5C",
+                    "configuration": "{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"CreateEntityRecordCurated\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"}",
+                    "uiPathActivityTypeId": "dfd2bc7a-ca4b-3316-8a1f-57c9e106dfbf",
+                    "isExperimental": false,
+                    "helpUrlTemplate": "https://docs.uipath.com/{0}/activities/other/latest/integration-service/uipath-uipath-dataservice-Create-Entity-Record",
+                    "isEnabled": true,
+                    "targetPlatform": "CrossPlatform",
+                    "isAdvanced": false,
+                    "isRestricted": false,
+                    "hasWpfOnlyDesigner": false,
+                    "tags": [
+                      ""
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inputDefinition": {},
+      "inputDefaults": {},
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "debug": {
+        "runtime": "bpmnEngine"
       }
     },
     {
@@ -2766,6 +3904,61 @@
       }
     },
     {
+      "nodeType": "core.logic.mock",
+      "version": "1.0",
+      "category": "control-flow",
+      "description": "Placeholder node for prototyping",
+      "tags": [
+        "blank",
+        "todo"
+      ],
+      "sortOrder": 20,
+      "display": {
+        "label": "Mock",
+        "icon": "square-dashed"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ],
+          "visible": true
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output"
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "model": {
+        "type": "bpmn:Task"
+      },
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "null",
+          "var": "output"
+        }
+      },
+      "runtimeConstraints": {
+        "exclude": [
+          "api-function"
+        ]
+      }
+    },
+    {
       "nodeType": "core.subflow",
       "version": "1.0",
       "category": "control-flow",
@@ -2991,6 +4184,282 @@
           "api-function"
         ]
       }
+    },
+    {
+      "nodeType": "uipath.connector.uipath-google-gmail.send-email",
+      "version": "1.0.0",
+      "category": "connector.113548",
+      "tags": [
+        "connector",
+        "activity",
+        "API.File.Upload.Optional"
+      ],
+      "sortOrder": 515,
+      "supportsErrorHandling": true,
+      "description": "(Gmail) Sends an email message",
+      "display": {
+        "label": "Send Email",
+        "description": "(Gmail) Sends an email message",
+        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input",
+              "label": ""
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output",
+              "label": ""
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:SendTask",
+        "serviceType": "Intsvc.ActivityExecution",
+        "bindings": {
+          "resource": "connection",
+          "resourceKey": "",
+          "values": [
+            {
+              "name": "uipath-google-gmail connection",
+              "propertyAttribute": "ConnectionId"
+            },
+            {
+              "name": "FolderKey",
+              "propertyAttribute": "FolderKey"
+            }
+          ]
+        },
+        "context": [
+          {
+            "name": "connectorKey",
+            "type": "string",
+            "value": "uipath-google-gmail"
+          },
+          {
+            "name": "operation",
+            "type": "string"
+          },
+          {
+            "name": "objectName",
+            "value": "SendEmail",
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "value": "POST"
+          },
+          {
+            "name": "connection",
+            "type": "string",
+            "value": "<bindings.uipath-google-gmail connection>"
+          },
+          {
+            "name": "folderKey",
+            "type": "string",
+            "value": "<bindings.FolderKey>"
+          },
+          {
+            "name": "activityConfigurationVersion",
+            "type": "string",
+            "value": "v1"
+          },
+          {
+            "name": "metadata",
+            "body": {
+              "telemetryData": {
+                "connectorKey": "uipath-google-gmail",
+                "connectorName": "Send Email"
+              },
+              "inputMetadata": {},
+              "errorState": {
+                "hasError": true
+              }
+            },
+            "type": "json"
+          }
+        ]
+      },
+      "form": {
+        "id": "connector-properties",
+        "title": "Connector configuration",
+        "sections": [
+          {
+            "id": "connector",
+            "title": "Connector",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "label": "",
+                "name": "inputs.detail",
+                "type": "custom",
+                "component": "dap-config",
+                "componentProps": {
+                  "connectorDetail": {
+                    "isAppActivity": false,
+                    "packageId": "113548",
+                    "svgIconUrl": "icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg",
+                    "displayName": "Send Email",
+                    "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
+                    "description": "Sends an email message",
+                    "category": "",
+                    "activityColor": "#E56D5C",
+                    "configuration": "{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"SendEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"}",
+                    "uiPathActivityTypeId": "f2a5320d-a0d1-3aec-af8f-5b16ad9665a0",
+                    "isExperimental": false,
+                    "helpUrlTemplate": "https://docs.uipath.com/{0}/activities/other/latest/integration-service/uipath-google-gmail-Send-Email",
+                    "isEnabled": true,
+                    "targetPlatform": "CrossPlatform",
+                    "isAdvanced": false,
+                    "isRestricted": false,
+                    "hasWpfOnlyDesigner": false,
+                    "tags": [
+                      "API.File.Upload.Optional"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inputDefinition": {},
+      "inputDefaults": {},
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "debug": {
+        "runtime": "bpmnEngine"
+      }
+    },
+    {
+      "nodeType": "core.trigger.manual",
+      "version": "1.0",
+      "category": "trigger",
+      "description": "Start workflow manually",
+      "tags": [
+        "trigger",
+        "start",
+        "manual"
+      ],
+      "sortOrder": 40,
+      "display": {
+        "label": "Manual trigger",
+        "icon": "play",
+        "shape": "circle"
+      },
+      "handleConfiguration": [
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output",
+              "showButton": true,
+              "constraints": {
+                "forbiddenTargetCategories": [
+                  "trigger"
+                ]
+              }
+            }
+          ],
+          "visible": true
+        }
+      ],
+      "model": {
+        "type": "bpmn:StartEvent",
+        "entryPointId": true
+      },
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "Data passed when manually triggering the workflow.",
+          "source": "null",
+          "var": "output"
+        }
+      },
+      "toolbarExtensions": {
+        "design": {
+          "actions": [
+            {
+              "id": "change-trigger-type",
+              "icon": "square-mouse-pointer",
+              "label": "Change trigger type"
+            }
+          ]
+        }
+      }
     }
   ],
   "variables": {
@@ -3000,7 +4469,7 @@
         "direction": "in",
         "type": "object",
         "defaultValue": {},
-        "triggerNodeId": "start"
+        "triggerNodeId": "emailReceived1"
       },
       {
         "id": "finalStatus",
@@ -3035,48 +4504,116 @@
     ],
     "nodes": [
       {
-        "id": "start.output",
+        "id": "moveTriggerMailToProcessedMock1.error",
         "type": "object",
-        "description": "Data passed when manually triggering the workflow.",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
         "binding": {
-          "nodeId": "start",
-          "outputId": "output"
-        }
-      },
-      {
-        "id": "moveTriggerMail.output",
-        "type": "object",
-        "description": "Mock output value",
-        "binding": {
-          "nodeId": "moveTriggerMail",
-          "outputId": "output"
+          "nodeId": "moveTriggerMailToProcessedMock1",
+          "outputId": "error"
         }
       },
       {
         "id": "bookingAgent.output",
         "type": "object",
-        "description": "Mock output value",
+        "description": "Agent response",
         "binding": {
           "nodeId": "bookingAgent",
           "outputId": "output"
         }
       },
       {
-        "id": "getAllRecords.output",
+        "id": "bookingAgent.error",
         "type": "object",
-        "description": "Mock output value",
+        "description": "Error information if the node fails",
         "binding": {
-          "nodeId": "getAllRecords",
+          "nodeId": "bookingAgent",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "createAppointment1.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "createAppointment1",
           "outputId": "output"
         }
       },
       {
-        "id": "sendConfirmMail.output",
+        "id": "createAppointment1.error",
         "type": "object",
-        "description": "Mock output value",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
         "binding": {
-          "nodeId": "sendConfirmMail",
-          "outputId": "output"
+          "nodeId": "createAppointment1",
+          "outputId": "error"
         }
       },
       {
@@ -3118,7 +4655,6 @@
       {
         "id": "pollDayLoop.error",
         "type": "object",
-        "description": "Error information if the node fails",
         "schema": {
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
@@ -3153,6 +4689,7 @@
           },
           "additionalProperties": false
         },
+        "description": "Error information if the node fails",
         "binding": {
           "nodeId": "pollDayLoop",
           "outputId": "error"
@@ -3195,24 +4732,6 @@
         }
       },
       {
-        "id": "bufferBP1.output",
-        "type": "object",
-        "description": "The return value of the script",
-        "binding": {
-          "nodeId": "bufferBP1",
-          "outputId": "output"
-        }
-      },
-      {
-        "id": "bufferBP1.error",
-        "type": "object",
-        "description": "Error information if the script fails",
-        "binding": {
-          "nodeId": "bufferBP1",
-          "outputId": "error"
-        }
-      },
-      {
         "id": "pollReplyLoop1.currentItem",
         "type": "any",
         "description": "The current item being iterated in the loop",
@@ -3251,7 +4770,6 @@
       {
         "id": "pollReplyLoop1.error",
         "type": "object",
-        "description": "Error information if the node fails",
         "schema": {
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
@@ -3286,6 +4804,7 @@
           },
           "additionalProperties": false
         },
+        "description": "Error information if the node fails",
         "binding": {
           "nodeId": "pollReplyLoop1",
           "outputId": "error"
@@ -3411,7 +4930,6 @@
       {
         "id": "dayOfConsult.error",
         "type": "object",
-        "description": "Error information if the subflow fails",
         "schema": {
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
@@ -3451,6 +4969,7 @@
           },
           "additionalProperties": false
         },
+        "description": "Error information if the subflow fails",
         "binding": {
           "nodeId": "dayOfConsult",
           "outputId": "error"
@@ -3504,7 +5023,6 @@
       {
         "id": "emergencyWatch.error",
         "type": "object",
-        "description": "Error information if the node fails",
         "schema": {
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
@@ -3539,6 +5057,7 @@
           },
           "additionalProperties": false
         },
+        "description": "Error information if the node fails",
         "binding": {
           "nodeId": "emergencyWatch",
           "outputId": "error"
@@ -3581,24 +5100,6 @@
         }
       },
       {
-        "id": "bufferBP2.output",
-        "type": "object",
-        "description": "The return value of the script",
-        "binding": {
-          "nodeId": "bufferBP2",
-          "outputId": "output"
-        }
-      },
-      {
-        "id": "bufferBP2.error",
-        "type": "object",
-        "description": "Error information if the script fails",
-        "binding": {
-          "nodeId": "bufferBP2",
-          "outputId": "error"
-        }
-      },
-      {
         "id": "pollReplyLoop2.currentItem",
         "type": "any",
         "description": "The current item being iterated in the loop",
@@ -3637,7 +5138,6 @@
       {
         "id": "pollReplyLoop2.error",
         "type": "object",
-        "description": "Error information if the node fails",
         "schema": {
           "$schema": "http://json-schema.org/draft-07/schema#",
           "type": "object",
@@ -3672,6 +5172,7 @@
           },
           "additionalProperties": false
         },
+        "description": "Error information if the node fails",
         "binding": {
           "nodeId": "pollReplyLoop2",
           "outputId": "error"
@@ -4158,6 +5659,76 @@
           "nodeId": "done_main",
           "outputId": "reply2Received"
         }
+      },
+      {
+        "id": "sendEmail1.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "sendEmail1",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "sendEmail1.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "sendEmail1",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "emailReceived1.output",
+        "type": "object",
+        "description": "The return value of the connector trigger.",
+        "binding": {
+          "nodeId": "emailReceived1",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "moveTriggerMailToProcessedMock1.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "moveTriggerMailToProcessedMock1",
+          "outputId": "output"
+        }
       }
     ],
     "variableUpdates": {
@@ -4187,11 +5758,47 @@
       ]
     }
   },
+  "bindings": [
+    {
+      "id": "bHGl2F3ix",
+      "name": "uipath-google-gmail connection",
+      "type": "string",
+      "resource": "connection",
+      "resourceKey": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+      "default": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+      "propertyAttribute": "ConnectionId"
+    },
+    {
+      "id": "bUjHF3jBC",
+      "name": "FolderKey",
+      "type": "string",
+      "resource": "connection",
+      "resourceKey": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+      "propertyAttribute": "FolderKey",
+      "default": "bdd91426-3fa3-472e-846f-e091d3f5d315"
+    },
+    {
+      "id": "b0EJSukKB",
+      "name": "uipath-google-gmail connection",
+      "type": "string",
+      "resource": "connection",
+      "resourceKey": "",
+      "propertyAttribute": "ConnectionId"
+    },
+    {
+      "id": "bWUcL1sYB",
+      "name": "FolderKey",
+      "type": "string",
+      "resource": "connection",
+      "resourceKey": "",
+      "propertyAttribute": "FolderKey"
+    }
+  ],
   "solutionId": "uip-sw-local://Folder/9de45f97-be7d-4156-9475-5c7b6def72bc",
   "projectId": "5a9ed874-ebf3-4051-bba9-83d816ab6e12",
   "layout": {
     "nodes": {
-      "start": {
+      "emailReceived1": {
         "position": {
           "x": -192,
           "y": 0
@@ -4202,7 +5809,7 @@
         },
         "collapsed": false
       },
-      "moveTriggerMail": {
+      "moveTriggerMailToProcessedMock1": {
         "position": {
           "x": 0,
           "y": 0
@@ -4219,23 +5826,12 @@
           "y": 0
         },
         "size": {
-          "width": 96,
+          "width": 288,
           "height": 96
         },
         "collapsed": false
       },
-      "getAllRecords": {
-        "position": {
-          "x": 384,
-          "y": 0
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "sendConfirmMail": {
+      "createAppointment1": {
         "position": {
           "x": 576,
           "y": 0
@@ -4248,7 +5844,7 @@
       },
       "pollDayLoop": {
         "position": {
-          "x": 768,
+          "x": 960,
           "y": -112
         },
         "size": {
@@ -4259,8 +5855,8 @@
       },
       "delayDayPoll": {
         "position": {
-          "x": 1424,
-          "y": 304
+          "x": 1616,
+          "y": 288
         },
         "size": {
           "width": 96,
@@ -4270,8 +5866,8 @@
       },
       "checkDayEvents": {
         "position": {
-          "x": 1616,
-          "y": 304
+          "x": 2048,
+          "y": 288
         },
         "size": {
           "width": 96,
@@ -4281,30 +5877,19 @@
       },
       "routeDayEvent": {
         "position": {
-          "x": 1424,
-          "y": -304
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "bufferBP1": {
-        "position": {
           "x": 1616,
-          "y": -736
+          "y": -272
         },
         "size": {
           "width": 96,
-          "height": 96
+          "height": 160
         },
         "collapsed": false
       },
       "pollReplyLoop1": {
         "position": {
           "x": 1808,
-          "y": -848
+          "y": -768
         },
         "size": {
           "width": 560,
@@ -4314,8 +5899,8 @@
       },
       "delayReply1": {
         "position": {
-          "x": 2464,
-          "y": -592
+          "x": 2704,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -4325,8 +5910,8 @@
       },
       "checkReply1": {
         "position": {
-          "x": 2656,
-          "y": -592
+          "x": 3120,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -4336,8 +5921,8 @@
       },
       "gotReply1": {
         "position": {
-          "x": 2464,
-          "y": -880
+          "x": 2704,
+          "y": -800
         },
         "size": {
           "width": 96,
@@ -4347,8 +5932,8 @@
       },
       "analyseReply": {
         "position": {
-          "x": 2656,
-          "y": -976
+          "x": 3120,
+          "y": -896
         },
         "size": {
           "width": 96,
@@ -4358,8 +5943,8 @@
       },
       "moveReplyMail": {
         "position": {
-          "x": 3088,
-          "y": -976
+          "x": 3552,
+          "y": -896
         },
         "size": {
           "width": 96,
@@ -4369,8 +5954,8 @@
       },
       "isCancelled": {
         "position": {
-          "x": 3504,
-          "y": -976
+          "x": 3968,
+          "y": -896
         },
         "size": {
           "width": 96,
@@ -4380,8 +5965,8 @@
       },
       "updCancelPatient": {
         "position": {
-          "x": 3696,
-          "y": -1072
+          "x": 4160,
+          "y": -992
         },
         "size": {
           "width": 96,
@@ -4391,8 +5976,8 @@
       },
       "sendBookingMail": {
         "position": {
-          "x": 3696,
-          "y": -880
+          "x": 4160,
+          "y": -800
         },
         "size": {
           "width": 96,
@@ -4402,8 +5987,8 @@
       },
       "updRescheduled": {
         "position": {
-          "x": 3888,
-          "y": -880
+          "x": 4352,
+          "y": -800
         },
         "size": {
           "width": 96,
@@ -4413,8 +5998,8 @@
       },
       "updCancelNoReply": {
         "position": {
-          "x": 2656,
-          "y": -784
+          "x": 3120,
+          "y": -704
         },
         "size": {
           "width": 96,
@@ -4424,8 +6009,8 @@
       },
       "moveReminderMail": {
         "position": {
-          "x": 1616,
-          "y": 112
+          "x": 2048,
+          "y": 96
         },
         "size": {
           "width": 96,
@@ -4435,8 +6020,8 @@
       },
       "dayOfConsult": {
         "position": {
-          "x": 2048,
-          "y": -208
+          "x": 2704,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -4446,8 +6031,8 @@
       },
       "emergencyWatch": {
         "position": {
-          "x": 1808,
-          "y": 304
+          "x": 2464,
+          "y": 400
         },
         "size": {
           "width": 560,
@@ -4457,8 +6042,8 @@
       },
       "delayEmerg": {
         "position": {
-          "x": 2464,
-          "y": 560
+          "x": 3120,
+          "y": 672
         },
         "size": {
           "width": 96,
@@ -4468,8 +6053,8 @@
       },
       "checkEmerg": {
         "position": {
-          "x": 2656,
-          "y": 560
+          "x": 3552,
+          "y": 672
         },
         "size": {
           "width": 96,
@@ -4479,19 +6064,8 @@
       },
       "hadEmergency": {
         "position": {
-          "x": 2464,
-          "y": 272
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "bufferBP2": {
-        "position": {
-          "x": 2656,
-          "y": 176
+          "x": 3120,
+          "y": 336
         },
         "size": {
           "width": 96,
@@ -4501,7 +6075,7 @@
       },
       "pollReplyLoop2": {
         "position": {
-          "x": 2848,
+          "x": 3312,
           "y": 64
         },
         "size": {
@@ -4512,7 +6086,7 @@
       },
       "delayReply2": {
         "position": {
-          "x": 3504,
+          "x": 3968,
           "y": 272
         },
         "size": {
@@ -4523,7 +6097,7 @@
       },
       "checkReply2": {
         "position": {
-          "x": 3696,
+          "x": 4160,
           "y": 272
         },
         "size": {
@@ -4534,7 +6108,7 @@
       },
       "gotReply2": {
         "position": {
-          "x": 3504,
+          "x": 3968,
           "y": 80
         },
         "size": {
@@ -4545,7 +6119,7 @@
       },
       "updCancel1h": {
         "position": {
-          "x": 3696,
+          "x": 4160,
           "y": 80
         },
         "size": {
@@ -4556,8 +6130,8 @@
       },
       "outcomeOk": {
         "position": {
-          "x": 2464,
-          "y": -208
+          "x": 3120,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -4567,8 +6141,8 @@
       },
       "terminateFlow": {
         "position": {
-          "x": 2656,
-          "y": -16
+          "x": 3552,
+          "y": -128
         },
         "size": {
           "width": 96,
@@ -4578,8 +6152,8 @@
       },
       "decisionTests": {
         "position": {
-          "x": 2656,
-          "y": -400
+          "x": 3552,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -4589,8 +6163,8 @@
       },
       "labTestRequest": {
         "position": {
-          "x": 3088,
-          "y": -400
+          "x": 3968,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -4600,8 +6174,8 @@
       },
       "joinTests": {
         "position": {
-          "x": 3504,
-          "y": -400
+          "x": 4160,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -4611,8 +6185,8 @@
       },
       "decisionMeds": {
         "position": {
-          "x": 2656,
-          "y": -208
+          "x": 3552,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -4622,8 +6196,8 @@
       },
       "pharmacyOrder": {
         "position": {
-          "x": 3088,
-          "y": -208
+          "x": 3968,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -4633,8 +6207,8 @@
       },
       "joinMeds": {
         "position": {
-          "x": 3504,
-          "y": -208
+          "x": 4160,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -4644,8 +6218,8 @@
       },
       "mergeOrders": {
         "position": {
-          "x": 3696,
-          "y": -400
+          "x": 4352,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -4655,8 +6229,8 @@
       },
       "apptCompleted": {
         "position": {
-          "x": 3888,
-          "y": -400
+          "x": 4544,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -4666,8 +6240,8 @@
       },
       "done_reschedCancel": {
         "position": {
-          "x": 1616,
-          "y": -304
+          "x": 2048,
+          "y": -224
         },
         "size": {
           "width": 96,
@@ -4677,8 +6251,8 @@
       },
       "done_noReply": {
         "position": {
-          "x": 3088,
-          "y": -784
+          "x": 3552,
+          "y": -704
         },
         "size": {
           "width": 96,
@@ -4688,8 +6262,8 @@
       },
       "done_cancelPatient": {
         "position": {
-          "x": 3888,
-          "y": -1072
+          "x": 4352,
+          "y": -992
         },
         "size": {
           "width": 96,
@@ -4699,8 +6273,8 @@
       },
       "done_rescheduled": {
         "position": {
-          "x": 4080,
-          "y": -880
+          "x": 4544,
+          "y": -800
         },
         "size": {
           "width": 96,
@@ -4710,7 +6284,7 @@
       },
       "done_emerg1h": {
         "position": {
-          "x": 3888,
+          "x": 4352,
           "y": 80
         },
         "size": {
@@ -4721,8 +6295,8 @@
       },
       "done_noEmerg": {
         "position": {
-          "x": 2656,
-          "y": 368
+          "x": 3552,
+          "y": 480
         },
         "size": {
           "width": 96,
@@ -4732,8 +6306,19 @@
       },
       "done_main": {
         "position": {
-          "x": 4080,
-          "y": -400
+          "x": 4736,
+          "y": -512
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "sendEmail1": {
+        "position": {
+          "x": 768,
+          "y": 0
         },
         "size": {
           "width": 96,

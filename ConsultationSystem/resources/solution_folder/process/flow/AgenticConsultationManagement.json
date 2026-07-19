@@ -1,0 +1,38 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "AgenticConsultationManagement",
+    "kind": "process",
+    "type": "flow",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "5a9ed874-ebf3-4051-bba9-83d816ab6e12",
+    "dependencies": [
+      {
+        "kind": "package",
+        "name": "AgenticConsultationManagement"
+      }
+    ],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "type": "Flow",
+      "name": "AgenticConsultationManagement",
+      "package": {
+        "key": "56cf0d39-db60-4835-8b0b-5b70fe263d0c"
+      },
+      "packageName": "ConsultationSystem.flow.AgenticConsultationManagement",
+      "targetFrameworkValue": "Portable",
+      "retentionAction": "Delete",
+      "retentionPeriod": 30,
+      "staleRetentionAction": "Delete",
+      "staleRetentionPeriod": 180
+    },
+    "locks": [],
+    "key": "01dadbcc-e940-4762-89ec-3c59f7bbdba2",
+    "files": []
+  }
+}

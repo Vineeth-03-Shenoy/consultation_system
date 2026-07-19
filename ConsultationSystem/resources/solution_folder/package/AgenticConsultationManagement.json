@@ -1,0 +1,22 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "AgenticConsultationManagement",
+    "kind": "package",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "5a9ed874-ebf3-4051-bba9-83d816ab6e12",
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "name": "AgenticConsultationManagement"
+    },
+    "locks": [],
+    "key": "56cf0d39-db60-4835-8b0b-5b70fe263d0c",
+    "files": []
+  }
+}

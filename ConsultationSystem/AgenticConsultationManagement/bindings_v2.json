@@ -1,0 +1,85 @@
+{
+  "version": "2.0",
+  "resources": [
+    {
+      "resource": "connection",
+      "key": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+      "id": "connection9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
+      "value": {
+        "ConnectionId": {
+          "isExpression": false,
+          "displayName": "uipath-google-gmail connection",
+          "defaultValue": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15"
+        }
+      },
+      "metadata": {
+        "ActivityName": "Email Received",
+        "BindingsVersion": "2.2",
+        "DisplayLabel": "uipath-google-gmail connection",
+        "UseConnectionService": "true",
+        "Connector": "uipath-google-gmail"
+      }
+    },
+    {
+      "resource": "connection",
+      "key": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+      "id": "connection088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+      "value": {
+        "ConnectionId": {
+          "defaultValue": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "isExpression": false,
+          "displayName": "uipath-uipath-dataservice connection"
+        }
+      },
+      "metadata": {
+        "ActivityName": "Create Appointment Record",
+        "BindingsVersion": "2.2",
+        "DisplayLabel": "uipath-uipath-dataservice connection",
+        "UseConnectionService": "true",
+        "Connector": "uipath-uipath-dataservice"
+      }
+    },
+    {
+      "resource": "EventTrigger",
+      "key": "",
+      "id": "EventTrigger",
+      "value": {
+        "ConnectionId": {
+          "isExpression": false
+        },
+        "EntryPointUniqueId": {
+          "defaultValue": "a0320203-ebb2-454a-b090-1ab4cff1446c",
+          "isExpression": false
+        }
+      },
+      "metadata": {
+        "UseConnectionService": "true",
+        "Connector": "uipath-google-gmail",
+        "ActivityName": "Email Received",
+        "BindingsVersion": "2.2",
+        "ObjectName": "Message",
+        "Operation": "EMAIL_RECEIVED",
+        "FilterExpression": "(ParentFolders[?ID=='Label_7937964960849497374'])"
+      }
+    },
+    {
+      "resource": "Property",
+      "key": "EMAIL_RECEIVED",
+      "id": "Property_emailReceived1",
+      "value": {
+        "ParentFolders[*].ID": {
+          "defaultValue": "Label_7937964960849497374",
+          "isExpression": false
+        }
+      },
+      "metadata": {
+        "TriggerCreateParameters": "ParentFolders[*].ID",
+        "DebugQueryParameters": "ParentFolders[*].ID",
+        "ActivityName": "Email Received",
+        "BindingsVersion": "2.2",
+        "ObjectName": "Message",
+        "ParentResourceKey": "EventTrigger."
+      }
+    }
+  ]
+}

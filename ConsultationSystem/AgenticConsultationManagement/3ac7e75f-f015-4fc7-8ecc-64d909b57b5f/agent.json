@@ -1,0 +1,88 @@
+{
+  "version": "1.1.0",
+  "settings": {
+    "model": "gpt-5.4",
+    "maxTokens": 16000,
+    "temperature": 0,
+    "engine": "basic-v2",
+    "maxIterations": 5,
+    "mode": "standard"
+  },
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "emailReceived1__output__Subject": {
+        "type": "string",
+        "description": "Bound from $vars.emailReceived1.output.Subject"
+      },
+      "emailReceived1__output__Body": {
+        "type": "string",
+        "description": "Bound from $vars.emailReceived1.output.Body"
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "patientId": {
+        "type": "string"
+      },
+      "appointmentDate": {
+        "type": "string"
+      },
+      "appointmentTime": {
+        "type": "string"
+      },
+      "valid": {
+        "type": "boolean"
+      },
+      "reason": {
+        "type": "string"
+      }
+    }
+  },
+  "metadata": {
+    "storageVersion": "50.0.0",
+    "isConversational": false,
+    "showProjectCreationExperience": false
+  },
+  "type": "lowCode",
+  "guardrails": [],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are the Booking Agent for a medical consultation clinic. Your only job is to read one inbound booking email and extract a structured booking request.\n\nRules:\n- Extract patientId, appointmentDate, and appointmentTime from the email subject and body.\n- The body typically contains lines like \"PatientID:0001\", \"Date:2026-07-25\", \"Time:14:30\", but tolerate free-form phrasing (e.g. \"I'd like to come in on 25th July at 2:30 pm, my patient id is 0001\").\n- Normalize dates to YYYY-MM-DD and times to 24-hour HH:MM.\n- Never invent values. If any of the three fields is missing or ambiguous, set valid to false and explain what is missing in reason. Do not guess a patient id or a date.\n- Set valid to true only when all three fields are confidently extracted.\n- Return only the structured output. Do not add commentary.",
+      "contentTokens": [
+        {
+          "type": "simpleText",
+          "rawString": "You are the Booking Agent for a medical consultation clinic. Your only job is to read one inbound booking email and extract a structured booking request.\n\nRules:\n- Extract patientId, appointmentDate, and appointmentTime from the email subject and body.\n- The body typically contains lines like \"PatientID:0001\", \"Date:2026-07-25\", \"Time:14:30\", but tolerate free-form phrasing (e.g. \"I'd like to come in on 25th July at 2:30 pm, my patient id is 0001\").\n- Normalize dates to YYYY-MM-DD and times to 24-hour HH:MM.\n- Never invent values. If any of the three fields is missing or ambiguous, set valid to false and explain what is missing in reason. Do not guess a patient id or a date.\n- Set valid to true only when all three fields are confidently extracted.\n- Return only the structured output. Do not add commentary."
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": "Extract the booking request from this email.\n\nSubject: {{input.emailReceived1__output__Subject}}\n\nBody:\n{{input.emailReceived1__output__Body}}",
+      "contentTokens": [
+        {
+          "type": "simpleText",
+          "rawString": "Extract the booking request from this email.\n\nSubject: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.emailReceived1__output__Subject"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n\nBody:\n"
+        },
+        {
+          "type": "variable",
+          "rawString": "input.emailReceived1__output__Body"
+        }
+      ]
+    }
+  ],
+  "projectId": "3ac7e75f-f015-4fc7-8ecc-64d909b57b5f",
+  "id": "3ac7e75f-f015-4fc7-8ecc-64d909b57b5f",
+  "name": "Booking Agent"
+}
