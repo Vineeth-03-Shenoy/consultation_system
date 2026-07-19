@@ -29,7 +29,7 @@
           "eventType": "EMAIL_RECEIVED",
           "eventMode": "polling",
           "filterExpression": "(ParentFolders[?ID=='Label_7937964960849497374'])",
-          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"executionType\":null,\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"Message\",\"activityType\":\"CuratedTrigger\",\"version\":\"1.0.0\",\"eventOperation\":\"EMAIL_RECEIVED\",\"eventMode\":\"polling\",\"supportsStreaming\":false},\"objectName\":\"Message\",\"packageVersion\":\"1.0.0\",\"httpMethod\":null,\"path\":null,\"filter\":null},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":null,\"connectorName\":\"Gmail\",\"maxPageSize\":null,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[],\"cachedBrowserItems\":[[\"ParentFolders_array_sub_ID\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"ConsultationBooking\"],[\"name\",\"ConsultationBooking\"],[\"id\",\"Label_7937964960849497374\"],[\"type\",\"user\"],[\"referenceID\",\"consultationbooking\"]],\"id\":\"Label_7937964960849497374\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[],\"objectDisplayName\":\"Normalizedmessage\",\"baseObject\":null,\"eventMode\":[\"polling\"],\"eventOperation\":null,\"language\":\"b065b929-37ff-4dcb-8b9d-85bb92e66d45\",\"hasBreakingChanges\":false,\"debugDisabled\":false,\"hasStaticLeftOperandFilterBuilder\":false,\"isV2TriggerBaseUrl\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"Attachments\\\":{\\\"ID\\\":string;\\\"MIMEType\\\":string;\\\"Name\\\":string;\\\"Size\\\":number}[];\\\"BCC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Body\\\":string;\\\"CC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Categories\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"From\\\":{\\\"Email\\\":string;\\\"Name\\\":string};\\\"HasAttachments\\\":boolean;\\\"ID\\\":string;\\\"Importance\\\":string;\\\"ParentFolders\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"Sensitivity\\\":string;\\\"Subject\\\":string;\\\"ThreadID\\\":string;\\\"To\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Type\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"Attachments[*]\":{\"title\":\"Attachments\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Attachments[*]\"}},\"BCC[*]\":{\"title\":\"Bcc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/BCC[*]\"}},\"CC[*]\":{\"title\":\"Cc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/CC[*]\"}},\"HasAttachments\":{\"title\":\"With attachments only\",\"type\":\"boolean\"},\"Categories[*]\":{\"title\":\"Categories\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Categories[*]\"}},\"To[*]\":{\"title\":\"To\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/To[*]\"}},\"From\":{\"title\":\"From\",\"$ref\":\"#/definitions/From\"},\"Subject\":{\"title\":\"Subject\",\"type\":\"string\"},\"ParentFolders[*]\":{\"title\":\"Parent folders\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/ParentFolders[*]\"}},\"Importance\":{\"title\":\"Importance\",\"type\":\"string\"},\"Sensitivity\":{\"title\":\"Sensitivity\",\"type\":\"string\"},\"Type\":{\"title\":\"Type\",\"type\":\"string\"},\"ThreadID\":{\"title\":\"Thread\",\"type\":\"string\"},\"ID\":{\"title\":\"Id\",\"type\":\"string\"},\"Body\":{\"title\":\"Body\",\"type\":\"string\"}},\"definitions\":{\"Attachments[*]\":{\"type\":\"object\",\"properties\":{\"MIMEType\":{\"title\":\"Attachment mime type\",\"type\":\"string\"},\"ID\":{\"title\":\"Attachment ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Attachment name\",\"type\":\"string\"},\"Size\":{\"title\":\"Attachment size\",\"type\":\"integer\"}}},\"BCC[*]\":{\"type\":\"object\",\"properties\":{\"Name\":{\"title\":\"Bcc name\",\"type\":\"string\"},\"Email\":{\"title\":\"Bcc email\",\"type\":\"string\"}}},\"CC[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"Cc\",\"type\":\"string\"},\"Name\":{\"title\":\"Cc name\",\"type\":\"string\"}}},\"Categories[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Category ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Category name\",\"type\":\"string\"}}},\"To[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"To\",\"type\":\"string\"},\"Name\":{\"title\":\"Recipient name\",\"type\":\"string\"}}},\"From\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"From\",\"type\":\"string\"},\"Name\":{\"title\":\"Sender name\",\"type\":\"string\"}}},\"ParentFolders[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Email folder or label\",\"type\":\"string\"},\"Name\":{\"title\":\"Label\",\"type\":\"string\"}}}}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"ParentFolders_array_sub_ID\",\"name\":\"ParentFolders[*].ID\",\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"type\":\"string\",\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"component\":\"FolderPicker\",\"textBlocks\":null,\"dictionaryWidget\":null,\"selection\":null,\"solutionResourceKind\":null,\"solutionResourceSubTypes\":null,\"exposeAsSubBinding\":true,\"enableURLInput\":null},\"fieldActions\":[],\"searchable\":false,\"searchableJoins\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"none\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":true,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"Normalizedmessage\",\"name\":\"Normalizedmessage\",\"displayName\":\"Normalizedmessage\",\"description\":\"\",\"type\":\"GeneratedNormalizedMessage_Trigger\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":true,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"eventFields\":[{\"name\":\"BCC[*].Email\",\"displayName\":\"BCC email\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Body\",\"displayName\":\"Body\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"CC[*].Email\",\"displayName\":\"CC\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"From.Email\",\"displayName\":\"From\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ParentFolders[*].Name\",\"displayName\":\"Label\",\"type\":\"string\",\"reference\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\"},\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Subject\",\"displayName\":\"Subject\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ThreadID\",\"displayName\":\"Thread\",\"type\":\"string\",\"reference\":{\"objectName\":\"NormalizedMessage\",\"lookupNames\":[\"Subject\"],\"lookupValue\":\"ThreadID\",\"path\":\"/NormalizedMessage/{ThreadID}\"},\"sampleValue\":null,\"isCuratedEventField\":false,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"To[*].Email\",\"displayName\":\"To\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"HasAttachments\",\"displayName\":\"With attachments only\",\"type\":\"boolean\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"boolean\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Boolean\",\"assemblyQualifiedName\":\"Boolean\",\"isValueType\":true}}]},\"filterNeedsRefresh\":false,\"filterExpression\":null,\"obsoleteEventFields\":false,\"filterWidget\":null}}",
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"executionType\":null,\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"Message\",\"activityType\":\"CuratedTrigger\",\"version\":\"1.0.0\",\"eventOperation\":\"EMAIL_RECEIVED\",\"eventMode\":\"polling\",\"supportsStreaming\":false},\"objectName\":\"Message\",\"packageVersion\":\"1.0.0\",\"httpMethod\":null,\"path\":null,\"filter\":null},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":null,\"connectorName\":\"Gmail\",\"maxPageSize\":null,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[[\"ParentFolders_array_sub_ID\",[{\"id\":\"Label_7937964960849497374\",\"displayColumns\":[\"ConsultationBooking\"],\"stringFormatDisplayColumns\":\"\"}]]],\"cachedBrowserItems\":[[\"ParentFolders_array_sub_ID\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"ConsultationBooking\"],[\"name\",\"ConsultationBooking\"],[\"id\",\"Label_7937964960849497374\"],[\"type\",\"user\"],[\"referenceID\",\"consultationbooking\"]],\"id\":\"Label_7937964960849497374\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[],\"objectDisplayName\":\"Normalizedmessage\",\"baseObject\":null,\"eventMode\":[\"polling\"],\"eventOperation\":null,\"language\":\"b065b929-37ff-4dcb-8b9d-85bb92e66d45\",\"hasBreakingChanges\":false,\"debugDisabled\":false,\"hasStaticLeftOperandFilterBuilder\":false,\"isV2TriggerBaseUrl\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"Attachments\\\":{\\\"ID\\\":string;\\\"MIMEType\\\":string;\\\"Name\\\":string;\\\"Size\\\":number}[];\\\"BCC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Body\\\":string;\\\"CC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Categories\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"From\\\":{\\\"Email\\\":string;\\\"Name\\\":string};\\\"HasAttachments\\\":boolean;\\\"ID\\\":string;\\\"Importance\\\":string;\\\"ParentFolders\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"Sensitivity\\\":string;\\\"Subject\\\":string;\\\"ThreadID\\\":string;\\\"To\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Type\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"Attachments[*]\":{\"title\":\"Attachments\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Attachments[*]\"}},\"BCC[*]\":{\"title\":\"Bcc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/BCC[*]\"}},\"CC[*]\":{\"title\":\"Cc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/CC[*]\"}},\"HasAttachments\":{\"title\":\"With attachments only\",\"type\":\"boolean\"},\"Categories[*]\":{\"title\":\"Categories\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Categories[*]\"}},\"To[*]\":{\"title\":\"To\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/To[*]\"}},\"From\":{\"title\":\"From\",\"$ref\":\"#/definitions/From\"},\"Subject\":{\"title\":\"Subject\",\"type\":\"string\"},\"ParentFolders[*]\":{\"title\":\"Parent folders\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/ParentFolders[*]\"}},\"Importance\":{\"title\":\"Importance\",\"type\":\"string\"},\"Sensitivity\":{\"title\":\"Sensitivity\",\"type\":\"string\"},\"Type\":{\"title\":\"Type\",\"type\":\"string\"},\"ThreadID\":{\"title\":\"Thread\",\"type\":\"string\"},\"ID\":{\"title\":\"Id\",\"type\":\"string\"},\"Body\":{\"title\":\"Body\",\"type\":\"string\"}},\"definitions\":{\"Attachments[*]\":{\"type\":\"object\",\"properties\":{\"MIMEType\":{\"title\":\"Attachment mime type\",\"type\":\"string\"},\"ID\":{\"title\":\"Attachment ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Attachment name\",\"type\":\"string\"},\"Size\":{\"title\":\"Attachment size\",\"type\":\"integer\"}}},\"BCC[*]\":{\"type\":\"object\",\"properties\":{\"Name\":{\"title\":\"Bcc name\",\"type\":\"string\"},\"Email\":{\"title\":\"Bcc email\",\"type\":\"string\"}}},\"CC[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"Cc\",\"type\":\"string\"},\"Name\":{\"title\":\"Cc name\",\"type\":\"string\"}}},\"Categories[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Category ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Category name\",\"type\":\"string\"}}},\"To[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"To\",\"type\":\"string\"},\"Name\":{\"title\":\"Recipient name\",\"type\":\"string\"}}},\"From\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"From\",\"type\":\"string\"},\"Name\":{\"title\":\"Sender name\",\"type\":\"string\"}}},\"ParentFolders[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Email folder or label\",\"type\":\"string\"},\"Name\":{\"title\":\"Label\",\"type\":\"string\"}}}}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"ParentFolders_array_sub_ID\",\"name\":\"ParentFolders[*].ID\",\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"type\":\"string\",\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"component\":\"FolderPicker\",\"textBlocks\":null,\"dictionaryWidget\":null,\"selection\":null,\"solutionResourceKind\":null,\"solutionResourceSubTypes\":null,\"exposeAsSubBinding\":true,\"enableURLInput\":null},\"fieldActions\":[],\"searchable\":false,\"searchableJoins\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"none\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":true,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"Normalizedmessage\",\"name\":\"Normalizedmessage\",\"displayName\":\"Normalizedmessage\",\"description\":\"\",\"type\":\"GeneratedNormalizedMessage_Trigger\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":true,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"eventFields\":[{\"name\":\"BCC[*].Email\",\"displayName\":\"BCC email\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Body\",\"displayName\":\"Body\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"CC[*].Email\",\"displayName\":\"CC\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"From.Email\",\"displayName\":\"From\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ParentFolders[*].Name\",\"displayName\":\"Label\",\"type\":\"string\",\"reference\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\"},\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Subject\",\"displayName\":\"Subject\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ThreadID\",\"displayName\":\"Thread\",\"type\":\"string\",\"reference\":{\"objectName\":\"NormalizedMessage\",\"lookupNames\":[\"Subject\"],\"lookupValue\":\"ThreadID\",\"path\":\"/NormalizedMessage/{ThreadID}\"},\"sampleValue\":null,\"isCuratedEventField\":false,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"To[*].Email\",\"displayName\":\"To\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"HasAttachments\",\"displayName\":\"With attachments only\",\"type\":\"boolean\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"boolean\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Boolean\",\"assemblyQualifiedName\":\"Boolean\",\"isValueType\":true}}]},\"filterNeedsRefresh\":false,\"filterExpression\":null,\"obsoleteEventFields\":false,\"filterWidget\":null}}",
           "uiPathActivityTypeId": "1d19e4f4-2817-3aeb-b71c-2dafca7b1da2",
           "errorState": {
             "issues": []
@@ -49,6 +49,65 @@
           "description": "The return value of the connector trigger.",
           "source": "=result.response",
           "var": "output"
+        }
+      }
+    },
+    {
+      "id": "normalizeMail",
+      "type": "core.action.script",
+      "typeVersion": "1.0",
+      "display": {
+        "label": "Normalize Trigger Mail"
+      },
+      "inputs": {
+        "script": "const o = $vars.emailReceived1.output || {}; const m = o.bookingRequest || o; return { ID: m.ID, Subject: m.Subject, Body: m.Body, From: m.From || {} };"
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
         }
       }
     },
@@ -2061,7 +2120,8 @@
       "type": "uipath.agent.autonomous",
       "typeVersion": "1.2",
       "display": {
-        "label": "Reply Analysis Agent"
+        "label": "Reply Analysis Agent",
+        "subLabel": ""
       },
       "inputs": {
         "source": "dff49a67-de87-4564-8767-0baa7fd4aae5",
@@ -2240,6 +2300,13 @@
       "id": "e1",
       "sourceNodeId": "emailReceived1",
       "sourcePort": "output",
+      "targetNodeId": "normalizeMail",
+      "targetPort": "input"
+    },
+    {
+      "id": "e1b",
+      "sourceNodeId": "normalizeMail",
+      "sourcePort": "success",
       "targetNodeId": "moveTriggerMailToProcessedMock1",
       "targetPort": "input"
     },
@@ -2687,7 +2754,7 @@
         "eventDefinition": "bpmn:MessageEventDefinition",
         "bindings": {
           "resource": "connection",
-          "resourceKey": "",
+          "resourceKey": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
           "values": [
             {
               "name": "uipath-google-gmail connection",
@@ -2816,6 +2883,154 @@
       }
     },
     {
+      "nodeType": "core.action.script",
+      "version": "1.0",
+      "category": "data-operations",
+      "description": "Run custom JavaScript code",
+      "tags": [
+        "code",
+        "javascript",
+        "python"
+      ],
+      "sortOrder": 35,
+      "supportsErrorHandling": true,
+      "display": {
+        "label": "Script",
+        "icon": "code"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input"
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "success",
+              "type": "source",
+              "handleType": "output"
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "debug": {
+        "runtime": "clientScript"
+      },
+      "model": {
+        "type": "bpmn:ScriptTask"
+      },
+      "inputDefinition": {
+        "type": "object",
+        "properties": {
+          "script": {
+            "type": "string",
+            "minLength": 1,
+            "errorMessage": "A script function is required",
+            "validationSeverity": "warning"
+          }
+        },
+        "required": [
+          "script"
+        ]
+      },
+      "inputDefaults": {
+        "script": ""
+      },
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the script",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "form": {
+        "id": "script-properties",
+        "title": "Script configuration",
+        "sections": [
+          {
+            "id": "script",
+            "title": "Script",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "name": "inputs.script",
+                "type": "custom",
+                "component": "script-editor",
+                "componentProps": {
+                  "language": "javascript",
+                  "returnType": "any",
+                  "validationMode": "script",
+                  "minHeight": 200,
+                  "placeholder": " // Return an object with your result\nreturn {\n  message: \"Web request response\",\n  data: $vars.httpRequest1.output\n                  };"
+                },
+                "label": "Code",
+                "description": "JavaScript expression that returns a result object"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "nodeType": "uipath.connector.uipath-google-gmail.move-email",
       "version": "1.0.0",
       "category": "connector.72537",
@@ -2870,7 +3085,7 @@
         "serviceType": "Intsvc.ActivityExecution",
         "bindings": {
           "resource": "connection",
-          "resourceKey": "",
+          "resourceKey": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
           "values": [
             {
               "name": "uipath-google-gmail connection",
@@ -3406,17 +3621,17 @@
           {
             "name": "_label",
             "type": "string",
-            "value": ""
+            "value": "Medical Report Agent"
           },
           {
             "name": "name",
             "type": "string",
-            "value": ""
+            "value": "Medical Report Agent"
           },
           {
             "name": "entryPoint",
             "type": "string",
-            "value": ""
+            "value": "9f63ce3e-748f-46b0-8690-0ac95aea4eb8/agent.json"
           }
         ]
       },
@@ -3479,7 +3694,7 @@
         "serviceType": "Intsvc.ActivityExecution",
         "bindings": {
           "resource": "connection",
-          "resourceKey": "",
+          "resourceKey": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
           "values": [
             {
               "name": "uipath-uipath-dataservice connection",
@@ -4170,154 +4385,6 @@
       }
     },
     {
-      "nodeType": "core.action.script",
-      "version": "1.0",
-      "category": "data-operations",
-      "description": "Run custom JavaScript code",
-      "tags": [
-        "code",
-        "javascript",
-        "python"
-      ],
-      "sortOrder": 35,
-      "supportsErrorHandling": true,
-      "display": {
-        "label": "Script",
-        "icon": "code"
-      },
-      "handleConfiguration": [
-        {
-          "position": "left",
-          "handles": [
-            {
-              "id": "input",
-              "type": "target",
-              "handleType": "input"
-            }
-          ]
-        },
-        {
-          "position": "right",
-          "handles": [
-            {
-              "id": "success",
-              "type": "source",
-              "handleType": "output"
-            },
-            {
-              "id": "error",
-              "label": "Error",
-              "type": "source",
-              "handleType": "output",
-              "visible": "{inputs.errorHandlingEnabled}",
-              "constraints": {
-                "maxConnections": 1
-              }
-            }
-          ]
-        }
-      ],
-      "debug": {
-        "runtime": "clientScript"
-      },
-      "model": {
-        "type": "bpmn:ScriptTask"
-      },
-      "inputDefinition": {
-        "type": "object",
-        "properties": {
-          "script": {
-            "type": "string",
-            "minLength": 1,
-            "errorMessage": "A script function is required",
-            "validationSeverity": "warning"
-          }
-        },
-        "required": [
-          "script"
-        ]
-      },
-      "inputDefaults": {
-        "script": ""
-      },
-      "outputDefinition": {
-        "output": {
-          "type": "object",
-          "description": "The return value of the script",
-          "source": "=result.response",
-          "var": "output"
-        },
-        "error": {
-          "type": "object",
-          "description": "Error information if the node fails",
-          "source": "=Error",
-          "var": "error",
-          "schema": {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "type": "object",
-            "required": [
-              "code",
-              "message",
-              "detail",
-              "category",
-              "status"
-            ],
-            "properties": {
-              "code": {
-                "type": "string",
-                "description": "Error code as a string"
-              },
-              "message": {
-                "type": "string",
-                "description": "High-level error message"
-              },
-              "detail": {
-                "type": "string",
-                "description": "Detailed error description"
-              },
-              "category": {
-                "type": "string",
-                "description": "Error category"
-              },
-              "status": {
-                "type": "integer",
-                "description": "HTTP status code"
-              }
-            },
-            "additionalProperties": false
-          }
-        }
-      },
-      "form": {
-        "id": "script-properties",
-        "title": "Script configuration",
-        "sections": [
-          {
-            "id": "script",
-            "title": "Script",
-            "collapsible": true,
-            "defaultExpanded": true,
-            "fields": [
-              {
-                "name": "inputs.script",
-                "type": "custom",
-                "component": "script-editor",
-                "componentProps": {
-                  "language": "javascript",
-                  "returnType": "any",
-                  "validationMode": "script",
-                  "minHeight": 200,
-                  "placeholder": " // Return an object with your result\nreturn {\n  message: \"Web request response\",\n  data: $vars.httpRequest1.output\n                  };"
-                },
-                "label": "Code",
-                "description": "JavaScript expression that returns a result object"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
       "nodeType": "core.logic.switch",
       "version": "1.1",
       "category": "control-flow",
@@ -4897,7 +4964,7 @@
         "serviceType": "Intsvc.ActivityExecution",
         "bindings": {
           "resource": "connection",
-          "resourceKey": "",
+          "resourceKey": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
           "values": [
             {
               "name": "uipath-uipath-dataservice connection",
@@ -5152,7 +5219,7 @@
         "serviceType": "Intsvc.ActivityExecution",
         "bindings": {
           "resource": "connection",
-          "resourceKey": "",
+          "resourceKey": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
           "values": [
             {
               "name": "uipath-google-gmail connection",
@@ -5368,7 +5435,7 @@
         "serviceType": "Intsvc.ActivityExecution",
         "bindings": {
           "resource": "connection",
-          "resourceKey": "",
+          "resourceKey": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
           "values": [
             {
               "name": "uipath-google-gmail connection",
@@ -5584,7 +5651,7 @@
         "serviceType": "Intsvc.ActivityExecution",
         "bindings": {
           "resource": "connection",
-          "resourceKey": "",
+          "resourceKey": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
           "values": [
             {
               "name": "uipath-uipath-dataservice connection",
@@ -5846,6 +5913,58 @@
       }
     ],
     "nodes": [
+      {
+        "id": "normalizeMail.output",
+        "type": "object",
+        "description": "The return value of the script",
+        "binding": {
+          "nodeId": "normalizeMail",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "normalizeMail.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "normalizeMail",
+          "outputId": "error"
+        }
+      },
       {
         "id": "moveTriggerMailToProcessedMock1.error",
         "type": "object",
@@ -7508,24 +7627,6 @@
   },
   "bindings": [
     {
-      "id": "bHGl2F3ix",
-      "name": "uipath-google-gmail connection",
-      "type": "string",
-      "resource": "connection",
-      "resourceKey": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-      "default": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-      "propertyAttribute": "ConnectionId"
-    },
-    {
-      "id": "bUjHF3jBC",
-      "name": "FolderKey",
-      "type": "string",
-      "resource": "connection",
-      "resourceKey": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-      "default": "bdd91426-3fa3-472e-846f-e091d3f5d315",
-      "propertyAttribute": "FolderKey"
-    },
-    {
       "id": "b0EJSukKB",
       "name": "uipath-google-gmail connection",
       "type": "string",
@@ -7577,7 +7678,7 @@
         },
         "collapsed": false
       },
-      "moveTriggerMailToProcessedMock1": {
+      "normalizeMail": {
         "position": {
           "x": 0,
           "y": 0
@@ -7588,9 +7689,20 @@
         },
         "collapsed": false
       },
+      "moveTriggerMailToProcessedMock1": {
+        "position": {
+          "x": 192,
+          "y": 0
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
       "bookingAgent": {
         "position": {
-          "x": 384,
+          "x": 576,
           "y": 0
         },
         "size": {
@@ -7601,7 +7713,7 @@
       },
       "createAppointment1": {
         "position": {
-          "x": 768,
+          "x": 960,
           "y": 0
         },
         "size": {
@@ -7612,7 +7724,7 @@
       },
       "pollDayLoop": {
         "position": {
-          "x": 1152,
+          "x": 1344,
           "y": -112
         },
         "size": {
@@ -7623,7 +7735,7 @@
       },
       "delayDayPoll": {
         "position": {
-          "x": 1808,
+          "x": 2000,
           "y": 288
         },
         "size": {
@@ -7634,7 +7746,7 @@
       },
       "checkDayEvents": {
         "position": {
-          "x": 2240,
+          "x": 2432,
           "y": 288
         },
         "size": {
@@ -7645,7 +7757,7 @@
       },
       "routeDayEvent": {
         "position": {
-          "x": 1808,
+          "x": 2000,
           "y": -272
         },
         "size": {
@@ -7656,7 +7768,7 @@
       },
       "pollReplyLoop1": {
         "position": {
-          "x": 2000,
+          "x": 2192,
           "y": -768
         },
         "size": {
@@ -7667,7 +7779,7 @@
       },
       "delayReply1": {
         "position": {
-          "x": 2896,
+          "x": 3088,
           "y": -512
         },
         "size": {
@@ -7678,7 +7790,7 @@
       },
       "checkReply1": {
         "position": {
-          "x": 3312,
+          "x": 3504,
           "y": -512
         },
         "size": {
@@ -7689,7 +7801,7 @@
       },
       "gotReply1": {
         "position": {
-          "x": 2896,
+          "x": 3088,
           "y": -800
         },
         "size": {
@@ -7700,7 +7812,7 @@
       },
       "moveReplyMail": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": -896
         },
         "size": {
@@ -7711,7 +7823,7 @@
       },
       "isCancelled": {
         "position": {
-          "x": 4352,
+          "x": 4544,
           "y": -896
         },
         "size": {
@@ -7722,7 +7834,7 @@
       },
       "moveReminderMail": {
         "position": {
-          "x": 2240,
+          "x": 2432,
           "y": 96
         },
         "size": {
@@ -7733,7 +7845,7 @@
       },
       "dayOfConsult": {
         "position": {
-          "x": 2896,
+          "x": 3088,
           "y": -320
         },
         "size": {
@@ -7744,7 +7856,7 @@
       },
       "emergencyWatch": {
         "position": {
-          "x": 2656,
+          "x": 2848,
           "y": 400
         },
         "size": {
@@ -7755,7 +7867,7 @@
       },
       "delayEmerg": {
         "position": {
-          "x": 3312,
+          "x": 3504,
           "y": 672
         },
         "size": {
@@ -7766,7 +7878,7 @@
       },
       "checkEmerg": {
         "position": {
-          "x": 3744,
+          "x": 3936,
           "y": 672
         },
         "size": {
@@ -7777,7 +7889,7 @@
       },
       "hadEmergency": {
         "position": {
-          "x": 3312,
+          "x": 3504,
           "y": 336
         },
         "size": {
@@ -7788,7 +7900,7 @@
       },
       "pollReplyLoop2": {
         "position": {
-          "x": 3504,
+          "x": 3696,
           "y": 64
         },
         "size": {
@@ -7799,7 +7911,7 @@
       },
       "delayReply2": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": 272
         },
         "size": {
@@ -7810,7 +7922,7 @@
       },
       "checkReply2": {
         "position": {
-          "x": 4352,
+          "x": 4544,
           "y": 272
         },
         "size": {
@@ -7821,7 +7933,7 @@
       },
       "gotReply2": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": 80
         },
         "size": {
@@ -7832,7 +7944,7 @@
       },
       "outcomeOk": {
         "position": {
-          "x": 3312,
+          "x": 3504,
           "y": -320
         },
         "size": {
@@ -7843,7 +7955,7 @@
       },
       "terminateFlow": {
         "position": {
-          "x": 3744,
+          "x": 3936,
           "y": -128
         },
         "size": {
@@ -7854,7 +7966,7 @@
       },
       "decisionTests": {
         "position": {
-          "x": 3744,
+          "x": 3936,
           "y": -512
         },
         "size": {
@@ -7865,7 +7977,7 @@
       },
       "labTestRequest": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": -512
         },
         "size": {
@@ -7876,7 +7988,7 @@
       },
       "joinTests": {
         "position": {
-          "x": 4352,
+          "x": 4544,
           "y": -512
         },
         "size": {
@@ -7887,7 +7999,7 @@
       },
       "decisionMeds": {
         "position": {
-          "x": 3744,
+          "x": 3936,
           "y": -320
         },
         "size": {
@@ -7898,7 +8010,7 @@
       },
       "pharmacyOrder": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": -320
         },
         "size": {
@@ -7909,7 +8021,7 @@
       },
       "joinMeds": {
         "position": {
-          "x": 4352,
+          "x": 4544,
           "y": -320
         },
         "size": {
@@ -7920,7 +8032,7 @@
       },
       "mergeOrders": {
         "position": {
-          "x": 4544,
+          "x": 4736,
           "y": -512
         },
         "size": {
@@ -7931,7 +8043,7 @@
       },
       "apptCompleted": {
         "position": {
-          "x": 4736,
+          "x": 4928,
           "y": -512
         },
         "size": {
@@ -7942,7 +8054,7 @@
       },
       "done_reschedCancel": {
         "position": {
-          "x": 2240,
+          "x": 2432,
           "y": -224
         },
         "size": {
@@ -7953,7 +8065,7 @@
       },
       "done_noReply": {
         "position": {
-          "x": 3744,
+          "x": 3936,
           "y": -704
         },
         "size": {
@@ -7964,7 +8076,7 @@
       },
       "done_cancelPatient": {
         "position": {
-          "x": 4736,
+          "x": 4928,
           "y": -992
         },
         "size": {
@@ -7975,7 +8087,7 @@
       },
       "done_rescheduled": {
         "position": {
-          "x": 4928,
+          "x": 5120,
           "y": -800
         },
         "size": {
@@ -7986,7 +8098,7 @@
       },
       "done_emerg1h": {
         "position": {
-          "x": 4544,
+          "x": 4736,
           "y": 80
         },
         "size": {
@@ -7997,7 +8109,7 @@
       },
       "done_noEmerg": {
         "position": {
-          "x": 3744,
+          "x": 3936,
           "y": 480
         },
         "size": {
@@ -8008,7 +8120,7 @@
       },
       "done_main": {
         "position": {
-          "x": 4928,
+          "x": 5120,
           "y": -512
         },
         "size": {
@@ -8019,7 +8131,7 @@
       },
       "sendEmail1": {
         "position": {
-          "x": 960,
+          "x": 1152,
           "y": 0
         },
         "size": {
@@ -8030,7 +8142,7 @@
       },
       "updateEntityRecord1": {
         "position": {
-          "x": 4544,
+          "x": 4736,
           "y": -992
         },
         "size": {
@@ -8041,7 +8153,7 @@
       },
       "updateEntityRecord2": {
         "position": {
-          "x": 4736,
+          "x": 4928,
           "y": -800
         },
         "size": {
@@ -8052,7 +8164,7 @@
       },
       "updateEntityRecord3": {
         "position": {
-          "x": 3312,
+          "x": 3504,
           "y": -704
         },
         "size": {
@@ -8063,7 +8175,7 @@
       },
       "updateEntityRecord4": {
         "position": {
-          "x": 4352,
+          "x": 4544,
           "y": 80
         },
         "size": {
@@ -8074,7 +8186,7 @@
       },
       "getNewestEmail1": {
         "position": {
-          "x": 3312,
+          "x": 3504,
           "y": -896
         },
         "size": {
@@ -8085,7 +8197,7 @@
       },
       "sendEmail2": {
         "position": {
-          "x": 4544,
+          "x": 4736,
           "y": -800
         },
         "size": {
@@ -8096,7 +8208,7 @@
       },
       "analyseReply": {
         "position": {
-          "x": 3648,
+          "x": 3840,
           "y": -896
         },
         "size": {
@@ -8107,7 +8219,7 @@
       },
       "getAllRecordsDataFabric1": {
         "position": {
-          "x": 192,
+          "x": 384,
           "y": 0
         },
         "size": {
