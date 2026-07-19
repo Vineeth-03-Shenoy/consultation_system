@@ -160,6 +160,12 @@
             "type": "string",
             "binding": "=$vars.emailReceived1.output.Body",
             "description": "Bound from $vars.emailReceived1.output.Body"
+          },
+          {
+            "id": "getAllRecordsDataFabric1__output",
+            "type": "object",
+            "binding": "=$vars.getAllRecordsDataFabric1.output",
+            "description": "Bound from $vars.getAllRecordsDataFabric1.output — existing Appointment records"
           }
         ],
         "agentOutputVariables": [
@@ -223,18 +229,18 @@
           "queryParameters": {
             "expansionLevel": 3
           },
+          "bodyParameters": {
+            "patientId": "=js:$vars.bookingAgent.output.patientId",
+            "appointmentDate": "=js:$vars.bookingAgent.output.appointmentDate",
+            "appointmentTime": "=js:$vars.bookingAgent.output.appointmentTime",
+            "patientEmail": "=js:$vars.emailReceived1.output.From.Email",
+            "status": "Booked",
+            "notes": "=js:$vars.bookingAgent.output.reason"
+          },
           "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.69.3\",\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"CreateEntityRecordCurated\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"CreateEntityRecordCurated\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/v2/{entityName}/CreateEntityRecord\",\"unifiedTypesCompatible\":true,\"savedJitInputFieldId\":\"in_CreateEntityRecordCurated\"},\"optionalConfiguration\":{\"_textBlocks\":[{\"name\":\"schemaAPIErrorMessage\",\"text\":\"Could not generate schema for the chosen entity.\",\"severity\":\"error\"}],\"objectActions\":[{\"actionType\":\"api\",\"rules\":[{\"type\":\"path\",\"refFieldName\":\"entityName\",\"refFieldValues\":[\"*\"],\"isCleared\":false,\"isVariable\":false}],\"name\":\"GenerateSchema\",\"apiConfiguration\":{\"url\":\"/standard-objects/{entityName}/CreateEntityRecord/metadata\",\"method\":\"GET\"},\"onSuccess\":{\"type\":\"remap\",\"remapConfiguration\":{\"input\":\"replace\",\"output\":\"replace\"}},\"onFailure\":{\"type\":\"remap\",\"remapConfiguration\":{\"input\":\"noop\",\"output\":\"noop\"},\"actions\":[{\"actionType\":\"showMessages\",\"refFieldName\":\"entityName\",\"messages\":[\"schemaAPIErrorMessage\"]}]}},{\"actionType\":\"reset\",\"rules\":[{\"type\":\"path\",\"refFieldName\":\"entityName\",\"isCleared\":true,\"isVariable\":false}],\"name\":\"ClearContent\"}],\"connectorName\":\"UiPath Data Fabric\",\"maxPageSize\":null,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[[\"entityName\",[{\"id\":\"Appointments\",\"displayColumns\":[\"Appointments\"],\"stringFormatDisplayColumns\":\"\"}]]],\"cachedBrowserItems\":[],\"cachedPropertyMappings\":[],\"primaryKeys\":[],\"objectDisplayName\":\"Create Entity Record\",\"eventMode\":null,\"eventOperation\":null,\"hasBreakingChanges\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"CreateTime\\\":string;\\\"CreatedBy\\\":{\\\"CreateTime\\\":string;\\\"Email\\\":string;\\\"Id\\\":string;\\\"IsActive\\\":boolean;\\\"Name\\\":string;\\\"Type\\\":number;\\\"UpdateTime\\\":string};\\\"Id\\\":string;\\\"UpdateTime\\\":string;\\\"UpdatedBy\\\":{\\\"CreateTime\\\":string;\\\"Email\\\":string;\\\"Id\\\":string;\\\"IsActive\\\":boolean;\\\"Name\\\":string;\\\"Type\\\":number;\\\"UpdateTime\\\":string};\\\"appointmentDate\\\":string;\\\"appointmentTime\\\":string;\\\"notes\\\":string;\\\"patientEmail\\\":string;\\\"patientId\\\":string;\\\"status\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"notes\":{\"title\":\"Notes\",\"type\":\"string\"},\"UpdatedBy\":{\"title\":\"Updated by\",\"$ref\":\"#/definitions/UpdatedBy\"},\"patientId\":{\"title\":\"Patient ID\",\"type\":\"string\"},\"CreateTime\":{\"title\":\"Create time\",\"type\":\"string\"},\"CreatedBy\":{\"title\":\"Created by\",\"$ref\":\"#/definitions/CreatedBy\"},\"appointmentTime\":{\"title\":\"Appointment time\",\"type\":\"string\"},\"UpdateTime\":{\"title\":\"Update time\",\"type\":\"string\"},\"patientEmail\":{\"title\":\"Patient email\",\"type\":\"string\"},\"Id\":{\"title\":\"Id\",\"type\":\"string\"},\"appointmentDate\":{\"title\":\"Appointment date\",\"type\":\"string\"},\"status\":{\"title\":\"Status\",\"type\":\"string\"}},\"definitions\":{\"UpdatedBy\":{\"type\":\"object\",\"properties\":{\"UpdateTime\":{\"title\":\"Updated by update time\",\"type\":\"string\"},\"Name\":{\"title\":\"Updated by name\",\"type\":\"string\"},\"IsActive\":{\"title\":\"Updated by is active\",\"type\":\"boolean\"},\"Id\":{\"title\":\"Updated by ID\",\"type\":\"string\",\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\"},\"Type\":{\"title\":\"Updated by type\",\"type\":\"integer\"},\"CreateTime\":{\"title\":\"Updated by create time\",\"type\":\"string\"},\"Email\":{\"title\":\"Updated by email\",\"type\":\"string\"}}},\"CreatedBy\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"Created by email\",\"type\":\"string\"},\"Type\":{\"title\":\"Created by type\",\"type\":\"integer\"},\"CreateTime\":{\"title\":\"Created by create time\",\"type\":\"string\"},\"UpdateTime\":{\"title\":\"Created by update time\",\"type\":\"string\"},\"Id\":{\"title\":\"Created by ID\",\"type\":\"string\",\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\"},\"Name\":{\"title\":\"Created by name\",\"type\":\"string\"},\"IsActive\":{\"title\":\"Created by is active\",\"type\":\"boolean\"}}}}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"entityName\",\"name\":\"entityName\",\"displayName\":\"Entity\",\"description\":\"Enter entity name\",\"type\":\"string\",\"sortOrder\":1,\"primaryKey\":false,\"lookup\":{\"objectName\":\"system\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"name\",\"path\":\"/standard-objects-hybrid\"},\"design\":{\"loadByDefault\":true,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":[],\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"path\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"expansionLevel\",\"name\":\"expansionLevel\",\"displayName\":\"Related record depth\",\"description\":\"Specify the depth of related records in the response from the service. Range: 1-3. Default: 3.\",\"type\":\"integer\",\"sortOrder\":2,\"format\":\"int32\",\"defaultValue\":3,\"primaryKey\":false,\"enum\":[{\"name\":\"1\",\"value\":1},{\"name\":\"2\",\"value\":2},{\"name\":\"3\",\"value\":3}],\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"fieldActions\":[{\"actionType\":\"showMessages\",\"rules\":[{\"type\":\"field\",\"refFieldName\":\"expansionLevel\",\"isCleared\":true,\"isVariable\":false,\"isWorkflowExpression\":true,\"isConstantValue\":true}],\"messages\":[\"expansionLevelInfoMessage\"]}],\"position\":\"secondary\",\"textBlocks\":[{\"name\":\"expansionLevelInfoMessage\",\"text\":\"Related record depth: Specify depth 1-3 for related records. Default: 3.\"}],\"validation\":false},\"fieldActions\":[{\"actionType\":\"showMessages\",\"rules\":[{\"type\":\"field\",\"refFieldName\":\"expansionLevel\",\"isCleared\":true,\"isVariable\":false,\"isWorkflowExpression\":true,\"isConstantValue\":true}],\"messages\":[\"expansionLevelInfoMessage\"]}],\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Int\",\"assemblyQualifiedName\":\"Int\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"patientId\",\"name\":\"patientId\",\"displayName\":\"patientId\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":true,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"appointmentDate\",\"name\":\"appointmentDate\",\"displayName\":\"appointmentDate\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"appointmentTime\",\"name\":\"appointmentTime\",\"displayName\":\"appointmentTime\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"notes\",\"name\":\"notes\",\"displayName\":\"notes\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"patientEmail\",\"name\":\"patientEmail\",\"displayName\":\"patientEmail\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"status\",\"name\":\"status\",\"displayName\":\"status\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"out_CreatedBy_sub_Id\",\"name\":\"CreatedBy.Id\",\"displayName\":\"CreatedBy.Id\",\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\",\"type\":\"string\",\"primaryKey\":true,\"lookup\":{\"lookupNames\":[\"Name\",\"Id\"],\"objectName\":\"SystemUser\",\"path\":\"/SystemUser\",\"lookupValue\":\"Id\"},\"design\":{\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\"},\"fieldActions\":[],\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"out_Id\",\"name\":\"Id\",\"displayName\":\"Id\",\"type\":\"string\",\"primaryKey\":true,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"out_UpdatedBy_sub_Id\",\"name\":\"UpdatedBy.Id\",\"displayName\":\"UpdatedBy.Id\",\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\",\"type\":\"string\",\"primaryKey\":true,\"lookup\":{\"lookupNames\":[\"Name\",\"Id\"],\"objectName\":\"SystemUser\",\"path\":\"/SystemUser\",\"lookupValue\":\"Id\"},\"design\":{\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\"},\"fieldActions\":[],\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"CreateEntityRecordCurated\",\"name\":\"CreateEntityRecordCurated\",\"displayName\":\"Record\",\"description\":\"Created record\",\"type\":\"GeneratedCreateEntityRecordCurated\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"jitInputField\":{\"typeScriptDefinition\":\"{\\\"appointmentDate\\\":string;\\\"appointmentTime\\\":string;\\\"notes\\\":string;\\\"patientEmail\\\":string;\\\"patientId\\\":string;\\\"status\\\":string}\",\"useUrlInput\":false,\"id\":\"in_CreateEntityRecordCurated\",\"name\":\"CreateEntityRecordCurated\",\"displayName\":\"Record\",\"description\":\"Record input object\",\"type\":\"GeneratedCreateEntityRecordCurated\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":\"{\\n  \\\"appointmentDate\\\": null,\\n  \\\"appointmentTime\\\": null,\\n  \\\"notes\\\": null,\\n  \\\"patientEmail\\\": null,\\n  \\\"patientId\\\": null,\\n  \\\"status\\\": null\\n}\",\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":true,\"request\":false,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"jitObjectInput\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},\"inputMode\":null,\"searchableFields\":[],\"hasUnifiedTypes\":false,\"jitTypeHash\":null}}}",
           "uiPathActivityTypeId": "dfd2bc7a-ca4b-3316-8a1f-57c9e106dfbf",
           "errorState": {
-            "issues": [
-              {
-                "id": "c59d6a33-82a8-49c0-95ff-b2150fa25665:patientId:error:b42be195-c962-4a05-8a19-30429b2f180e",
-                "title": "patientId is required",
-                "description": "",
-                "type": "Error",
-                "canNavigate": true
-              }
-            ]
+            "issues": []
           },
           "telemetryData": {
             "connectorKey": "uipath-uipath-dataservice",
@@ -1888,7 +1894,7 @@
       "type": "uipath.connector.uipath-google-gmail.send-email",
       "typeVersion": "1.0.0",
       "display": {
-        "label": "Send Email 2"
+        "label": "Send Booking Mail (re-trigger)"
       },
       "inputs": {
         "detail": {
@@ -1899,9 +1905,9 @@
           "method": "POST",
           "endpoint": "/SendEmail",
           "bodyParameters": {
-            "To": "=js:$vars.emailReceived1.output.From.Email",
-            "Subject": "=js:`Appointment Rescheduled - ${$vars.analyseReply.output.newDate} at ${$vars.analyseReply.output.newTime}`",
-            "Body": "=js:`Dear Patient ${$vars.bookingAgent.output.patientId},\n\nYour consultation has been rescheduled as requested.\n\nNew Date: ${$vars.analyseReply.output.newDate}\nNew Time: ${$vars.analyseReply.output.newTime}\n\nRegards,\nConsultation Clinic`",
+            "To": "not.sir.but.good.at.it@gmail.com",
+            "Subject": "Book Consultation",
+            "Body": "=js:`PatientID:${$vars.bookingAgent.output.patientId}\nDate:${$vars.analyseReply.output.newDate}\nTime:${$vars.analyseReply.output.newTime}`",
             "Importance": "normal"
           },
           "queryParameters": {
@@ -2073,6 +2079,89 @@
           }
         }
       }
+    },
+    {
+      "id": "getAllRecordsDataFabric1",
+      "type": "uipath.connector.uipath-uipath-dataservice.query-entity-records",
+      "typeVersion": "1.0.0",
+      "display": {
+        "label": "Get All Records (Data Fabric)"
+      },
+      "inputs": {
+        "detail": {
+          "connector": "uipath-uipath-dataservice",
+          "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+          "method": "POST",
+          "endpoint": "/v2/{entityName}/qer",
+          "queryParameters": {
+            "expansionLevel": 1
+          },
+          "pathParameters": {
+            "entityName": "Appointments"
+          },
+          "uiPathActivityTypeId": "703065b9-a310-33b8-9d4d-12df0a6f520b",
+          "errorState": {
+            "issues": []
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"QueryEntityRecordsCurated\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"QueryEntityRecordsCurated\",\"operation\":\"list\",\"httpMethod\":\"POST\",\"path\":\"/v2/{entityName}/qer\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}",
+          "inputMetadata": {
+            "operation": "list",
+            "pagination": {
+              "maxPageSize": 1000
+            }
+          }
+        }
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
     }
   ],
   "edges": [
@@ -2086,6 +2175,13 @@
     {
       "id": "e2",
       "sourceNodeId": "moveTriggerMailToProcessedMock1",
+      "sourcePort": "output",
+      "targetNodeId": "getAllRecordsDataFabric1",
+      "targetPort": "input"
+    },
+    {
+      "id": "e2b",
+      "sourceNodeId": "getAllRecordsDataFabric1",
       "sourcePort": "output",
       "targetNodeId": "bookingAgent",
       "targetPort": "input"
@@ -5363,6 +5459,222 @@
       }
     },
     {
+      "nodeType": "uipath.connector.uipath-uipath-dataservice.query-entity-records",
+      "version": "1.0.0",
+      "category": "connector.72495",
+      "tags": [
+        "connector",
+        "activity"
+      ],
+      "sortOrder": 515,
+      "supportsErrorHandling": true,
+      "description": "(UiPath Data Fabric) Retrieves a list of records for the selected Entity from Data Fabric, according to specified filters.",
+      "display": {
+        "label": "Query Entity Records",
+        "description": "(UiPath Data Fabric) Retrieves a list of records for the selected Entity from Data Fabric, according to specified filters.",
+        "icon": "https://staging.uipath.com/ee592586-d464-411d-8c04-487e05e39950/studio_/typecache/icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input",
+              "label": ""
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output",
+              "label": ""
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:SendTask",
+        "serviceType": "Intsvc.ActivityExecution",
+        "bindings": {
+          "resource": "connection",
+          "resourceKey": "",
+          "values": [
+            {
+              "name": "uipath-uipath-dataservice connection",
+              "propertyAttribute": "ConnectionId"
+            },
+            {
+              "name": "FolderKey",
+              "propertyAttribute": "FolderKey"
+            }
+          ]
+        },
+        "context": [
+          {
+            "name": "connectorKey",
+            "type": "string",
+            "value": "uipath-uipath-dataservice"
+          },
+          {
+            "name": "operation",
+            "type": "string"
+          },
+          {
+            "name": "objectName",
+            "value": "QueryEntityRecordsCurated",
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "value": "POST"
+          },
+          {
+            "name": "connection",
+            "type": "string",
+            "value": "<bindings.uipath-uipath-dataservice connection>"
+          },
+          {
+            "name": "folderKey",
+            "type": "string",
+            "value": "<bindings.FolderKey>"
+          },
+          {
+            "name": "activityConfigurationVersion",
+            "type": "string",
+            "value": "v1"
+          },
+          {
+            "name": "metadata",
+            "body": {
+              "telemetryData": {
+                "connectorKey": "uipath-uipath-dataservice",
+                "connectorName": "Query Entity Records"
+              },
+              "inputMetadata": {},
+              "errorState": {
+                "hasError": true
+              }
+            },
+            "type": "json"
+          }
+        ]
+      },
+      "form": {
+        "id": "connector-properties",
+        "title": "Connector configuration",
+        "sections": [
+          {
+            "id": "connector",
+            "title": "Connector",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "label": "",
+                "name": "inputs.detail",
+                "type": "custom",
+                "component": "dap-config",
+                "componentProps": {
+                  "connectorDetail": {
+                    "isAppActivity": false,
+                    "packageId": "72495",
+                    "svgIconUrl": "icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg",
+                    "displayName": "Query Entity Records",
+                    "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
+                    "description": "Retrieves a list of records for the selected Entity from Data Fabric, according to specified filters.",
+                    "category": "",
+                    "activityColor": "#E56D5C",
+                    "configuration": "{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"QueryEntityRecordsCurated\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"}",
+                    "uiPathActivityTypeId": "703065b9-a310-33b8-9d4d-12df0a6f520b",
+                    "isExperimental": false,
+                    "helpUrlTemplate": "https://docs.uipath.com/{0}/activities/other/latest/integration-service/uipath-uipath-dataservice-Query-Entity-Records",
+                    "isEnabled": true,
+                    "targetPlatform": "CrossPlatform",
+                    "isAdvanced": false,
+                    "isRestricted": false,
+                    "hasWpfOnlyDesigner": false,
+                    "tags": [
+                      ""
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inputDefinition": {},
+      "inputDefaults": {},
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "debug": {
+        "runtime": "bpmnEngine"
+      }
+    },
+    {
       "nodeType": "core.trigger.manual",
       "version": "1.0",
       "category": "trigger",
@@ -6965,6 +7277,58 @@
         }
       },
       {
+        "id": "getAllRecordsDataFabric1.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "getAllRecordsDataFabric1",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "getAllRecordsDataFabric1.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "getAllRecordsDataFabric1",
+          "outputId": "error"
+        }
+      },
+      {
         "id": "emailReceived1.output",
         "type": "object",
         "description": "The return value of the connector trigger.",
@@ -7053,8 +7417,8 @@
       "type": "string",
       "resource": "connection",
       "resourceKey": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
-      "propertyAttribute": "ConnectionId",
-      "default": "b065b929-37ff-4dcb-8b9d-85bb92e66d45"
+      "default": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+      "propertyAttribute": "ConnectionId"
     },
     {
       "id": "bWUcL1sYB",
@@ -7062,8 +7426,8 @@
       "type": "string",
       "resource": "connection",
       "resourceKey": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
-      "propertyAttribute": "FolderKey",
-      "default": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a"
+      "default": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+      "propertyAttribute": "FolderKey"
     },
     {
       "id": "bOnphv6rH",
@@ -7112,7 +7476,7 @@
       },
       "bookingAgent": {
         "position": {
-          "x": 192,
+          "x": 384,
           "y": 0
         },
         "size": {
@@ -7123,7 +7487,7 @@
       },
       "createAppointment1": {
         "position": {
-          "x": 576,
+          "x": 768,
           "y": 0
         },
         "size": {
@@ -7134,7 +7498,7 @@
       },
       "pollDayLoop": {
         "position": {
-          "x": 960,
+          "x": 1152,
           "y": -112
         },
         "size": {
@@ -7145,7 +7509,7 @@
       },
       "delayDayPoll": {
         "position": {
-          "x": 1616,
+          "x": 1808,
           "y": 288
         },
         "size": {
@@ -7156,7 +7520,7 @@
       },
       "checkDayEvents": {
         "position": {
-          "x": 2048,
+          "x": 2240,
           "y": 288
         },
         "size": {
@@ -7167,7 +7531,7 @@
       },
       "routeDayEvent": {
         "position": {
-          "x": 1616,
+          "x": 1808,
           "y": -272
         },
         "size": {
@@ -7178,7 +7542,7 @@
       },
       "pollReplyLoop1": {
         "position": {
-          "x": 1808,
+          "x": 2000,
           "y": -768
         },
         "size": {
@@ -7189,7 +7553,7 @@
       },
       "delayReply1": {
         "position": {
-          "x": 2704,
+          "x": 2896,
           "y": -512
         },
         "size": {
@@ -7200,7 +7564,7 @@
       },
       "checkReply1": {
         "position": {
-          "x": 3120,
+          "x": 3312,
           "y": -512
         },
         "size": {
@@ -7211,7 +7575,7 @@
       },
       "gotReply1": {
         "position": {
-          "x": 2704,
+          "x": 2896,
           "y": -800
         },
         "size": {
@@ -7222,7 +7586,7 @@
       },
       "moveReplyMail": {
         "position": {
-          "x": 3968,
+          "x": 4160,
           "y": -896
         },
         "size": {
@@ -7233,7 +7597,7 @@
       },
       "isCancelled": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": -896
         },
         "size": {
@@ -7244,7 +7608,7 @@
       },
       "moveReminderMail": {
         "position": {
-          "x": 2048,
+          "x": 2240,
           "y": 96
         },
         "size": {
@@ -7255,7 +7619,7 @@
       },
       "dayOfConsult": {
         "position": {
-          "x": 2704,
+          "x": 2896,
           "y": -320
         },
         "size": {
@@ -7266,7 +7630,7 @@
       },
       "emergencyWatch": {
         "position": {
-          "x": 2464,
+          "x": 2656,
           "y": 400
         },
         "size": {
@@ -7277,7 +7641,7 @@
       },
       "delayEmerg": {
         "position": {
-          "x": 3120,
+          "x": 3312,
           "y": 672
         },
         "size": {
@@ -7288,7 +7652,7 @@
       },
       "checkEmerg": {
         "position": {
-          "x": 3552,
+          "x": 3744,
           "y": 672
         },
         "size": {
@@ -7299,7 +7663,7 @@
       },
       "hadEmergency": {
         "position": {
-          "x": 3120,
+          "x": 3312,
           "y": 336
         },
         "size": {
@@ -7310,7 +7674,7 @@
       },
       "pollReplyLoop2": {
         "position": {
-          "x": 3312,
+          "x": 3504,
           "y": 64
         },
         "size": {
@@ -7321,7 +7685,7 @@
       },
       "delayReply2": {
         "position": {
-          "x": 3968,
+          "x": 4160,
           "y": 272
         },
         "size": {
@@ -7332,7 +7696,7 @@
       },
       "checkReply2": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": 272
         },
         "size": {
@@ -7343,7 +7707,7 @@
       },
       "gotReply2": {
         "position": {
-          "x": 3968,
+          "x": 4160,
           "y": 80
         },
         "size": {
@@ -7354,7 +7718,7 @@
       },
       "outcomeOk": {
         "position": {
-          "x": 3120,
+          "x": 3312,
           "y": -320
         },
         "size": {
@@ -7365,7 +7729,7 @@
       },
       "terminateFlow": {
         "position": {
-          "x": 3552,
+          "x": 3744,
           "y": -128
         },
         "size": {
@@ -7376,7 +7740,7 @@
       },
       "decisionTests": {
         "position": {
-          "x": 3552,
+          "x": 3744,
           "y": -512
         },
         "size": {
@@ -7387,7 +7751,7 @@
       },
       "labTestRequest": {
         "position": {
-          "x": 3968,
+          "x": 4160,
           "y": -512
         },
         "size": {
@@ -7398,7 +7762,7 @@
       },
       "joinTests": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": -512
         },
         "size": {
@@ -7409,7 +7773,7 @@
       },
       "decisionMeds": {
         "position": {
-          "x": 3552,
+          "x": 3744,
           "y": -320
         },
         "size": {
@@ -7420,7 +7784,7 @@
       },
       "pharmacyOrder": {
         "position": {
-          "x": 3968,
+          "x": 4160,
           "y": -320
         },
         "size": {
@@ -7431,7 +7795,7 @@
       },
       "joinMeds": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": -320
         },
         "size": {
@@ -7442,7 +7806,7 @@
       },
       "mergeOrders": {
         "position": {
-          "x": 4352,
+          "x": 4544,
           "y": -512
         },
         "size": {
@@ -7453,7 +7817,7 @@
       },
       "apptCompleted": {
         "position": {
-          "x": 4544,
+          "x": 4736,
           "y": -512
         },
         "size": {
@@ -7464,7 +7828,7 @@
       },
       "done_reschedCancel": {
         "position": {
-          "x": 2048,
+          "x": 2240,
           "y": -224
         },
         "size": {
@@ -7475,7 +7839,7 @@
       },
       "done_noReply": {
         "position": {
-          "x": 3552,
+          "x": 3744,
           "y": -704
         },
         "size": {
@@ -7486,7 +7850,7 @@
       },
       "done_cancelPatient": {
         "position": {
-          "x": 4544,
+          "x": 4736,
           "y": -992
         },
         "size": {
@@ -7497,7 +7861,7 @@
       },
       "done_rescheduled": {
         "position": {
-          "x": 4736,
+          "x": 4928,
           "y": -800
         },
         "size": {
@@ -7508,7 +7872,7 @@
       },
       "done_emerg1h": {
         "position": {
-          "x": 4352,
+          "x": 4544,
           "y": 80
         },
         "size": {
@@ -7519,7 +7883,7 @@
       },
       "done_noEmerg": {
         "position": {
-          "x": 3552,
+          "x": 3744,
           "y": 480
         },
         "size": {
@@ -7530,7 +7894,7 @@
       },
       "done_main": {
         "position": {
-          "x": 4736,
+          "x": 4928,
           "y": -512
         },
         "size": {
@@ -7541,7 +7905,7 @@
       },
       "sendEmail1": {
         "position": {
-          "x": 768,
+          "x": 960,
           "y": 0
         },
         "size": {
@@ -7552,7 +7916,7 @@
       },
       "updateEntityRecord1": {
         "position": {
-          "x": 4352,
+          "x": 4544,
           "y": -992
         },
         "size": {
@@ -7563,7 +7927,7 @@
       },
       "updateEntityRecord2": {
         "position": {
-          "x": 4544,
+          "x": 4736,
           "y": -800
         },
         "size": {
@@ -7574,7 +7938,7 @@
       },
       "updateEntityRecord3": {
         "position": {
-          "x": 3120,
+          "x": 3312,
           "y": -704
         },
         "size": {
@@ -7585,7 +7949,7 @@
       },
       "updateEntityRecord4": {
         "position": {
-          "x": 4160,
+          "x": 4352,
           "y": 80
         },
         "size": {
@@ -7596,7 +7960,7 @@
       },
       "getNewestEmail1": {
         "position": {
-          "x": 3120,
+          "x": 3312,
           "y": -896
         },
         "size": {
@@ -7607,7 +7971,7 @@
       },
       "sendEmail2": {
         "position": {
-          "x": 4352,
+          "x": 4544,
           "y": -800
         },
         "size": {
@@ -7618,11 +7982,22 @@
       },
       "analyseReply": {
         "position": {
-          "x": 3456,
+          "x": 3648,
           "y": -896
         },
         "size": {
           "width": 288,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "getAllRecordsDataFabric1": {
+        "position": {
+          "x": 192,
+          "y": 0
+        },
+        "size": {
+          "width": 96,
           "height": 96
         },
         "collapsed": false
