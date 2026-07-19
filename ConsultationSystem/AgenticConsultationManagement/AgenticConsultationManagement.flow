@@ -19,9 +19,9 @@
         "isDefaultEntryPoint": true,
         "detail": {
           "connector": "uipath-google-gmail",
-          "connectionId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-          "connectionResourceId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-          "connectionFolderKey": "bdd91426-3fa3-472e-846f-e091d3f5d315",
+          "connectionId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionResourceId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
           "eventParameters": {
             "ParentFolders[*].ID": "Label_7937964960849497374"
           },
@@ -29,7 +29,7 @@
           "eventType": "EMAIL_RECEIVED",
           "eventMode": "polling",
           "filterExpression": "(ParentFolders[?ID=='Label_7937964960849497374'])",
-          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"executionType\":null,\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"Message\",\"activityType\":\"CuratedTrigger\",\"version\":\"1.0.0\",\"eventOperation\":\"EMAIL_RECEIVED\",\"eventMode\":\"polling\",\"supportsStreaming\":false},\"objectName\":\"Message\",\"packageVersion\":\"1.0.0\",\"httpMethod\":null,\"path\":null,\"filter\":null},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":null,\"connectorName\":\"Gmail\",\"maxPageSize\":null,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[[\"ParentFolders_array_sub_ID\",[{\"id\":\"Label_7937964960849497374\",\"displayColumns\":[\"ConsultationBooking\"],\"stringFormatDisplayColumns\":\"\"}]]],\"cachedBrowserItems\":[[\"ParentFolders_array_sub_ID\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"ConsultationBooking\"],[\"name\",\"ConsultationBooking\"],[\"id\",\"Label_7937964960849497374\"],[\"type\",\"user\"],[\"referenceID\",\"consultationbooking\"]],\"id\":\"Label_7937964960849497374\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[],\"objectDisplayName\":\"Normalizedmessage\",\"baseObject\":null,\"eventMode\":[\"polling\"],\"eventOperation\":null,\"language\":\"9d7d8b49-2d01-4e1e-9852-6df8e6167c15\",\"hasBreakingChanges\":false,\"debugDisabled\":false,\"hasStaticLeftOperandFilterBuilder\":false,\"isV2TriggerBaseUrl\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"Attachments\\\":{\\\"ID\\\":string;\\\"MIMEType\\\":string;\\\"Name\\\":string;\\\"Size\\\":number}[];\\\"BCC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Body\\\":string;\\\"CC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Categories\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"From\\\":{\\\"Email\\\":string;\\\"Name\\\":string};\\\"HasAttachments\\\":boolean;\\\"ID\\\":string;\\\"Importance\\\":string;\\\"ParentFolders\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"Sensitivity\\\":string;\\\"Subject\\\":string;\\\"ThreadID\\\":string;\\\"To\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Type\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"Attachments[*]\":{\"title\":\"Attachments\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Attachments[*]\"}},\"BCC[*]\":{\"title\":\"Bcc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/BCC[*]\"}},\"CC[*]\":{\"title\":\"Cc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/CC[*]\"}},\"HasAttachments\":{\"title\":\"With attachments only\",\"type\":\"boolean\"},\"Categories[*]\":{\"title\":\"Categories\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Categories[*]\"}},\"To[*]\":{\"title\":\"To\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/To[*]\"}},\"From\":{\"title\":\"From\",\"$ref\":\"#/definitions/From\"},\"Subject\":{\"title\":\"Subject\",\"type\":\"string\"},\"ParentFolders[*]\":{\"title\":\"Parent folders\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/ParentFolders[*]\"}},\"Importance\":{\"title\":\"Importance\",\"type\":\"string\"},\"Sensitivity\":{\"title\":\"Sensitivity\",\"type\":\"string\"},\"Type\":{\"title\":\"Type\",\"type\":\"string\"},\"ThreadID\":{\"title\":\"Thread\",\"type\":\"string\"},\"ID\":{\"title\":\"Id\",\"type\":\"string\"},\"Body\":{\"title\":\"Body\",\"type\":\"string\"}},\"definitions\":{\"Attachments[*]\":{\"type\":\"object\",\"properties\":{\"MIMEType\":{\"title\":\"Attachment mime type\",\"type\":\"string\"},\"ID\":{\"title\":\"Attachment ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Attachment name\",\"type\":\"string\"},\"Size\":{\"title\":\"Attachment size\",\"type\":\"integer\"}}},\"BCC[*]\":{\"type\":\"object\",\"properties\":{\"Name\":{\"title\":\"Bcc name\",\"type\":\"string\"},\"Email\":{\"title\":\"Bcc email\",\"type\":\"string\"}}},\"CC[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"Cc\",\"type\":\"string\"},\"Name\":{\"title\":\"Cc name\",\"type\":\"string\"}}},\"Categories[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Category ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Category name\",\"type\":\"string\"}}},\"To[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"To\",\"type\":\"string\"},\"Name\":{\"title\":\"Recipient name\",\"type\":\"string\"}}},\"From\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"From\",\"type\":\"string\"},\"Name\":{\"title\":\"Sender name\",\"type\":\"string\"}}},\"ParentFolders[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Email folder or label\",\"type\":\"string\"},\"Name\":{\"title\":\"Label\",\"type\":\"string\"}}}}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"id\":\"ParentFolders_array_sub_ID\",\"name\":\"ParentFolders[*].ID\",\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"type\":\"string\",\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"component\":\"FolderPicker\",\"textBlocks\":null,\"dictionaryWidget\":null,\"selection\":null,\"solutionResourceKind\":null,\"solutionResourceSubTypes\":null,\"exposeAsSubBinding\":true},\"fieldActions\":[],\"searchable\":false,\"searchableJoins\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"none\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":true,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"id\":\"Normalizedmessage\",\"name\":\"Normalizedmessage\",\"displayName\":\"Normalizedmessage\",\"description\":\"\",\"type\":\"GeneratedNormalizedMessage_Trigger\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":true,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"eventFields\":[{\"name\":\"BCC[*].Email\",\"displayName\":\"BCC email\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Body\",\"displayName\":\"Body\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"CC[*].Email\",\"displayName\":\"CC\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"From.Email\",\"displayName\":\"From\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ParentFolders[*].Name\",\"displayName\":\"Label\",\"type\":\"string\",\"reference\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\"},\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Subject\",\"displayName\":\"Subject\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ThreadID\",\"displayName\":\"Thread\",\"type\":\"string\",\"reference\":{\"objectName\":\"NormalizedMessage\",\"lookupNames\":[\"Subject\"],\"lookupValue\":\"ThreadID\",\"path\":\"/NormalizedMessage/{ThreadID}\"},\"sampleValue\":null,\"isCuratedEventField\":false,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"To[*].Email\",\"displayName\":\"To\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"HasAttachments\",\"displayName\":\"With attachments only\",\"type\":\"boolean\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"boolean\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Boolean\",\"assemblyQualifiedName\":\"Boolean\",\"isValueType\":true}}]},\"filterNeedsRefresh\":false,\"filterExpression\":null,\"obsoleteEventFields\":false,\"filterWidget\":null}}",
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"executionType\":null,\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"Message\",\"activityType\":\"CuratedTrigger\",\"version\":\"1.0.0\",\"eventOperation\":\"EMAIL_RECEIVED\",\"eventMode\":\"polling\",\"supportsStreaming\":false},\"objectName\":\"Message\",\"packageVersion\":\"1.0.0\",\"httpMethod\":null,\"path\":null,\"filter\":null},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":null,\"connectorName\":\"Gmail\",\"maxPageSize\":null,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[],\"cachedBrowserItems\":[[\"ParentFolders_array_sub_ID\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"ConsultationBooking\"],[\"name\",\"ConsultationBooking\"],[\"id\",\"Label_7937964960849497374\"],[\"type\",\"user\"],[\"referenceID\",\"consultationbooking\"]],\"id\":\"Label_7937964960849497374\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[],\"objectDisplayName\":\"Normalizedmessage\",\"baseObject\":null,\"eventMode\":[\"polling\"],\"eventOperation\":null,\"language\":\"b065b929-37ff-4dcb-8b9d-85bb92e66d45\",\"hasBreakingChanges\":false,\"debugDisabled\":false,\"hasStaticLeftOperandFilterBuilder\":false,\"isV2TriggerBaseUrl\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"Attachments\\\":{\\\"ID\\\":string;\\\"MIMEType\\\":string;\\\"Name\\\":string;\\\"Size\\\":number}[];\\\"BCC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Body\\\":string;\\\"CC\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Categories\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"From\\\":{\\\"Email\\\":string;\\\"Name\\\":string};\\\"HasAttachments\\\":boolean;\\\"ID\\\":string;\\\"Importance\\\":string;\\\"ParentFolders\\\":{\\\"ID\\\":string;\\\"Name\\\":string}[];\\\"Sensitivity\\\":string;\\\"Subject\\\":string;\\\"ThreadID\\\":string;\\\"To\\\":{\\\"Email\\\":string;\\\"Name\\\":string}[];\\\"Type\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"Attachments[*]\":{\"title\":\"Attachments\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Attachments[*]\"}},\"BCC[*]\":{\"title\":\"Bcc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/BCC[*]\"}},\"CC[*]\":{\"title\":\"Cc\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/CC[*]\"}},\"HasAttachments\":{\"title\":\"With attachments only\",\"type\":\"boolean\"},\"Categories[*]\":{\"title\":\"Categories\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/Categories[*]\"}},\"To[*]\":{\"title\":\"To\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/To[*]\"}},\"From\":{\"title\":\"From\",\"$ref\":\"#/definitions/From\"},\"Subject\":{\"title\":\"Subject\",\"type\":\"string\"},\"ParentFolders[*]\":{\"title\":\"Parent folders\",\"type\":\"array\",\"items\":{\"$ref\":\"#/definitions/ParentFolders[*]\"}},\"Importance\":{\"title\":\"Importance\",\"type\":\"string\"},\"Sensitivity\":{\"title\":\"Sensitivity\",\"type\":\"string\"},\"Type\":{\"title\":\"Type\",\"type\":\"string\"},\"ThreadID\":{\"title\":\"Thread\",\"type\":\"string\"},\"ID\":{\"title\":\"Id\",\"type\":\"string\"},\"Body\":{\"title\":\"Body\",\"type\":\"string\"}},\"definitions\":{\"Attachments[*]\":{\"type\":\"object\",\"properties\":{\"MIMEType\":{\"title\":\"Attachment mime type\",\"type\":\"string\"},\"ID\":{\"title\":\"Attachment ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Attachment name\",\"type\":\"string\"},\"Size\":{\"title\":\"Attachment size\",\"type\":\"integer\"}}},\"BCC[*]\":{\"type\":\"object\",\"properties\":{\"Name\":{\"title\":\"Bcc name\",\"type\":\"string\"},\"Email\":{\"title\":\"Bcc email\",\"type\":\"string\"}}},\"CC[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"Cc\",\"type\":\"string\"},\"Name\":{\"title\":\"Cc name\",\"type\":\"string\"}}},\"Categories[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Category ID\",\"type\":\"string\"},\"Name\":{\"title\":\"Category name\",\"type\":\"string\"}}},\"To[*]\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"To\",\"type\":\"string\"},\"Name\":{\"title\":\"Recipient name\",\"type\":\"string\"}}},\"From\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"From\",\"type\":\"string\"},\"Name\":{\"title\":\"Sender name\",\"type\":\"string\"}}},\"ParentFolders[*]\":{\"type\":\"object\",\"properties\":{\"ID\":{\"title\":\"Email folder or label\",\"type\":\"string\"},\"Name\":{\"title\":\"Label\",\"type\":\"string\"}}}}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"ParentFolders_array_sub_ID\",\"name\":\"ParentFolders[*].ID\",\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"type\":\"string\",\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"displayName\":\"Email folder or label\",\"description\":\"Email folder or label\",\"component\":\"FolderPicker\",\"textBlocks\":null,\"dictionaryWidget\":null,\"selection\":null,\"solutionResourceKind\":null,\"solutionResourceSubTypes\":null,\"exposeAsSubBinding\":true,\"enableURLInput\":null},\"fieldActions\":[],\"searchable\":false,\"searchableJoins\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"none\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":true,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"Normalizedmessage\",\"name\":\"Normalizedmessage\",\"displayName\":\"Normalizedmessage\",\"description\":\"\",\"type\":\"GeneratedNormalizedMessage_Trigger\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":true,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"eventFields\":[{\"name\":\"BCC[*].Email\",\"displayName\":\"BCC email\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Body\",\"displayName\":\"Body\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"CC[*].Email\",\"displayName\":\"CC\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"From.Email\",\"displayName\":\"From\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ParentFolders[*].Name\",\"displayName\":\"Label\",\"type\":\"string\",\"reference\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\"},\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"Subject\",\"displayName\":\"Subject\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"ThreadID\",\"displayName\":\"Thread\",\"type\":\"string\",\"reference\":{\"objectName\":\"NormalizedMessage\",\"lookupNames\":[\"Subject\"],\"lookupValue\":\"ThreadID\",\"path\":\"/NormalizedMessage/{ThreadID}\"},\"sampleValue\":null,\"isCuratedEventField\":false,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true}},{\"name\":\"To[*].Email\",\"displayName\":\"To\",\"type\":\"string\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"string\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":true,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String[*]\",\"isValueType\":true}},{\"name\":\"HasAttachments\",\"displayName\":\"With attachments only\",\"type\":\"boolean\",\"sampleValue\":null,\"isCuratedEventField\":true,\"nativeType\":\"boolean\",\"order\":1,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Boolean\",\"assemblyQualifiedName\":\"Boolean\",\"isValueType\":true}}]},\"filterNeedsRefresh\":false,\"filterExpression\":null,\"obsoleteEventFields\":false,\"filterWidget\":null}}",
           "uiPathActivityTypeId": "1d19e4f4-2817-3aeb-b71c-2dafca7b1da2",
           "errorState": {
             "issues": []
@@ -65,16 +65,16 @@
       "inputs": {
         "detail": {
           "connector": "uipath-google-gmail",
-          "connectionId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-          "connectionResourceId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-          "connectionFolderKey": "bdd91426-3fa3-472e-846f-e091d3f5d315",
+          "connectionId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionResourceId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
           "method": "POST",
           "endpoint": "/MoveEmail",
           "queryParameters": {
             "id": "=js:($vars.emailReceived1.output.ID)",
             "addLabelId": "Label_1174611446414526976"
           },
-          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"MoveEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"MoveEmail\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/MoveEmail\",\"unifiedTypesCompatible\":true},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":[],\"connectorName\":\"Gmail\",\"maxPageSize\":500,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[],\"cachedBrowserItems\":[[\"addLabelId\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"Processed_ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"Processed_ConsultationBooking\"],[\"name\",\"Processed_ConsultationBooking\"],[\"id\",\"Label_1174611446414526976\"],[\"type\",\"user\"],[\"referenceID\",\"processed_consultationbooking\"]],\"id\":\"Label_1174611446414526976\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[\"id\"],\"objectDisplayName\":\"Move Email\",\"eventMode\":null,\"eventOperation\":null,\"hasBreakingChanges\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"id\\\":string;\\\"labelIds\\\":string[];\\\"threadId\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"threadId\":{\"title\":\"Email thread identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the email thread.\"},\"labelIds[*]\":{\"title\":\"Email label identifiers\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"description\":\"A list of identifiers for labels associated with the email.\"},\"id\":{\"title\":\"Email message identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the specific email message.\"}},\"definitions\":{}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"id\":\"id\",\"name\":\"id\",\"displayName\":\"Email to move\",\"description\":\"The email ID to move\",\"type\":\"string\",\"sortOrder\":2,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"id\":\"addLabelId\",\"name\":\"addLabelId\",\"displayName\":\"To email folder or label\",\"description\":\"The folder or label where to move the email message\",\"type\":\"string\",\"sortOrder\":3,\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\",\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":[],\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"id\":\"out_id\",\"name\":\"id\",\"displayName\":\"Email message identifier\",\"description\":\"A unique identifier for the specific email message.\",\"type\":\"string\",\"primaryKey\":true,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"19468958b5e51c05\"},{\"typeScriptDefinition\":null,\"id\":\"MoveEmail\",\"name\":\"MoveEmail\",\"displayName\":\"Email\",\"description\":\"\",\"type\":\"GeneratedMoveEmail\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"jitInputField\":null,\"inputMode\":null,\"searchableFields\":[],\"hasUnifiedTypes\":true,\"jitTypeHash\":null}}}",
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"MoveEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"MoveEmail\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/MoveEmail\",\"unifiedTypesCompatible\":true},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":[],\"connectorName\":\"Gmail\",\"maxPageSize\":500,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[],\"cachedBrowserItems\":[[\"addLabelId\",{\"mimeType\":null,\"iconUri\":null,\"fullName\":\"Processed_ConsultationBooking\",\"isFolder\":true,\"metadata\":[[\"parentReference\",\"\"],[\"isFolder\",\"true\"],[\"displayName\",\"Processed_ConsultationBooking\"],[\"name\",\"Processed_ConsultationBooking\"],[\"id\",\"Label_1174611446414526976\"],[\"type\",\"user\"],[\"referenceID\",\"processed_consultationbooking\"]],\"id\":\"Label_1174611446414526976\"}]],\"cachedPropertyMappings\":[],\"primaryKeys\":[\"id\"],\"objectDisplayName\":\"Move Email\",\"eventMode\":null,\"eventOperation\":null,\"hasBreakingChanges\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"id\\\":string;\\\"labelIds\\\":string[];\\\"threadId\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"threadId\":{\"title\":\"Email thread identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the email thread.\"},\"labelIds[*]\":{\"title\":\"Email label identifiers\",\"type\":\"array\",\"items\":{\"type\":\"string\"},\"description\":\"A list of identifiers for labels associated with the email.\"},\"id\":{\"title\":\"Email message identifier\",\"type\":\"string\",\"description\":\"A unique identifier for the specific email message.\"}},\"definitions\":{}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"id\",\"name\":\"id\",\"displayName\":\"Email to move\",\"description\":\"The email ID to move\",\"type\":\"string\",\"sortOrder\":2,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"addLabelId\",\"name\":\"addLabelId\",\"displayName\":\"To email folder or label\",\"description\":\"The folder or label where to move the email message\",\"type\":\"string\",\"sortOrder\":3,\"primaryKey\":false,\"lookup\":{\"objectName\":\"folder\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"id\",\"path\":\"/folder\",\"childPath\":\"/folder?parentReference={name}\",\"hydration\":{\"url\":\"/folder/{id}\",\"method\":\"GETBYID\"}},\"design\":{\"component\":\"FolderPicker\",\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":[],\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"out_id\",\"name\":\"id\",\"displayName\":\"Email message identifier\",\"description\":\"A unique identifier for the specific email message.\",\"type\":\"string\",\"primaryKey\":true,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"19468958b5e51c05\"},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"MoveEmail\",\"name\":\"MoveEmail\",\"displayName\":\"Email\",\"description\":\"\",\"type\":\"GeneratedMoveEmail\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"jitInputField\":null,\"inputMode\":null,\"searchableFields\":[],\"hasUnifiedTypes\":true,\"jitTypeHash\":null}}}",
           "uiPathActivityTypeId": "7dce485b-164a-3bd6-9600-00750b64bef9",
           "errorState": {
             "issues": []
@@ -217,25 +217,33 @@
           "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
           "method": "POST",
           "endpoint": "/v2/{entityName}/CreateEntityRecord",
-          "bodyParameters": {
-            "patientId": "=js:$vars.bookingAgent.output.patientId",
-            "patientEmail": "=js:$vars.emailReceived1.output.From.Email",
-            "appointmentDate": "=js:$vars.bookingAgent.output.appointmentDate",
-            "appointmentTime": "=js:$vars.bookingAgent.output.appointmentTime",
-            "status": "Booked",
-            "notes": "=js:$vars.bookingAgent.output.valid ? \"Booked by Booking Agent\" : `Needs review: ${$vars.bookingAgent.output.reason}`"
-          },
-          "queryParameters": {
-            "expansionLevel": "3"
-          },
           "pathParameters": {
             "entityName": "Appointments"
           },
+          "queryParameters": {
+            "expansionLevel": 3
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.69.3\",\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"CreateEntityRecordCurated\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"CreateEntityRecordCurated\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/v2/{entityName}/CreateEntityRecord\",\"unifiedTypesCompatible\":true,\"savedJitInputFieldId\":\"in_CreateEntityRecordCurated\"},\"optionalConfiguration\":{\"_textBlocks\":[{\"name\":\"schemaAPIErrorMessage\",\"text\":\"Could not generate schema for the chosen entity.\",\"severity\":\"error\"}],\"objectActions\":[{\"actionType\":\"api\",\"rules\":[{\"type\":\"path\",\"refFieldName\":\"entityName\",\"refFieldValues\":[\"*\"],\"isCleared\":false,\"isVariable\":false}],\"name\":\"GenerateSchema\",\"apiConfiguration\":{\"url\":\"/standard-objects/{entityName}/CreateEntityRecord/metadata\",\"method\":\"GET\"},\"onSuccess\":{\"type\":\"remap\",\"remapConfiguration\":{\"input\":\"replace\",\"output\":\"replace\"}},\"onFailure\":{\"type\":\"remap\",\"remapConfiguration\":{\"input\":\"noop\",\"output\":\"noop\"},\"actions\":[{\"actionType\":\"showMessages\",\"refFieldName\":\"entityName\",\"messages\":[\"schemaAPIErrorMessage\"]}]}},{\"actionType\":\"reset\",\"rules\":[{\"type\":\"path\",\"refFieldName\":\"entityName\",\"isCleared\":true,\"isVariable\":false}],\"name\":\"ClearContent\"}],\"connectorName\":\"UiPath Data Fabric\",\"maxPageSize\":null,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[[\"entityName\",[{\"id\":\"Appointments\",\"displayColumns\":[\"Appointments\"],\"stringFormatDisplayColumns\":\"\"}]]],\"cachedBrowserItems\":[],\"cachedPropertyMappings\":[],\"primaryKeys\":[],\"objectDisplayName\":\"Create Entity Record\",\"eventMode\":null,\"eventOperation\":null,\"hasBreakingChanges\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"CreateTime\\\":string;\\\"CreatedBy\\\":{\\\"CreateTime\\\":string;\\\"Email\\\":string;\\\"Id\\\":string;\\\"IsActive\\\":boolean;\\\"Name\\\":string;\\\"Type\\\":number;\\\"UpdateTime\\\":string};\\\"Id\\\":string;\\\"UpdateTime\\\":string;\\\"UpdatedBy\\\":{\\\"CreateTime\\\":string;\\\"Email\\\":string;\\\"Id\\\":string;\\\"IsActive\\\":boolean;\\\"Name\\\":string;\\\"Type\\\":number;\\\"UpdateTime\\\":string};\\\"appointmentDate\\\":string;\\\"appointmentTime\\\":string;\\\"notes\\\":string;\\\"patientEmail\\\":string;\\\"patientId\\\":string;\\\"status\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"notes\":{\"title\":\"Notes\",\"type\":\"string\"},\"UpdatedBy\":{\"title\":\"Updated by\",\"$ref\":\"#/definitions/UpdatedBy\"},\"patientId\":{\"title\":\"Patient ID\",\"type\":\"string\"},\"CreateTime\":{\"title\":\"Create time\",\"type\":\"string\"},\"CreatedBy\":{\"title\":\"Created by\",\"$ref\":\"#/definitions/CreatedBy\"},\"appointmentTime\":{\"title\":\"Appointment time\",\"type\":\"string\"},\"UpdateTime\":{\"title\":\"Update time\",\"type\":\"string\"},\"patientEmail\":{\"title\":\"Patient email\",\"type\":\"string\"},\"Id\":{\"title\":\"Id\",\"type\":\"string\"},\"appointmentDate\":{\"title\":\"Appointment date\",\"type\":\"string\"},\"status\":{\"title\":\"Status\",\"type\":\"string\"}},\"definitions\":{\"UpdatedBy\":{\"type\":\"object\",\"properties\":{\"UpdateTime\":{\"title\":\"Updated by update time\",\"type\":\"string\"},\"Name\":{\"title\":\"Updated by name\",\"type\":\"string\"},\"IsActive\":{\"title\":\"Updated by is active\",\"type\":\"boolean\"},\"Id\":{\"title\":\"Updated by ID\",\"type\":\"string\",\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\"},\"Type\":{\"title\":\"Updated by type\",\"type\":\"integer\"},\"CreateTime\":{\"title\":\"Updated by create time\",\"type\":\"string\"},\"Email\":{\"title\":\"Updated by email\",\"type\":\"string\"}}},\"CreatedBy\":{\"type\":\"object\",\"properties\":{\"Email\":{\"title\":\"Created by email\",\"type\":\"string\"},\"Type\":{\"title\":\"Created by type\",\"type\":\"integer\"},\"CreateTime\":{\"title\":\"Created by create time\",\"type\":\"string\"},\"UpdateTime\":{\"title\":\"Created by update time\",\"type\":\"string\"},\"Id\":{\"title\":\"Created by ID\",\"type\":\"string\",\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\"},\"Name\":{\"title\":\"Created by name\",\"type\":\"string\"},\"IsActive\":{\"title\":\"Created by is active\",\"type\":\"boolean\"}}}}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"entityName\",\"name\":\"entityName\",\"displayName\":\"Entity\",\"description\":\"Enter entity name\",\"type\":\"string\",\"sortOrder\":1,\"primaryKey\":false,\"lookup\":{\"objectName\":\"system\",\"lookupNames\":[\"displayName\"],\"lookupValue\":\"name\",\"path\":\"/standard-objects-hybrid\"},\"design\":{\"loadByDefault\":true,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":[],\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"path\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"expansionLevel\",\"name\":\"expansionLevel\",\"displayName\":\"Related record depth\",\"description\":\"Specify the depth of related records in the response from the service. Range: 1-3. Default: 3.\",\"type\":\"integer\",\"sortOrder\":2,\"format\":\"int32\",\"defaultValue\":3,\"primaryKey\":false,\"enum\":[{\"name\":\"1\",\"value\":1},{\"name\":\"2\",\"value\":2},{\"name\":\"3\",\"value\":3}],\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"fieldActions\":[{\"actionType\":\"showMessages\",\"rules\":[{\"type\":\"field\",\"refFieldName\":\"expansionLevel\",\"isCleared\":true,\"isVariable\":false,\"isWorkflowExpression\":true,\"isConstantValue\":true}],\"messages\":[\"expansionLevelInfoMessage\"]}],\"position\":\"secondary\",\"textBlocks\":[{\"name\":\"expansionLevelInfoMessage\",\"text\":\"Related record depth: Specify depth 1-3 for related records. Default: 3.\"}],\"validation\":false},\"fieldActions\":[{\"actionType\":\"showMessages\",\"rules\":[{\"type\":\"field\",\"refFieldName\":\"expansionLevel\",\"isCleared\":true,\"isVariable\":false,\"isWorkflowExpression\":true,\"isConstantValue\":true}],\"messages\":[\"expansionLevelInfoMessage\"]}],\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Int\",\"assemblyQualifiedName\":\"Int\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"patientId\",\"name\":\"patientId\",\"displayName\":\"patientId\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":true,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"appointmentDate\",\"name\":\"appointmentDate\",\"displayName\":\"appointmentDate\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"appointmentTime\",\"name\":\"appointmentTime\",\"displayName\":\"appointmentTime\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"notes\",\"name\":\"notes\",\"displayName\":\"notes\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"patientEmail\",\"name\":\"patientEmail\",\"displayName\":\"patientEmail\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"status\",\"name\":\"status\",\"displayName\":\"status\",\"type\":\"string\",\"primaryKey\":false,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"outputFields\":[{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"out_CreatedBy_sub_Id\",\"name\":\"CreatedBy.Id\",\"displayName\":\"CreatedBy.Id\",\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\",\"type\":\"string\",\"primaryKey\":true,\"lookup\":{\"lookupNames\":[\"Name\",\"Id\"],\"objectName\":\"SystemUser\",\"path\":\"/SystemUser\",\"lookupValue\":\"Id\"},\"design\":{\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\"},\"fieldActions\":[],\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"out_Id\",\"name\":\"Id\",\"displayName\":\"Id\",\"type\":\"string\",\"primaryKey\":true,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"out_UpdatedBy_sub_Id\",\"name\":\"UpdatedBy.Id\",\"displayName\":\"UpdatedBy.Id\",\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\",\"type\":\"string\",\"primaryKey\":true,\"lookup\":{\"lookupNames\":[\"Name\",\"Id\"],\"objectName\":\"SystemUser\",\"path\":\"/SystemUser\",\"lookupValue\":\"Id\"},\"design\":{\"description\":\"Choose from the dropdown or provide the related entity's record ID directly.\"},\"fieldActions\":[],\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"useUrlInput\":false,\"id\":\"CreateEntityRecordCurated\",\"name\":\"CreateEntityRecordCurated\",\"displayName\":\"Record\",\"description\":\"Created record\",\"type\":\"GeneratedCreateEntityRecordCurated\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"jitInputField\":{\"typeScriptDefinition\":\"{\\\"appointmentDate\\\":string;\\\"appointmentTime\\\":string;\\\"notes\\\":string;\\\"patientEmail\\\":string;\\\"patientId\\\":string;\\\"status\\\":string}\",\"useUrlInput\":false,\"id\":\"in_CreateEntityRecordCurated\",\"name\":\"CreateEntityRecordCurated\",\"displayName\":\"Record\",\"description\":\"Record input object\",\"type\":\"GeneratedCreateEntityRecordCurated\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":\"{\\n  \\\"appointmentDate\\\": null,\\n  \\\"appointmentTime\\\": null,\\n  \\\"notes\\\": null,\\n  \\\"patientEmail\\\": null,\\n  \\\"patientId\\\": null,\\n  \\\"status\\\": null\\n}\",\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":true,\"request\":false,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"jitObjectInput\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},\"inputMode\":null,\"searchableFields\":[],\"hasUnifiedTypes\":false,\"jitTypeHash\":null}}}",
           "uiPathActivityTypeId": "dfd2bc7a-ca4b-3316-8a1f-57c9e106dfbf",
           "errorState": {
-            "issues": []
+            "issues": [
+              {
+                "id": "c59d6a33-82a8-49c0-95ff-b2150fa25665:patientId:error:b42be195-c962-4a05-8a19-30429b2f180e",
+                "title": "patientId is required",
+                "description": "",
+                "type": "Error",
+                "canNavigate": true
+              }
+            ]
           },
-          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"CreateEntityRecordCurated\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"CreateEntityRecordCurated\",\"operation\":\"create\",\"httpMethod\":\"POST\",\"path\":\"/v2/{entityName}/CreateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
+          "telemetryData": {
+            "connectorKey": "uipath-uipath-dataservice",
+            "connectorName": "UiPath Data Fabric",
+            "operationType": "create",
+            "objectName": "CreateEntityRecordCurated",
+            "objectDisplayName": "Create Entity Record",
+            "primaryKeyName": ""
+          }
         }
       },
       "outputs": {
@@ -1472,35 +1480,56 @@
       "inputs": {
         "detail": {
           "connector": "uipath-google-gmail",
-          "connectionId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-          "connectionResourceId": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-          "connectionFolderKey": "bdd91426-3fa3-472e-846f-e091d3f5d315",
+          "connectionId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionResourceId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
           "method": "POST",
           "endpoint": "/SendEmail",
-          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"SendEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"SendEmail\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/SendEmail\",\"unifiedTypesCompatible\":true}}",
-          "uiPathActivityTypeId": "f2a5320d-a0d1-3aec-af8f-5b16ad9665a0",
-          "errorState": {
-            "issues": []
-          },
-          "telemetryData": {
-            "connectorKey": "uipath-google-gmail",
-            "operationType": "create",
-            "objectName": "SendEmail",
-            "primaryKeyName": ""
-          },
           "queryParameters": {
             "SaveAsDraft": false
           },
           "bodyParameters": {
-            "To": "=js:$vars.emailReceived1.output.From.Email",
-            "Subject": "=js:`Consultation Confirmed - ${$vars.bookingAgent.output.appointmentDate} at ${$vars.bookingAgent.output.appointmentTime}`",
-            "Body": "=js:`Dear Patient ${$vars.bookingAgent.output.patientId},\n\nYour consultation has been booked.\n\nDate: ${$vars.bookingAgent.output.appointmentDate}\nTime: ${$vars.bookingAgent.output.appointmentTime}\n\nPlease reply to this email if you need to reschedule or cancel.\n\nRegards,\nConsultation Clinic`"
+            "To": "=js:($vars.emailReceived1.output.From.Email)",
+            "Subject": "=js:(`Consultation Confirmed - ${$vars.bookingAgent.output.appointmentDate} at ${$vars.bookingAgent.output.appointmentTime}`)",
+            "Body": "=js:(`Dear Patient ${$vars.bookingAgent.output.patientId},\n\nYour consultation has been booked.\n\nDate: ${$vars.bookingAgent.output.appointmentDate}\nTime: ${$vars.bookingAgent.output.appointmentTime}\n\nPlease reply to this email if you need to reschedule or cancel.\n\nRegards,\nConsultation Clinic`)",
+            "Importance": "normal"
+          },
+          "multipartParameters": [
+            {
+              "name": "body",
+              "dataType": "string"
+            },
+            {
+              "name": "file",
+              "dataType": "file"
+            }
+          ],
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"connectorVersion\":\"1.24.8\",\"executionType\":null,\"customFieldsRequestDetails\":null,\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"SendEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"SendEmail\",\"operation\":\"create\",\"packageVersion\":\"1.0.0\",\"httpMethod\":\"POST\",\"path\":\"/SendEmail\",\"unifiedTypesCompatible\":true,\"savedJitInputFieldId\":\"in_SendEmail\"},\"optionalConfiguration\":{\"_textBlocks\":[],\"objectActions\":[],\"connectorName\":\"Gmail\",\"maxPageSize\":500,\"jobArguments\":null,\"isAutopilotInvalidConfig\":false,\"additionalHeaders\":null,\"cachedLookupValues\":[],\"cachedBrowserItems\":[],\"cachedPropertyMappings\":[],\"primaryKeys\":[\"id\"],\"objectDisplayName\":\"Send Email\",\"baseObject\":null,\"eventMode\":null,\"eventOperation\":null,\"language\":\"en-US\",\"hasBreakingChanges\":false,\"fieldsContainer\":{\"outputTypeDefinition\":\"{\\\"Importance\\\":string;\\\"id\\\":string;\\\"labelIds\\\":string[];\\\"threadId\\\":string}\",\"outputJsonSchema\":{\"$schema\":\"http://json-schema.org/draft-07/schema#\",\"type\":\"object\",\"properties\":{\"Importance\":{\"title\":\"Importance\",\"type\":\"string\",\"description\":\"The importance of the mail\"},\"id\":{\"title\":\"Id\",\"type\":\"string\"},\"labelIds[*]\":{\"title\":\"Label ids\",\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"threadId\":{\"title\":\"Thread ID\",\"type\":\"string\"}},\"definitions\":{}},\"hasFileOutput\":false,\"populateOutputFields\":true,\"inputFields\":[{\"typeScriptDefinition\":null,\"id\":\"body\",\"name\":\"body\",\"displayName\":\"Body\",\"description\":\"The message body\\n\",\"type\":\"string\",\"sortOrder\":1,\"primaryKey\":false,\"design\":{\"displayName\":null,\"description\":null,\"displayPattern\":null,\"isMultiSelect\":null,\"loadByDefault\":null,\"enableUserOverride\":null,\"isHidden\":true,\"fieldActions\":null,\"position\":null,\"component\":null,\"requiredGroups\":null,\"textBlocks\":null,\"dictionaryWidget\":null,\"selection\":null,\"solutionResourceKind\":null,\"solutionResourceSubTypes\":null,\"exposeAsSubBinding\":null},\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"multipart\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"id\":\"SaveAsDraft\",\"name\":\"SaveAsDraft\",\"displayName\":\"Save as draft\",\"description\":\"Send an email message. By default, the email will be saved as draft.\",\"type\":\"boolean\",\"sortOrder\":2,\"defaultValue\":false,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"query\",\"onCanvas\":true,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Boolean\",\"assemblyQualifiedName\":\"Boolean\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"id\":\"To\",\"name\":\"To\",\"displayName\":\"To\",\"description\":\"The primary recipients of the email, separated by comma (,)\",\"type\":\"string\",\"sortOrder\":3,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":true,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"string\"},{\"typeScriptDefinition\":null,\"id\":\"Subject\",\"name\":\"Subject\",\"displayName\":\"Subject\",\"description\":\"The subject of the email\",\"type\":\"string\",\"sortOrder\":4,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":true,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"string\"},{\"typeScriptDefinition\":null,\"id\":\"Body\",\"name\":\"Body\",\"displayName\":\"Body\",\"description\":\"The body of the email\",\"type\":\"string\",\"sortOrder\":5,\"primaryKey\":false,\"design\":{\"component\":\"RichTextEditorHTML\",\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":true,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"string\"},{\"typeScriptDefinition\":\"{ \\\"ID\\\": string; \\\"FullName\\\"?: string; \\\"MimeType\\\"?: string; \\\"Metadata\\\"?: Record<string, unknown>; }\",\"id\":\"_file\",\"name\":\"file\",\"displayName\":\"Attachment\",\"description\":\"The attachment to be sent with the email\",\"type\":\"file\",\"sortOrder\":6,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"primary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"multipart\",\"onCanvas\":true,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":true,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"IResource\",\"assemblyQualifiedName\":\"IResource\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},{\"typeScriptDefinition\":null,\"id\":\"Importance\",\"name\":\"Importance\",\"displayName\":\"Importance\",\"description\":\"The importance of the mail\",\"type\":\"string\",\"sortOrder\":7,\"defaultValue\":\"normal\",\"primaryKey\":false,\"enum\":[{\"name\":\"Normal\",\"value\":\"normal\"},{\"name\":\"High\",\"value\":\"high\"},{\"name\":\"Low\",\"value\":\"low\"}],\"design\":{\"loadByDefault\":true,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"secondary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":true,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"string\"},{\"typeScriptDefinition\":null,\"id\":\"ReplyTo\",\"name\":\"ReplyTo\",\"displayName\":\"Reply to\",\"description\":\"The email addresses to use when replying, separated by comma (,)\",\"type\":\"string\",\"sortOrder\":8,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"secondary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":true,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"string\"},{\"typeScriptDefinition\":null,\"id\":\"CC\",\"name\":\"CC\",\"displayName\":\"CC\",\"description\":\"The secondary recipients of the email, separated by comma (,)\",\"type\":\"string\",\"sortOrder\":9,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"secondary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":true,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"string\"},{\"typeScriptDefinition\":null,\"id\":\"BCC\",\"name\":\"BCC\",\"displayName\":\"BCC\",\"description\":\"The hidden recipients of the email, separated by comma (,)\",\"type\":\"string\",\"sortOrder\":10,\"primaryKey\":false,\"design\":{\"loadByDefault\":false,\"isMultiSelect\":false,\"enableUserOverride\":false,\"isHidden\":false,\"position\":\"secondary\",\"validation\":false},\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":true,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"body\",\"onCanvas\":true,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"string\"}],\"outputFields\":[{\"typeScriptDefinition\":null,\"id\":\"out_id\",\"name\":\"id\",\"displayName\":\"Id\",\"type\":\"string\",\"primaryKey\":true,\"fieldActions\":null,\"searchable\":false,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":false,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":true,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"String\",\"assemblyQualifiedName\":\"String\",\"isValueType\":true},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null,\"sampleValue\":\"18572a181dfd50a3\"},{\"typeScriptDefinition\":null,\"id\":\"SendEmail\",\"name\":\"SendEmail\",\"displayName\":\"Email\",\"description\":\"\",\"type\":\"GeneratedSendEmail\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":null,\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":false,\"request\":false,\"response\":true,\"responseCurated\":false,\"fieldLocation\":\"output\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null}],\"jitTypeNeedsRefresh\":false,\"jitInputField\":{\"typeScriptDefinition\":\"{\\\"BCC\\\":string;\\\"Body\\\":string;\\\"CC\\\":string;\\\"Importance\\\":string;\\\"ReplyTo\\\":string;\\\"Subject\\\":string;\\\"To\\\":string}\",\"id\":\"in_SendEmail\",\"name\":\"SendEmail\",\"displayName\":\"Email\",\"description\":\"Email input object\",\"type\":\"GeneratedSendEmail\",\"sortOrder\":null,\"format\":null,\"mask\":null,\"defaultValue\":\"{\\n  \\\"BCC\\\": null,\\n  \\\"Body\\\": null,\\n  \\\"CC\\\": null,\\n  \\\"Importance\\\": null,\\n  \\\"ReplyTo\\\": null,\\n  \\\"Subject\\\": null,\\n  \\\"To\\\": null\\n}\",\"primaryKey\":false,\"lookup\":null,\"enum\":null,\"design\":null,\"fieldActions\":null,\"searchable\":false,\"searchableOperators\":null,\"searchableNames\":null,\"searchableJoins\":null,\"required\":true,\"request\":false,\"response\":false,\"responseCurated\":false,\"fieldLocation\":\"jitObjectInput\",\"onCanvas\":null,\"isJitField\":true,\"isFieldActionParent\":false,\"isMainResponseField\":false,\"isMethodParameter\":false,\"isBackgroundField\":false,\"filterTree\":null,\"filterNeedsRefresh\":null,\"arrayInputPaths\":null,\"clrType\":{\"_elementType\":null,\"_isNullable\":false,\"isArray\":false,\"genericTypeArguments\":[],\"fullName\":null,\"name\":\"Object\",\"assemblyQualifiedName\":\"Object\",\"isValueType\":false},\"forceExpressionEditor\":false,\"requiredGroups\":null,\"disableExpressions\":false,\"backingField\":null,\"searchableDisplayName\":null,\"selectedResourceId\":null},\"inputMode\":null,\"searchableFields\":[],\"hasUnifiedTypes\":true,\"jitTypeHash\":null}}}",
+          "uiPathActivityTypeId": "f2a5320d-a0d1-3aec-af8f-5b16ad9665a0",
+          "errorState": {
+            "issues": [
+              {
+                "id": "dfbfdfaa-49a8-4763-8594-b607147c38bd:connectionId:error:120198e4-0637-47e3-b07c-514eb54887f1",
+                "title": "Connection is required",
+                "description": "",
+                "type": "Error",
+                "canNavigate": true
+              }
+            ]
           },
           "inputMetadata": {
             "type": "multipart",
             "multipart": {
               "bodyFieldName": "body"
             }
+          },
+          "telemetryData": {
+            "connectorKey": "uipath-google-gmail",
+            "connectorName": "Gmail",
+            "operationType": "create",
+            "objectName": "SendEmail",
+            "objectDisplayName": "Send Email",
+            "primaryKeyName": "id"
           }
         }
       },
@@ -2123,7 +2152,7 @@
     {
       "nodeType": "uipath.connector.uipath-google-gmail.move-email",
       "version": "1.0.0",
-      "category": "connector.113548",
+      "category": "connector.72537",
       "tags": [
         "connector",
         "activity"
@@ -2134,7 +2163,7 @@
       "display": {
         "label": "Move Email",
         "description": "(Gmail) Move an email in Gmail to a folder or label",
-        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg"
+        "icon": "https://staging.uipath.com/ee592586-d464-411d-8c04-487e05e39950/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg"
       },
       "handleConfiguration": [
         {
@@ -2256,7 +2285,7 @@
                 "componentProps": {
                   "connectorDetail": {
                     "isAppActivity": false,
-                    "packageId": "113548",
+                    "packageId": "72537",
                     "svgIconUrl": "icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg",
                     "displayName": "Move Email",
                     "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
@@ -2732,7 +2761,7 @@
     {
       "nodeType": "uipath.connector.uipath-uipath-dataservice.create-entity-record",
       "version": "1.0.0",
-      "category": "connector.68054",
+      "category": "connector.72495",
       "tags": [
         "connector",
         "activity"
@@ -2743,7 +2772,7 @@
       "display": {
         "label": "Create Entity Record",
         "description": "(UiPath Data Fabric) Creates a new record for the selected Entity in Data Fabric",
-        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg"
+        "icon": "https://staging.uipath.com/ee592586-d464-411d-8c04-487e05e39950/studio_/typecache/icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg"
       },
       "handleConfiguration": [
         {
@@ -2865,7 +2894,7 @@
                 "componentProps": {
                   "connectorDetail": {
                     "isAppActivity": false,
-                    "packageId": "68054",
+                    "packageId": "72495",
                     "svgIconUrl": "icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg",
                     "displayName": "Create Entity Record",
                     "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
@@ -4188,7 +4217,7 @@
     {
       "nodeType": "uipath.connector.uipath-google-gmail.send-email",
       "version": "1.0.0",
-      "category": "connector.113548",
+      "category": "connector.72537",
       "tags": [
         "connector",
         "activity",
@@ -4200,7 +4229,7 @@
       "display": {
         "label": "Send Email",
         "description": "(Gmail) Sends an email message",
-        "icon": "https://cloud.uipath.com/3021fe0f-08ec-4a69-af9f-6479b25555a8/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg"
+        "icon": "https://staging.uipath.com/ee592586-d464-411d-8c04-487e05e39950/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg"
       },
       "handleConfiguration": [
         {
@@ -4322,7 +4351,7 @@
                 "componentProps": {
                   "connectorDetail": {
                     "isAppActivity": false,
-                    "packageId": "113548",
+                    "packageId": "72537",
                     "svgIconUrl": "icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg",
                     "displayName": "Send Email",
                     "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
@@ -4562,15 +4591,6 @@
         "binding": {
           "nodeId": "bookingAgent",
           "outputId": "error"
-        }
-      },
-      {
-        "id": "createAppointment1.output",
-        "type": "object",
-        "description": "The return value of the connector.",
-        "binding": {
-          "nodeId": "createAppointment1",
-          "outputId": "output"
         }
       },
       {
@@ -5661,15 +5681,6 @@
         }
       },
       {
-        "id": "sendEmail1.output",
-        "type": "object",
-        "description": "The return value of the connector.",
-        "binding": {
-          "nodeId": "sendEmail1",
-          "outputId": "output"
-        }
-      },
-      {
         "id": "sendEmail1.error",
         "type": "object",
         "schema": {
@@ -5729,6 +5740,24 @@
           "nodeId": "moveTriggerMailToProcessedMock1",
           "outputId": "output"
         }
+      },
+      {
+        "id": "createAppointment1.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "createAppointment1",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "sendEmail1.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "sendEmail1",
+          "outputId": "output"
+        }
       }
     ],
     "variableUpdates": {
@@ -5774,23 +5803,43 @@
       "type": "string",
       "resource": "connection",
       "resourceKey": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
-      "propertyAttribute": "FolderKey",
-      "default": "bdd91426-3fa3-472e-846f-e091d3f5d315"
+      "default": "bdd91426-3fa3-472e-846f-e091d3f5d315",
+      "propertyAttribute": "FolderKey"
     },
     {
       "id": "b0EJSukKB",
       "name": "uipath-google-gmail connection",
       "type": "string",
       "resource": "connection",
-      "resourceKey": "",
-      "propertyAttribute": "ConnectionId"
+      "resourceKey": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+      "propertyAttribute": "ConnectionId",
+      "default": "b065b929-37ff-4dcb-8b9d-85bb92e66d45"
     },
     {
       "id": "bWUcL1sYB",
       "name": "FolderKey",
       "type": "string",
       "resource": "connection",
-      "resourceKey": "",
+      "resourceKey": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+      "propertyAttribute": "FolderKey",
+      "default": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a"
+    },
+    {
+      "id": "bOnphv6rH",
+      "name": "uipath-uipath-dataservice connection",
+      "type": "string",
+      "resource": "connection",
+      "resourceKey": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+      "default": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+      "propertyAttribute": "ConnectionId"
+    },
+    {
+      "id": "bhYuwpPAQ",
+      "name": "FolderKey",
+      "type": "string",
+      "resource": "connection",
+      "resourceKey": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+      "default": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
       "propertyAttribute": "FolderKey"
     }
   ],
@@ -5848,15 +5897,15 @@
           "y": -112
         },
         "size": {
-          "width": 560,
+          "width": 576,
           "height": 320
         },
         "collapsed": false
       },
       "delayDayPoll": {
         "position": {
-          "x": 1616,
-          "y": 288
+          "x": 144,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -5866,8 +5915,8 @@
       },
       "checkDayEvents": {
         "position": {
-          "x": 2048,
-          "y": 288
+          "x": 336,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -5877,8 +5926,8 @@
       },
       "routeDayEvent": {
         "position": {
-          "x": 1616,
-          "y": -272
+          "x": 1632,
+          "y": -32
         },
         "size": {
           "width": 96,
@@ -5888,19 +5937,19 @@
       },
       "pollReplyLoop1": {
         "position": {
-          "x": 1808,
-          "y": -768
+          "x": 1824,
+          "y": -512
         },
         "size": {
-          "width": 560,
+          "width": 576,
           "height": 320
         },
         "collapsed": false
       },
       "delayReply1": {
         "position": {
-          "x": 2704,
-          "y": -512
+          "x": 144,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -5910,8 +5959,8 @@
       },
       "checkReply1": {
         "position": {
-          "x": 3120,
-          "y": -512
+          "x": 336,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -5921,8 +5970,8 @@
       },
       "gotReply1": {
         "position": {
-          "x": 2704,
-          "y": -800
+          "x": 2736,
+          "y": -400
         },
         "size": {
           "width": 96,
@@ -5932,8 +5981,8 @@
       },
       "analyseReply": {
         "position": {
-          "x": 3120,
-          "y": -896
+          "x": 3168,
+          "y": -496
         },
         "size": {
           "width": 96,
@@ -5943,8 +5992,8 @@
       },
       "moveReplyMail": {
         "position": {
-          "x": 3552,
-          "y": -896
+          "x": 3600,
+          "y": -496
         },
         "size": {
           "width": 96,
@@ -5954,8 +6003,8 @@
       },
       "isCancelled": {
         "position": {
-          "x": 3968,
-          "y": -896
+          "x": 4032,
+          "y": -496
         },
         "size": {
           "width": 96,
@@ -5965,8 +6014,8 @@
       },
       "updCancelPatient": {
         "position": {
-          "x": 4160,
-          "y": -992
+          "x": 4224,
+          "y": -592
         },
         "size": {
           "width": 96,
@@ -5976,8 +6025,8 @@
       },
       "sendBookingMail": {
         "position": {
-          "x": 4160,
-          "y": -800
+          "x": 4224,
+          "y": -400
         },
         "size": {
           "width": 96,
@@ -5987,8 +6036,8 @@
       },
       "updRescheduled": {
         "position": {
-          "x": 4352,
-          "y": -800
+          "x": 4416,
+          "y": -400
         },
         "size": {
           "width": 96,
@@ -5998,8 +6047,8 @@
       },
       "updCancelNoReply": {
         "position": {
-          "x": 3120,
-          "y": -704
+          "x": 3168,
+          "y": -304
         },
         "size": {
           "width": 96,
@@ -6009,8 +6058,8 @@
       },
       "moveReminderMail": {
         "position": {
-          "x": 2048,
-          "y": 96
+          "x": 2064,
+          "y": 416
         },
         "size": {
           "width": 96,
@@ -6020,8 +6069,8 @@
       },
       "dayOfConsult": {
         "position": {
-          "x": 2704,
-          "y": -320
+          "x": 2736,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -6031,19 +6080,19 @@
       },
       "emergencyWatch": {
         "position": {
-          "x": 2464,
-          "y": 400
+          "x": 2496,
+          "y": 624
         },
         "size": {
-          "width": 560,
+          "width": 576,
           "height": 320
         },
         "collapsed": false
       },
       "delayEmerg": {
         "position": {
-          "x": 3120,
-          "y": 672
+          "x": 144,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -6053,8 +6102,8 @@
       },
       "checkEmerg": {
         "position": {
-          "x": 3552,
-          "y": 672
+          "x": 336,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -6064,8 +6113,8 @@
       },
       "hadEmergency": {
         "position": {
-          "x": 3120,
-          "y": 336
+          "x": 3168,
+          "y": 736
         },
         "size": {
           "width": 96,
@@ -6075,19 +6124,19 @@
       },
       "pollReplyLoop2": {
         "position": {
-          "x": 3312,
-          "y": 64
+          "x": 3360,
+          "y": 464
         },
         "size": {
-          "width": 560,
+          "width": 576,
           "height": 320
         },
         "collapsed": false
       },
       "delayReply2": {
         "position": {
-          "x": 3968,
-          "y": 272
+          "x": 144,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -6097,8 +6146,8 @@
       },
       "checkReply2": {
         "position": {
-          "x": 4160,
-          "y": 272
+          "x": 336,
+          "y": 112
         },
         "size": {
           "width": 96,
@@ -6108,8 +6157,8 @@
       },
       "gotReply2": {
         "position": {
-          "x": 3968,
-          "y": 80
+          "x": 4032,
+          "y": 576
         },
         "size": {
           "width": 96,
@@ -6119,8 +6168,8 @@
       },
       "updCancel1h": {
         "position": {
-          "x": 4160,
-          "y": 80
+          "x": 4224,
+          "y": 576
         },
         "size": {
           "width": 96,
@@ -6130,8 +6179,8 @@
       },
       "outcomeOk": {
         "position": {
-          "x": 3120,
-          "y": -320
+          "x": 3168,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -6141,8 +6190,8 @@
       },
       "terminateFlow": {
         "position": {
-          "x": 3552,
-          "y": -128
+          "x": 3600,
+          "y": 272
         },
         "size": {
           "width": 96,
@@ -6152,8 +6201,8 @@
       },
       "decisionTests": {
         "position": {
-          "x": 3552,
-          "y": -512
+          "x": 3600,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -6163,8 +6212,8 @@
       },
       "labTestRequest": {
         "position": {
-          "x": 3968,
-          "y": -512
+          "x": 4032,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -6174,8 +6223,8 @@
       },
       "joinTests": {
         "position": {
-          "x": 4160,
-          "y": -512
+          "x": 4224,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -6185,8 +6234,8 @@
       },
       "decisionMeds": {
         "position": {
-          "x": 3552,
-          "y": -320
+          "x": 3600,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -6196,8 +6245,8 @@
       },
       "pharmacyOrder": {
         "position": {
-          "x": 3968,
-          "y": -320
+          "x": 4032,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -6207,8 +6256,8 @@
       },
       "joinMeds": {
         "position": {
-          "x": 4160,
-          "y": -320
+          "x": 4224,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -6218,8 +6267,8 @@
       },
       "mergeOrders": {
         "position": {
-          "x": 4352,
-          "y": -512
+          "x": 4416,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -6229,8 +6278,8 @@
       },
       "apptCompleted": {
         "position": {
-          "x": 4544,
-          "y": -512
+          "x": 4608,
+          "y": -112
         },
         "size": {
           "width": 96,
@@ -6240,8 +6289,8 @@
       },
       "done_reschedCancel": {
         "position": {
-          "x": 2048,
-          "y": -224
+          "x": 2064,
+          "y": 64
         },
         "size": {
           "width": 96,
@@ -6251,8 +6300,8 @@
       },
       "done_noReply": {
         "position": {
-          "x": 3552,
-          "y": -704
+          "x": 3600,
+          "y": -304
         },
         "size": {
           "width": 96,
@@ -6262,8 +6311,8 @@
       },
       "done_cancelPatient": {
         "position": {
-          "x": 4352,
-          "y": -992
+          "x": 4416,
+          "y": -592
         },
         "size": {
           "width": 96,
@@ -6273,8 +6322,8 @@
       },
       "done_rescheduled": {
         "position": {
-          "x": 4544,
-          "y": -800
+          "x": 4608,
+          "y": -400
         },
         "size": {
           "width": 96,
@@ -6284,8 +6333,8 @@
       },
       "done_emerg1h": {
         "position": {
-          "x": 4352,
-          "y": 80
+          "x": 4416,
+          "y": 576
         },
         "size": {
           "width": 96,
@@ -6295,8 +6344,8 @@
       },
       "done_noEmerg": {
         "position": {
-          "x": 3552,
-          "y": 480
+          "x": 3600,
+          "y": 880
         },
         "size": {
           "width": 96,
@@ -6306,8 +6355,8 @@
       },
       "done_main": {
         "position": {
-          "x": 4736,
-          "y": -512
+          "x": 4800,
+          "y": -112
         },
         "size": {
           "width": 96,
