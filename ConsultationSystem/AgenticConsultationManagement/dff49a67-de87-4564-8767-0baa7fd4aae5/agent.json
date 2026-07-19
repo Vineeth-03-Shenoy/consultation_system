@@ -1,0 +1,88 @@
+{
+  "version": "1.1.0",
+  "settings": {
+    "model": "gpt-5.4",
+    "maxTokens": 16000,
+    "temperature": 0,
+    "engine": "basic-v2",
+    "maxIterations": 5,
+    "mode": "standard"
+  },
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "getNewestEmail1__output__Body": {
+        "type": "string",
+        "description": "Bound from $vars.getNewestEmail1.output.Body"
+      },
+      "bookingAgent__output__appointmentDate": {
+        "type": "string",
+        "description": "Bound from $vars.bookingAgent.output.appointmentDate"
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "intent": {
+        "type": "string"
+      },
+      "cancelled": {
+        "type": "boolean"
+      },
+      "newDate": {
+        "type": "string"
+      },
+      "newTime": {
+        "type": "string"
+      },
+      "reason": {
+        "type": "string"
+      }
+    }
+  },
+  "metadata": {
+    "storageVersion": "50.0.0",
+    "isConversational": false,
+    "showProjectCreationExperience": false
+  },
+  "type": "lowCode",
+  "guardrails": [],
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are the Reply Analysis Agent for a medical consultation clinic. A patient was sent a booking confirmation and has replied. Read their reply and classify what they want.\n\nRules:\n- Classify intent as exactly one of: cancel, reschedule, confirm.\n  - cancel: the patient wants to call off the appointment entirely. Set cancelled = true.\n  - reschedule: the patient wants a different date and/or time. Extract newDate (YYYY-MM-DD) and newTime (24h HH:MM). Set cancelled = false.\n  - confirm: the patient acknowledges / accepts with no change. Set cancelled = false, newDate and newTime empty.\n- Interpret relative phrasing (\"next week\", \"same time tomorrow\") against the originally booked date when provided.\n- Never invent a new date/time unless the patient clearly asks to move the appointment.\n- If the reply is empty or ambiguous, default to intent = confirm with a reason noting the ambiguity — never guess a cancellation.\n- Return only the structured output.",
+      "contentTokens": [
+        {
+          "type": "simpleText",
+          "rawString": "You are the Reply Analysis Agent for a medical consultation clinic. A patient was sent a booking confirmation and has replied. Read their reply and classify what they want.\n\nRules:\n- Classify intent as exactly one of: cancel, reschedule, confirm.\n  - cancel: the patient wants to call off the appointment entirely. Set cancelled = true.\n  - reschedule: the patient wants a different date and/or time. Extract newDate (YYYY-MM-DD) and newTime (24h HH:MM). Set cancelled = false.\n  - confirm: the patient acknowledges / accepts with no change. Set cancelled = false, newDate and newTime empty.\n- Interpret relative phrasing (\"next week\", \"same time tomorrow\") against the originally booked date when provided.\n- Never invent a new date/time unless the patient clearly asks to move the appointment.\n- If the reply is empty or ambiguous, default to intent = confirm with a reason noting the ambiguity — never guess a cancellation.\n- Return only the structured output."
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": "Originally booked date: {{input.bookingAgent__output__appointmentDate}}\n\nPatient reply:\n{{input.getNewestEmail1__output__Body}}",
+      "contentTokens": [
+        {
+          "type": "simpleText",
+          "rawString": "Originally booked date: "
+        },
+        {
+          "type": "variable",
+          "rawString": "input.bookingAgent__output__appointmentDate"
+        },
+        {
+          "type": "simpleText",
+          "rawString": "\n\nPatient reply:\n"
+        },
+        {
+          "type": "variable",
+          "rawString": "input.getNewestEmail1__output__Body"
+        }
+      ]
+    }
+  ],
+  "projectId": "dff49a67-de87-4564-8767-0baa7fd4aae5",
+  "id": "dff49a67-de87-4564-8767-0baa7fd4aae5",
+  "name": "Reply Analysis Agent"
+}

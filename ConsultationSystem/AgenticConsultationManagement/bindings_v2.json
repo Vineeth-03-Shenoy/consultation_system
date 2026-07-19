@@ -7,9 +7,28 @@
       "id": "connection9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
       "value": {
         "ConnectionId": {
+          "defaultValue": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15",
           "isExpression": false,
-          "displayName": "uipath-google-gmail connection",
-          "defaultValue": "9d7d8b49-2d01-4e1e-9852-6df8e6167c15"
+          "displayName": "uipath-google-gmail connection"
+        }
+      },
+      "metadata": {
+        "ActivityName": "Email Received",
+        "BindingsVersion": "2.2",
+        "DisplayLabel": "uipath-google-gmail connection",
+        "UseConnectionService": "true",
+        "Connector": "uipath-google-gmail"
+      }
+    },
+    {
+      "resource": "connection",
+      "key": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+      "id": "connectionb065b929-37ff-4dcb-8b9d-85bb92e66d45",
+      "value": {
+        "ConnectionId": {
+          "defaultValue": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "isExpression": false,
+          "displayName": "uipath-google-gmail connection"
         }
       },
       "metadata": {
@@ -41,10 +60,11 @@
     },
     {
       "resource": "EventTrigger",
-      "key": "",
-      "id": "EventTrigger",
+      "key": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+      "id": "EventTriggerb065b929-37ff-4dcb-8b9d-85bb92e66d45",
       "value": {
         "ConnectionId": {
+          "defaultValue": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
           "isExpression": false
         },
         "EntryPointUniqueId": {
@@ -78,7 +98,7 @@
         "ActivityName": "Email Received",
         "BindingsVersion": "2.2",
         "ObjectName": "Message",
-        "ParentResourceKey": "EventTrigger."
+        "ParentResourceKey": "EventTrigger.b065b929-37ff-4dcb-8b9d-85bb92e66d45"
       }
     }
   ]

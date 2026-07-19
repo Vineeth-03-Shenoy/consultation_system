@@ -127,8 +127,8 @@ Every status transition in the flow is one `update record` call — the Appointm
 Booking Agent inline (parse mail → structured booking) → Data Fabric `Appointments` create → Gmail confirmation mail.
 *Demo: send one mail, watch a record appear and a confirmation come back.* This is the smallest end-to-end proof of "agentic".
 
-**Phase 2 — The waiting game.**
-Replace day-event poll mocks: reminder/emergency/reschedule mails detected via Gmail wait-for-event (or scripted poll against the label), Reply Analysis Agent live, reschedule/cancel branches write real status updates.
+**Phase 2 — The waiting game. ✅ mostly built (2026-07-19).**
+Reply Analysis Agent live (inline, classifies cancel/reschedule/confirm from the patient's reply, sourced via Gmail *Get Newest Email*); reschedule/cancel branches now write **real Appointment status** to Data Fabric (`CancelledByPatient` / `Rescheduled` / `CancelledNoReply` / `CancelledEmergency`) via 4 update-entity-record nodes keyed on `createAppointment1.output.Id`; reschedule confirmation mail sent for real. **Still simulated:** the *detection* of the reply/reminder/emergency events themselves — the poll loops with mock check-scripts remain (the approved script-based-loop stand-in). Two housekeeping mail-moves (`moveReplyMail`, `moveReminderMail`) stay mock because they need a real inbound message-id, which only exists once detection is real — see PM question #1 (wait-for-event race).
 
 **Phase 3 — Day of consultation.**
 Check-In Action App + 24h SLA, doctor notes task, Medical Report Agent, ConsultationRecords writes.

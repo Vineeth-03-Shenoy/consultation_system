@@ -580,23 +580,6 @@
       }
     },
     {
-      "id": "analyseReply",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Analyse Patient Reply (mock agent)"
-      },
-      "inputs": {},
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "Mock output value",
-          "source": "null",
-          "var": "output"
-        }
-      }
-    },
-    {
       "id": "moveReplyMail",
       "type": "core.logic.mock",
       "typeVersion": "1.0",
@@ -624,74 +607,6 @@
         "expression": "(($vars.analyseReply.output || {}).cancelled) === true",
         "trueLabel": "Yes",
         "falseLabel": "No"
-      }
-    },
-    {
-      "id": "updCancelPatient",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Update Appointment Cancelled by Patient (mock)"
-      },
-      "inputs": {},
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "Mock output value",
-          "source": "null",
-          "var": "output"
-        }
-      }
-    },
-    {
-      "id": "sendBookingMail",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Send Booking Mail (mock)"
-      },
-      "inputs": {},
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "Mock output value",
-          "source": "null",
-          "var": "output"
-        }
-      }
-    },
-    {
-      "id": "updRescheduled",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Update Appointment Rescheduled (mock)"
-      },
-      "inputs": {},
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "Mock output value",
-          "source": "null",
-          "var": "output"
-        }
-      }
-    },
-    {
-      "id": "updCancelNoReply",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Update Appointment Cancelled No Reply (mock)"
-      },
-      "inputs": {},
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "Mock output value",
-          "source": "null",
-          "var": "output"
-        }
       }
     },
     {
@@ -1053,23 +968,6 @@
         "expression": "$vars.reply2Received === true",
         "trueLabel": "Reply received",
         "falseLabel": "1h elapsed"
-      }
-    },
-    {
-      "id": "updCancel1h",
-      "type": "core.logic.mock",
-      "typeVersion": "1.0",
-      "display": {
-        "label": "Update Appointment Cancelled 1h Timeout (mock)"
-      },
-      "inputs": {},
-      "outputs": {
-        "output": {
-          "type": "object",
-          "description": "Mock output value",
-          "source": "null",
-          "var": "output"
-        }
       }
     },
     {
@@ -1581,6 +1479,600 @@
           "var": "error"
         }
       }
+    },
+    {
+      "id": "updateEntityRecord1",
+      "type": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+      "typeVersion": "1.0.0",
+      "display": {
+        "label": "Update Entity Record"
+      },
+      "inputs": {
+        "detail": {
+          "connector": "uipath-uipath-dataservice",
+          "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+          "method": "PUT",
+          "endpoint": "/v2/{entityName}/UpdateEntityRecord",
+          "bodyParameters": {
+            "status": "CancelledByPatient"
+          },
+          "queryParameters": {
+            "recordId": "=js:$vars.createAppointment1.output.Id",
+            "expansionLevel": "3"
+          },
+          "pathParameters": {
+            "entityName": "Appointments"
+          },
+          "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+          "errorState": {
+            "issues": []
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"UpdateEntityRecordV2\",\"operation\":\"replace\",\"httpMethod\":\"PUT\",\"path\":\"/v2/{entityName}/UpdateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
+        }
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "updateEntityRecord2",
+      "type": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+      "typeVersion": "1.0.0",
+      "display": {
+        "label": "Update Entity Record 2"
+      },
+      "inputs": {
+        "detail": {
+          "connector": "uipath-uipath-dataservice",
+          "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+          "method": "PUT",
+          "endpoint": "/v2/{entityName}/UpdateEntityRecord",
+          "bodyParameters": {
+            "status": "Rescheduled",
+            "appointmentDate": "=js:$vars.analyseReply.output.newDate",
+            "appointmentTime": "=js:$vars.analyseReply.output.newTime",
+            "notes": "=js:$vars.analyseReply.output.reason"
+          },
+          "queryParameters": {
+            "recordId": "=js:$vars.createAppointment1.output.Id",
+            "expansionLevel": "3"
+          },
+          "pathParameters": {
+            "entityName": "Appointments"
+          },
+          "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+          "errorState": {
+            "issues": []
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"UpdateEntityRecordV2\",\"operation\":\"replace\",\"httpMethod\":\"PUT\",\"path\":\"/v2/{entityName}/UpdateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
+        }
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "updateEntityRecord3",
+      "type": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+      "typeVersion": "1.0.0",
+      "display": {
+        "label": "Update Entity Record 3"
+      },
+      "inputs": {
+        "detail": {
+          "connector": "uipath-uipath-dataservice",
+          "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+          "method": "PUT",
+          "endpoint": "/v2/{entityName}/UpdateEntityRecord",
+          "bodyParameters": {
+            "status": "CancelledNoReply"
+          },
+          "queryParameters": {
+            "recordId": "=js:$vars.createAppointment1.output.Id",
+            "expansionLevel": "3"
+          },
+          "pathParameters": {
+            "entityName": "Appointments"
+          },
+          "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+          "errorState": {
+            "issues": []
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"UpdateEntityRecordV2\",\"operation\":\"replace\",\"httpMethod\":\"PUT\",\"path\":\"/v2/{entityName}/UpdateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
+        }
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "updateEntityRecord4",
+      "type": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+      "typeVersion": "1.0.0",
+      "display": {
+        "label": "Update Entity Record 4"
+      },
+      "inputs": {
+        "detail": {
+          "connector": "uipath-uipath-dataservice",
+          "connectionId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionResourceId": "088ae8a8-9a56-4fc2-9df9-470c850f8d64",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+          "method": "PUT",
+          "endpoint": "/v2/{entityName}/UpdateEntityRecord",
+          "bodyParameters": {
+            "status": "CancelledEmergency"
+          },
+          "queryParameters": {
+            "recordId": "=js:$vars.createAppointment1.output.Id",
+            "expansionLevel": "3"
+          },
+          "pathParameters": {
+            "entityName": "Appointments"
+          },
+          "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+          "errorState": {
+            "issues": []
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"UpdateEntityRecordV2\",\"operation\":\"replace\",\"httpMethod\":\"PUT\",\"path\":\"/v2/{entityName}/UpdateEntityRecord\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":{\"objectActionName\":\"GenerateSchema\",\"parameterValues\":[[\"entityName\",\"Appointments\"]]},\"unifiedTypesCompatible\":true}}"
+        }
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "getNewestEmail1",
+      "type": "uipath.connector.uipath-google-gmail.get-newest-email",
+      "typeVersion": "1.0.0",
+      "display": {
+        "label": "Get Newest Email"
+      },
+      "inputs": {
+        "detail": {
+          "connector": "uipath-google-gmail",
+          "connectionId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionResourceId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+          "method": "GET",
+          "endpoint": "/GetNewestEmail",
+          "queryParameters": {
+            "emailFolder": "INBOX",
+            "unreadOnly": false,
+            "markAsRead": false
+          },
+          "uiPathActivityTypeId": "a35f9887-0d49-3780-a070-515aa71cf046",
+          "errorState": {
+            "issues": []
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"GetNewestEmail\",\"httpMethod\":\"GETBYID\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"GetNewestEmail\",\"operation\":\"retrieve\",\"httpMethod\":\"GET\",\"path\":\"/GetNewestEmail\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":null,\"unifiedTypesCompatible\":true}}"
+        }
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "sendEmail2",
+      "type": "uipath.connector.uipath-google-gmail.send-email",
+      "typeVersion": "1.0.0",
+      "display": {
+        "label": "Send Email 2"
+      },
+      "inputs": {
+        "detail": {
+          "connector": "uipath-google-gmail",
+          "connectionId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionResourceId": "b065b929-37ff-4dcb-8b9d-85bb92e66d45",
+          "connectionFolderKey": "8b57f5f4-fc08-48b2-9d0e-94cf0ca5cc0a",
+          "method": "POST",
+          "endpoint": "/SendEmail",
+          "bodyParameters": {
+            "To": "=js:$vars.emailReceived1.output.From.Email",
+            "Subject": "=js:`Appointment Rescheduled - ${$vars.analyseReply.output.newDate} at ${$vars.analyseReply.output.newTime}`",
+            "Body": "=js:`Dear Patient ${$vars.bookingAgent.output.patientId},\n\nYour consultation has been rescheduled as requested.\n\nNew Date: ${$vars.analyseReply.output.newDate}\nNew Time: ${$vars.analyseReply.output.newTime}\n\nRegards,\nConsultation Clinic`",
+            "Importance": "normal"
+          },
+          "queryParameters": {
+            "SaveAsDraft": false
+          },
+          "uiPathActivityTypeId": "f2a5320d-a0d1-3aec-af8f-5b16ad9665a0",
+          "errorState": {
+            "issues": []
+          },
+          "configuration": "=jsonString:{\"essentialConfiguration\":{\"instanceParameters\":{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"SendEmail\",\"httpMethod\":\"POST\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"},\"objectName\":\"SendEmail\",\"operation\":\"create\",\"httpMethod\":\"POST\",\"path\":\"/SendEmail\",\"packageVersion\":\"1.0.0\",\"connectorVersion\":null,\"executionType\":null,\"customFieldsRequestDetails\":null,\"unifiedTypesCompatible\":true}}",
+          "multipartParameters": [
+            {
+              "name": "file",
+              "dataType": "file"
+            },
+            {
+              "name": "body",
+              "dataType": "string"
+            }
+          ],
+          "inputMetadata": {
+            "type": "multipart",
+            "multipart": {
+              "bodyFieldName": "body"
+            }
+          }
+        }
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          },
+          "source": "=Error",
+          "var": "error"
+        }
+      }
+    },
+    {
+      "id": "analyseReply",
+      "type": "uipath.agent.autonomous",
+      "typeVersion": "1.2",
+      "display": {
+        "label": "Reply Analysis Agent"
+      },
+      "inputs": {
+        "source": "dff49a67-de87-4564-8767-0baa7fd4aae5",
+        "agentInputVariables": [
+          {
+            "id": "getNewestEmail1__output__Body",
+            "type": "string",
+            "binding": "=$vars.getNewestEmail1.output.Body",
+            "description": "Bound from $vars.getNewestEmail1.output.Body"
+          },
+          {
+            "id": "bookingAgent__output__appointmentDate",
+            "type": "string",
+            "binding": "=$vars.bookingAgent.output.appointmentDate",
+            "description": "Bound from $vars.bookingAgent.output.appointmentDate"
+          }
+        ],
+        "agentOutputVariables": [
+          {
+            "id": "intent",
+            "type": "string"
+          },
+          {
+            "id": "cancelled",
+            "type": "boolean"
+          },
+          {
+            "id": "newDate",
+            "type": "string"
+          },
+          {
+            "id": "newTime",
+            "type": "string"
+          },
+          {
+            "id": "reason",
+            "type": "string"
+          }
+        ]
+      },
+      "outputs": {
+        "output": {
+          "type": "object",
+          "description": "Mock output value",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      }
     }
   ],
   "edges": [
@@ -1700,19 +2192,19 @@
       "id": "e19",
       "sourceNodeId": "gotReply1",
       "sourcePort": "true",
-      "targetNodeId": "analyseReply",
+      "targetNodeId": "getNewestEmail1",
       "targetPort": "input"
     },
     {
       "id": "e20",
       "sourceNodeId": "gotReply1",
       "sourcePort": "false",
-      "targetNodeId": "updCancelNoReply",
+      "targetNodeId": "updateEntityRecord3",
       "targetPort": "input"
     },
     {
       "id": "e21",
-      "sourceNodeId": "updCancelNoReply",
+      "sourceNodeId": "updateEntityRecord3",
       "sourcePort": "output",
       "targetNodeId": "done_noReply",
       "targetPort": "input"
@@ -1720,7 +2212,7 @@
     {
       "id": "e22",
       "sourceNodeId": "analyseReply",
-      "sourcePort": "output",
+      "sourcePort": "success",
       "targetNodeId": "moveReplyMail",
       "targetPort": "input"
     },
@@ -1735,33 +2227,33 @@
       "id": "e24",
       "sourceNodeId": "isCancelled",
       "sourcePort": "true",
-      "targetNodeId": "updCancelPatient",
+      "targetNodeId": "updateEntityRecord1",
       "targetPort": "input"
     },
     {
       "id": "e25",
       "sourceNodeId": "isCancelled",
       "sourcePort": "false",
-      "targetNodeId": "sendBookingMail",
+      "targetNodeId": "sendEmail2",
       "targetPort": "input"
     },
     {
       "id": "e26",
-      "sourceNodeId": "updCancelPatient",
+      "sourceNodeId": "updateEntityRecord1",
       "sourcePort": "output",
       "targetNodeId": "done_cancelPatient",
       "targetPort": "input"
     },
     {
       "id": "e27",
-      "sourceNodeId": "sendBookingMail",
+      "sourceNodeId": "sendEmail2",
       "sourcePort": "output",
-      "targetNodeId": "updRescheduled",
+      "targetNodeId": "updateEntityRecord2",
       "targetPort": "input"
     },
     {
       "id": "e28",
-      "sourceNodeId": "updRescheduled",
+      "sourceNodeId": "updateEntityRecord2",
       "sourcePort": "output",
       "targetNodeId": "done_rescheduled",
       "targetPort": "input"
@@ -1847,19 +2339,19 @@
       "id": "e42",
       "sourceNodeId": "gotReply2",
       "sourcePort": "true",
-      "targetNodeId": "analyseReply",
+      "targetNodeId": "getNewestEmail1",
       "targetPort": "input"
     },
     {
       "id": "e43",
       "sourceNodeId": "gotReply2",
       "sourcePort": "false",
-      "targetNodeId": "updCancel1h",
+      "targetNodeId": "updateEntityRecord4",
       "targetPort": "input"
     },
     {
       "id": "e44",
-      "sourceNodeId": "updCancel1h",
+      "sourceNodeId": "updateEntityRecord4",
       "sourcePort": "output",
       "targetNodeId": "done_emerg1h",
       "targetPort": "input"
@@ -1974,6 +2466,13 @@
       "sourceNodeId": "hadEmergency",
       "sourcePort": "true",
       "targetNodeId": "pollReplyLoop2",
+      "targetPort": "input"
+    },
+    {
+      "id": "e_getreply_agent",
+      "sourceNodeId": "getNewestEmail1",
+      "sourcePort": "output",
+      "targetNodeId": "analyseReply",
       "targetPort": "input"
     }
   ],
@@ -4432,6 +4931,438 @@
       }
     },
     {
+      "nodeType": "uipath.connector.uipath-uipath-dataservice.update-entity-record",
+      "version": "1.0.0",
+      "category": "connector.72495",
+      "tags": [
+        "connector",
+        "activity"
+      ],
+      "sortOrder": 515,
+      "supportsErrorHandling": true,
+      "description": "(UiPath Data Fabric) Updates an existing record in a Data Fabric entity",
+      "display": {
+        "label": "Update Entity Record",
+        "description": "(UiPath Data Fabric) Updates an existing record in a Data Fabric entity",
+        "icon": "https://staging.uipath.com/ee592586-d464-411d-8c04-487e05e39950/studio_/typecache/icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input",
+              "label": ""
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output",
+              "label": ""
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:SendTask",
+        "serviceType": "Intsvc.ActivityExecution",
+        "bindings": {
+          "resource": "connection",
+          "resourceKey": "",
+          "values": [
+            {
+              "name": "uipath-uipath-dataservice connection",
+              "propertyAttribute": "ConnectionId"
+            },
+            {
+              "name": "FolderKey",
+              "propertyAttribute": "FolderKey"
+            }
+          ]
+        },
+        "context": [
+          {
+            "name": "connectorKey",
+            "type": "string",
+            "value": "uipath-uipath-dataservice"
+          },
+          {
+            "name": "operation",
+            "type": "string"
+          },
+          {
+            "name": "objectName",
+            "value": "UpdateEntityRecordV2",
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "value": "PUT"
+          },
+          {
+            "name": "connection",
+            "type": "string",
+            "value": "<bindings.uipath-uipath-dataservice connection>"
+          },
+          {
+            "name": "folderKey",
+            "type": "string",
+            "value": "<bindings.FolderKey>"
+          },
+          {
+            "name": "activityConfigurationVersion",
+            "type": "string",
+            "value": "v1"
+          },
+          {
+            "name": "metadata",
+            "body": {
+              "telemetryData": {
+                "connectorKey": "uipath-uipath-dataservice",
+                "connectorName": "Update Entity Record"
+              },
+              "inputMetadata": {},
+              "errorState": {
+                "hasError": true
+              }
+            },
+            "type": "json"
+          }
+        ]
+      },
+      "form": {
+        "id": "connector-properties",
+        "title": "Connector configuration",
+        "sections": [
+          {
+            "id": "connector",
+            "title": "Connector",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "label": "",
+                "name": "inputs.detail",
+                "type": "custom",
+                "component": "dap-config",
+                "componentProps": {
+                  "connectorDetail": {
+                    "isAppActivity": false,
+                    "packageId": "72495",
+                    "svgIconUrl": "icons/98381fa079bbcf73264f551006d6ef7580fb53992f3d9f94361eb5d9e06040cb.svg",
+                    "displayName": "Update Entity Record",
+                    "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
+                    "description": "Updates an existing record in a Data Fabric entity",
+                    "category": "",
+                    "activityColor": "#E56D5C",
+                    "configuration": "{\"connectorKey\":\"uipath-uipath-dataservice\",\"objectName\":\"UpdateEntityRecordV2\",\"httpMethod\":\"PUT\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"}",
+                    "uiPathActivityTypeId": "718fdc36-73a8-3607-8604-ddef95bb9967",
+                    "isExperimental": false,
+                    "helpUrlTemplate": "https://docs.uipath.com/{0}/activities/other/latest/integration-service/uipath-uipath-dataservice-Update-Entity-Record",
+                    "isEnabled": true,
+                    "targetPlatform": "CrossPlatform",
+                    "isAdvanced": false,
+                    "isRestricted": false,
+                    "hasWpfOnlyDesigner": false,
+                    "tags": [
+                      ""
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inputDefinition": {},
+      "inputDefaults": {},
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "debug": {
+        "runtime": "bpmnEngine"
+      }
+    },
+    {
+      "nodeType": "uipath.connector.uipath-google-gmail.get-newest-email",
+      "version": "1.0.0",
+      "category": "connector.72537",
+      "tags": [
+        "connector",
+        "activity"
+      ],
+      "sortOrder": 515,
+      "supportsErrorHandling": true,
+      "description": "(Gmail) Fetch newest email from the list of emails in specified folder",
+      "display": {
+        "label": "Get Newest Email",
+        "description": "(Gmail) Fetch newest email from the list of emails in specified folder",
+        "icon": "https://staging.uipath.com/ee592586-d464-411d-8c04-487e05e39950/studio_/typecache/icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg"
+      },
+      "handleConfiguration": [
+        {
+          "position": "left",
+          "handles": [
+            {
+              "id": "input",
+              "type": "target",
+              "handleType": "input",
+              "label": ""
+            }
+          ]
+        },
+        {
+          "position": "right",
+          "handles": [
+            {
+              "id": "output",
+              "type": "source",
+              "handleType": "output",
+              "label": ""
+            },
+            {
+              "id": "error",
+              "label": "Error",
+              "type": "source",
+              "handleType": "output",
+              "visible": "{inputs.errorHandlingEnabled}",
+              "constraints": {
+                "maxConnections": 1
+              }
+            }
+          ]
+        }
+      ],
+      "model": {
+        "type": "bpmn:SendTask",
+        "serviceType": "Intsvc.ActivityExecution",
+        "bindings": {
+          "resource": "connection",
+          "resourceKey": "",
+          "values": [
+            {
+              "name": "uipath-google-gmail connection",
+              "propertyAttribute": "ConnectionId"
+            },
+            {
+              "name": "FolderKey",
+              "propertyAttribute": "FolderKey"
+            }
+          ]
+        },
+        "context": [
+          {
+            "name": "connectorKey",
+            "type": "string",
+            "value": "uipath-google-gmail"
+          },
+          {
+            "name": "operation",
+            "type": "string"
+          },
+          {
+            "name": "objectName",
+            "value": "GetNewestEmail",
+            "type": "string"
+          },
+          {
+            "name": "method",
+            "type": "string",
+            "value": "GETBYID"
+          },
+          {
+            "name": "connection",
+            "type": "string",
+            "value": "<bindings.uipath-google-gmail connection>"
+          },
+          {
+            "name": "folderKey",
+            "type": "string",
+            "value": "<bindings.FolderKey>"
+          },
+          {
+            "name": "activityConfigurationVersion",
+            "type": "string",
+            "value": "v1"
+          },
+          {
+            "name": "metadata",
+            "body": {
+              "telemetryData": {
+                "connectorKey": "uipath-google-gmail",
+                "connectorName": "Get Newest Email"
+              },
+              "inputMetadata": {},
+              "errorState": {
+                "hasError": true
+              }
+            },
+            "type": "json"
+          }
+        ]
+      },
+      "form": {
+        "id": "connector-properties",
+        "title": "Connector configuration",
+        "sections": [
+          {
+            "id": "connector",
+            "title": "Connector",
+            "collapsible": true,
+            "defaultExpanded": true,
+            "fields": [
+              {
+                "label": "",
+                "name": "inputs.detail",
+                "type": "custom",
+                "component": "dap-config",
+                "componentProps": {
+                  "connectorDetail": {
+                    "isAppActivity": false,
+                    "packageId": "72537",
+                    "svgIconUrl": "icons/70091673b4573a26ec5090fa697c3bf61a0bedf4c77a302986b69d53bea30191.svg",
+                    "displayName": "Get Newest Email",
+                    "assemblyQualifiedName": "UiPath.IntegrationService.Activities.Runtime.Activities.ConnectorActivity, UiPath.IntegrationService.Activities.Runtime, Version=1.29.0.0, Culture=neutral, PublicKeyToken=null",
+                    "description": "Fetch newest email from the list of emails in specified folder",
+                    "category": "",
+                    "activityColor": "#E56D5C",
+                    "configuration": "{\"connectorKey\":\"uipath-google-gmail\",\"objectName\":\"GetNewestEmail\",\"httpMethod\":\"GETBYID\",\"activityType\":\"Curated\",\"version\":\"1.0.0\",\"supportsStreaming\":false,\"subType\":\"standard\"}",
+                    "uiPathActivityTypeId": "a35f9887-0d49-3780-a070-515aa71cf046",
+                    "isExperimental": false,
+                    "helpUrlTemplate": "https://docs.uipath.com/{0}/activities/other/latest/integration-service/uipath-google-gmail-Get-Newest-Email",
+                    "isEnabled": true,
+                    "targetPlatform": "CrossPlatform",
+                    "isAdvanced": false,
+                    "isRestricted": false,
+                    "hasWpfOnlyDesigner": false,
+                    "tags": [
+                      ""
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "inputDefinition": {},
+      "inputDefaults": {},
+      "outputDefinition": {
+        "output": {
+          "type": "object",
+          "description": "The return value of the connector.",
+          "source": "=result.response",
+          "var": "output"
+        },
+        "error": {
+          "type": "object",
+          "description": "Error information if the node fails",
+          "source": "=Error",
+          "var": "error",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "detail",
+              "category",
+              "status"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "description": "Error code as a string"
+              },
+              "message": {
+                "type": "string",
+                "description": "High-level error message"
+              },
+              "detail": {
+                "type": "string",
+                "description": "Detailed error description"
+              },
+              "category": {
+                "type": "string",
+                "description": "Error category"
+              },
+              "status": {
+                "type": "integer",
+                "description": "HTTP status code"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "debug": {
+        "runtime": "bpmnEngine"
+      }
+    },
+    {
       "nodeType": "core.trigger.manual",
       "version": "1.0",
       "category": "trigger",
@@ -4867,15 +5798,6 @@
         }
       },
       {
-        "id": "analyseReply.output",
-        "type": "object",
-        "description": "Mock output value",
-        "binding": {
-          "nodeId": "analyseReply",
-          "outputId": "output"
-        }
-      },
-      {
         "id": "moveReplyMail.output",
         "type": "object",
         "description": "Mock output value",
@@ -4900,42 +5822,6 @@
         "binding": {
           "nodeId": "isCancelled",
           "outputId": "matchedCaseId"
-        }
-      },
-      {
-        "id": "updCancelPatient.output",
-        "type": "object",
-        "description": "Mock output value",
-        "binding": {
-          "nodeId": "updCancelPatient",
-          "outputId": "output"
-        }
-      },
-      {
-        "id": "sendBookingMail.output",
-        "type": "object",
-        "description": "Mock output value",
-        "binding": {
-          "nodeId": "sendBookingMail",
-          "outputId": "output"
-        }
-      },
-      {
-        "id": "updRescheduled.output",
-        "type": "object",
-        "description": "Mock output value",
-        "binding": {
-          "nodeId": "updRescheduled",
-          "outputId": "output"
-        }
-      },
-      {
-        "id": "updCancelNoReply.output",
-        "type": "object",
-        "description": "Mock output value",
-        "binding": {
-          "nodeId": "updCancelNoReply",
-          "outputId": "output"
         }
       },
       {
@@ -5232,15 +6118,6 @@
         "binding": {
           "nodeId": "gotReply2",
           "outputId": "matchedCaseId"
-        }
-      },
-      {
-        "id": "updCancel1h.output",
-        "type": "object",
-        "description": "Mock output value",
-        "binding": {
-          "nodeId": "updCancel1h",
-          "outputId": "output"
         }
       },
       {
@@ -5724,6 +6601,370 @@
         }
       },
       {
+        "id": "updateEntityRecord1.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "updateEntityRecord1",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "updateEntityRecord1.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "updateEntityRecord1",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "updateEntityRecord2.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "updateEntityRecord2",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "updateEntityRecord2.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "updateEntityRecord2",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "updateEntityRecord3.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "updateEntityRecord3",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "updateEntityRecord3.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "updateEntityRecord3",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "updateEntityRecord4.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "updateEntityRecord4",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "updateEntityRecord4.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "updateEntityRecord4",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "getNewestEmail1.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "getNewestEmail1",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "getNewestEmail1.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "getNewestEmail1",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "sendEmail2.output",
+        "type": "object",
+        "description": "The return value of the connector.",
+        "binding": {
+          "nodeId": "sendEmail2",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "sendEmail2.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "sendEmail2",
+          "outputId": "error"
+        }
+      },
+      {
+        "id": "analyseReply.output",
+        "type": "object",
+        "description": "Mock output value",
+        "binding": {
+          "nodeId": "analyseReply",
+          "outputId": "output"
+        }
+      },
+      {
+        "id": "analyseReply.error",
+        "type": "object",
+        "schema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": [
+            "code",
+            "message",
+            "detail",
+            "category",
+            "status"
+          ],
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "Error code as a string"
+            },
+            "message": {
+              "type": "string",
+              "description": "High-level error message"
+            },
+            "detail": {
+              "type": "string",
+              "description": "Detailed error description"
+            },
+            "category": {
+              "type": "string",
+              "description": "Error category"
+            },
+            "status": {
+              "type": "integer",
+              "description": "HTTP status code"
+            }
+          },
+          "additionalProperties": false
+        },
+        "description": "Error information if the node fails",
+        "binding": {
+          "nodeId": "analyseReply",
+          "outputId": "error"
+        }
+      },
+      {
         "id": "emailReceived1.output",
         "type": "object",
         "description": "The return value of the connector trigger.",
@@ -5897,15 +7138,15 @@
           "y": -112
         },
         "size": {
-          "width": 576,
+          "width": 560,
           "height": 320
         },
         "collapsed": false
       },
       "delayDayPoll": {
         "position": {
-          "x": 144,
-          "y": 112
+          "x": 1616,
+          "y": 288
         },
         "size": {
           "width": 96,
@@ -5915,8 +7156,8 @@
       },
       "checkDayEvents": {
         "position": {
-          "x": 336,
-          "y": 112
+          "x": 2048,
+          "y": 288
         },
         "size": {
           "width": 96,
@@ -5926,8 +7167,8 @@
       },
       "routeDayEvent": {
         "position": {
-          "x": 1632,
-          "y": -32
+          "x": 1616,
+          "y": -272
         },
         "size": {
           "width": 96,
@@ -5937,19 +7178,19 @@
       },
       "pollReplyLoop1": {
         "position": {
-          "x": 1824,
-          "y": -512
+          "x": 1808,
+          "y": -768
         },
         "size": {
-          "width": 576,
+          "width": 560,
           "height": 320
         },
         "collapsed": false
       },
       "delayReply1": {
         "position": {
-          "x": 144,
-          "y": 112
+          "x": 2704,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -5959,8 +7200,8 @@
       },
       "checkReply1": {
         "position": {
-          "x": 336,
-          "y": 112
+          "x": 3120,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -5970,19 +7211,8 @@
       },
       "gotReply1": {
         "position": {
-          "x": 2736,
-          "y": -400
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "analyseReply": {
-        "position": {
-          "x": 3168,
-          "y": -496
+          "x": 2704,
+          "y": -800
         },
         "size": {
           "width": 96,
@@ -5992,8 +7222,8 @@
       },
       "moveReplyMail": {
         "position": {
-          "x": 3600,
-          "y": -496
+          "x": 3968,
+          "y": -896
         },
         "size": {
           "width": 96,
@@ -6003,52 +7233,8 @@
       },
       "isCancelled": {
         "position": {
-          "x": 4032,
-          "y": -496
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "updCancelPatient": {
-        "position": {
-          "x": 4224,
-          "y": -592
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "sendBookingMail": {
-        "position": {
-          "x": 4224,
-          "y": -400
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "updRescheduled": {
-        "position": {
-          "x": 4416,
-          "y": -400
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "updCancelNoReply": {
-        "position": {
-          "x": 3168,
-          "y": -304
+          "x": 4160,
+          "y": -896
         },
         "size": {
           "width": 96,
@@ -6058,8 +7244,8 @@
       },
       "moveReminderMail": {
         "position": {
-          "x": 2064,
-          "y": 416
+          "x": 2048,
+          "y": 96
         },
         "size": {
           "width": 96,
@@ -6069,8 +7255,8 @@
       },
       "dayOfConsult": {
         "position": {
-          "x": 2736,
-          "y": 80
+          "x": 2704,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -6080,19 +7266,19 @@
       },
       "emergencyWatch": {
         "position": {
-          "x": 2496,
-          "y": 624
+          "x": 2464,
+          "y": 400
         },
         "size": {
-          "width": 576,
+          "width": 560,
           "height": 320
         },
         "collapsed": false
       },
       "delayEmerg": {
         "position": {
-          "x": 144,
-          "y": 112
+          "x": 3120,
+          "y": 672
         },
         "size": {
           "width": 96,
@@ -6102,8 +7288,8 @@
       },
       "checkEmerg": {
         "position": {
-          "x": 336,
-          "y": 112
+          "x": 3552,
+          "y": 672
         },
         "size": {
           "width": 96,
@@ -6113,8 +7299,8 @@
       },
       "hadEmergency": {
         "position": {
-          "x": 3168,
-          "y": 736
+          "x": 3120,
+          "y": 336
         },
         "size": {
           "width": 96,
@@ -6124,19 +7310,19 @@
       },
       "pollReplyLoop2": {
         "position": {
-          "x": 3360,
-          "y": 464
+          "x": 3312,
+          "y": 64
         },
         "size": {
-          "width": 576,
+          "width": 560,
           "height": 320
         },
         "collapsed": false
       },
       "delayReply2": {
         "position": {
-          "x": 144,
-          "y": 112
+          "x": 3968,
+          "y": 272
         },
         "size": {
           "width": 96,
@@ -6146,8 +7332,8 @@
       },
       "checkReply2": {
         "position": {
-          "x": 336,
-          "y": 112
+          "x": 4160,
+          "y": 272
         },
         "size": {
           "width": 96,
@@ -6157,19 +7343,8 @@
       },
       "gotReply2": {
         "position": {
-          "x": 4032,
-          "y": 576
-        },
-        "size": {
-          "width": 96,
-          "height": 96
-        },
-        "collapsed": false
-      },
-      "updCancel1h": {
-        "position": {
-          "x": 4224,
-          "y": 576
+          "x": 3968,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -6179,8 +7354,8 @@
       },
       "outcomeOk": {
         "position": {
-          "x": 3168,
-          "y": 80
+          "x": 3120,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -6190,8 +7365,8 @@
       },
       "terminateFlow": {
         "position": {
-          "x": 3600,
-          "y": 272
+          "x": 3552,
+          "y": -128
         },
         "size": {
           "width": 96,
@@ -6201,8 +7376,8 @@
       },
       "decisionTests": {
         "position": {
-          "x": 3600,
-          "y": -112
+          "x": 3552,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -6212,8 +7387,8 @@
       },
       "labTestRequest": {
         "position": {
-          "x": 4032,
-          "y": -112
+          "x": 3968,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -6223,8 +7398,8 @@
       },
       "joinTests": {
         "position": {
-          "x": 4224,
-          "y": -112
+          "x": 4160,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -6234,8 +7409,8 @@
       },
       "decisionMeds": {
         "position": {
-          "x": 3600,
-          "y": 80
+          "x": 3552,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -6245,8 +7420,8 @@
       },
       "pharmacyOrder": {
         "position": {
-          "x": 4032,
-          "y": 80
+          "x": 3968,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -6256,8 +7431,8 @@
       },
       "joinMeds": {
         "position": {
-          "x": 4224,
-          "y": 80
+          "x": 4160,
+          "y": -320
         },
         "size": {
           "width": 96,
@@ -6267,8 +7442,8 @@
       },
       "mergeOrders": {
         "position": {
-          "x": 4416,
-          "y": -112
+          "x": 4352,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -6278,8 +7453,8 @@
       },
       "apptCompleted": {
         "position": {
-          "x": 4608,
-          "y": -112
+          "x": 4544,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -6289,8 +7464,8 @@
       },
       "done_reschedCancel": {
         "position": {
-          "x": 2064,
-          "y": 64
+          "x": 2048,
+          "y": -224
         },
         "size": {
           "width": 96,
@@ -6300,8 +7475,8 @@
       },
       "done_noReply": {
         "position": {
-          "x": 3600,
-          "y": -304
+          "x": 3552,
+          "y": -704
         },
         "size": {
           "width": 96,
@@ -6311,8 +7486,8 @@
       },
       "done_cancelPatient": {
         "position": {
-          "x": 4416,
-          "y": -592
+          "x": 4544,
+          "y": -992
         },
         "size": {
           "width": 96,
@@ -6322,8 +7497,8 @@
       },
       "done_rescheduled": {
         "position": {
-          "x": 4608,
-          "y": -400
+          "x": 4736,
+          "y": -800
         },
         "size": {
           "width": 96,
@@ -6333,8 +7508,8 @@
       },
       "done_emerg1h": {
         "position": {
-          "x": 4416,
-          "y": 576
+          "x": 4352,
+          "y": 80
         },
         "size": {
           "width": 96,
@@ -6344,8 +7519,8 @@
       },
       "done_noEmerg": {
         "position": {
-          "x": 3600,
-          "y": 880
+          "x": 3552,
+          "y": 480
         },
         "size": {
           "width": 96,
@@ -6355,8 +7530,8 @@
       },
       "done_main": {
         "position": {
-          "x": 4800,
-          "y": -112
+          "x": 4736,
+          "y": -512
         },
         "size": {
           "width": 96,
@@ -6371,6 +7546,83 @@
         },
         "size": {
           "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "updateEntityRecord1": {
+        "position": {
+          "x": 4352,
+          "y": -992
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "updateEntityRecord2": {
+        "position": {
+          "x": 4544,
+          "y": -800
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "updateEntityRecord3": {
+        "position": {
+          "x": 3120,
+          "y": -704
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "updateEntityRecord4": {
+        "position": {
+          "x": 4160,
+          "y": 80
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "getNewestEmail1": {
+        "position": {
+          "x": 3120,
+          "y": -896
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "sendEmail2": {
+        "position": {
+          "x": 4352,
+          "y": -800
+        },
+        "size": {
+          "width": 96,
+          "height": 96
+        },
+        "collapsed": false
+      },
+      "analyseReply": {
+        "position": {
+          "x": 3456,
+          "y": -896
+        },
+        "size": {
+          "width": 288,
           "height": 96
         },
         "collapsed": false
