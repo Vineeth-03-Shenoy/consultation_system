@@ -1,0 +1,22 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "SlotAllocator",
+    "kind": "package",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "59fe728f-7480-4b89-985d-cafc8cf2f5f1",
+    "dependencies": [],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "name": "SlotAllocator"
+    },
+    "locks": [],
+    "key": "8be5da0d-5712-4d6a-aa6e-03227a595aeb",
+    "files": []
+  }
+}

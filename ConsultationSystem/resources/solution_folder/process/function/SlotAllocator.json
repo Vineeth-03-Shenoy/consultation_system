@@ -1,0 +1,38 @@
+{
+  "docVersion": "1.0.0",
+  "resource": {
+    "name": "SlotAllocator",
+    "kind": "process",
+    "type": "function",
+    "apiVersion": "orchestrator.uipath.com/v1",
+    "projectKey": "59fe728f-7480-4b89-985d-cafc8cf2f5f1",
+    "dependencies": [
+      {
+        "kind": "package",
+        "name": "SlotAllocator"
+      }
+    ],
+    "runtimeDependencies": [],
+    "folders": [
+      {
+        "fullyQualifiedName": "solution_folder"
+      }
+    ],
+    "spec": {
+      "type": "Function",
+      "name": "SlotAllocator",
+      "package": {
+        "key": "8be5da0d-5712-4d6a-aa6e-03227a595aeb"
+      },
+      "packageName": "ConsultationSystem.function.SlotAllocator",
+      "targetFrameworkValue": "Portable",
+      "retentionAction": "Delete",
+      "retentionPeriod": 30,
+      "staleRetentionAction": "Delete",
+      "staleRetentionPeriod": 180
+    },
+    "locks": [],
+    "key": "d8a019fc-ed4a-4602-a4a4-7488ca365ce5",
+    "files": []
+  }
+}

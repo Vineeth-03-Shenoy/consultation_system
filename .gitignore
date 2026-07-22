@@ -20,3 +20,17 @@ ConsultationSystem/userProfile/
 *.tmp
 temp/
 tmp/
+
+# Old-implementation reference bundles (local only, not part of the rebuild)
+Codes/
+
+# Studio Web export bundles (regenerable via solution upload + browser Export)
+*.uis
+
+# Python
+__pycache__/
+*.pyc
+.env
+
+# uip-generated agent doc boilerplate
+.agent/

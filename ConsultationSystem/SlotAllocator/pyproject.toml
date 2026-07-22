@@ -1,0 +1,9 @@
+[project]
+name = "SlotAllocator"
+version = "0.0.1"
+description = "Deterministic non-overlapping appointment slot allocator for the Consultation Management System"
+authors = [{ name = "Vineeth Shenoy", email = "vineethshenoy22@gmail.com" }]
+dependencies = [
+    "uipath>=2.10.0, <2.11.0"
+]
+requires-python = ">=3.11"

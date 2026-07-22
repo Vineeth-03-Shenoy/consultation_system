@@ -1,12 +1,17 @@
 {
   "DocVersion": "1.0.0",
   "StudioMinVersion": "2025.10.0",
-  "SolutionId": "9de45f97-be7d-4156-9475-5c7b6def72bc",
+  "SolutionId": "2444ad1b-5180-4666-2c12-08dee6498962",
   "Projects": [
     {
       "Type": "Flow",
       "ProjectRelativePath": "AgenticConsultationManagement/project.uiproj",
       "Id": "5a9ed874-ebf3-4051-bba9-83d816ab6e12"
+    },
+    {
+      "Type": "Function",
+      "ProjectRelativePath": "SlotAllocator/project.uiproj",
+      "Id": "59fe728f-7480-4b89-985d-cafc8cf2f5f1"
     }
   ]
 }

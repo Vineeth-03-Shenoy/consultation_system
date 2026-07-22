@@ -1,0 +1,9 @@
+{
+  "runtimeOptions": {
+    "isConversational": false
+  },
+  "functions": {
+    "allocate_slot": "main.py:allocate_slot"
+  },
+  "id": "6c1f129d-e946-462a-9e50-68a5e7141885"
+}

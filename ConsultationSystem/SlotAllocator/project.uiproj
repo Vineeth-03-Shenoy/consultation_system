@@ -1,0 +1,6 @@
+{
+  "ProjectType": "Function",
+  "Name": "SlotAllocator",
+  "Description": "Deterministic non-overlapping appointment slot allocator for the Consultation Management System",
+  "MainFile": null
+}

@@ -1,0 +1,15 @@
+{
+  "AppointmentStatus": {
+    "choiceSetId": "80d367cd-b085-f111-b337-000d3ab0e5e5",
+    "values": {
+      "booked": 0,
+      "checked_in": 1,
+      "cancelled_by_patient": 2,
+      "cancelled_no_reply": 3,
+      "cancelled_emergency": 4,
+      "rescheduled": 5,
+      "completed": 6,
+      "abandoned": 7
+    }
+  }
+}

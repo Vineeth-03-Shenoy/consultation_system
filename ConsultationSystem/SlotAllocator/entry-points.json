@@ -1,0 +1,188 @@
+{
+    "$schema": "https://cloud.uipath.com/draft/2024-12/entry-point",
+    "$id": "entry-points.json",
+    "entryPoints": [
+        {
+            "filePath": "allocate_slot",
+            "uniqueId": "aa256931-a87e-4cb1-b1b5-c734edd6e63d",
+            "type": "function",
+            "input": {
+                "type": "object",
+                "properties": {
+                    "doctorId": {
+                        "title": "Doctorid",
+                        "type": "string"
+                    },
+                    "appointmentDate": {
+                        "title": "Appointmentdate",
+                        "type": "string"
+                    },
+                    "timePreference": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "doctorId",
+                    "appointmentDate"
+                ],
+                "title": "Input"
+            },
+            "output": {
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "default": false,
+                        "title": "Success",
+                        "type": "boolean"
+                    },
+                    "selectedTime": {
+                        "type": "string"
+                    },
+                    "reason": {
+                        "default": "",
+                        "title": "Reason",
+                        "type": "string"
+                    },
+                    "error_type": {
+                        "default": "",
+                        "title": "Error Type",
+                        "type": "string"
+                    },
+                    "error_message": {
+                        "default": "",
+                        "title": "Error Message",
+                        "type": "string"
+                    }
+                },
+                "required": [],
+                "title": "Output"
+            },
+            "graph": {
+                "nodes": [
+                    {
+                        "id": "main.py:104",
+                        "name": "allocate_slot",
+                        "type": "function",
+                        "metadata": {
+                            "file": "main.py"
+                        }
+                    },
+                    {
+                        "id": "main.py:50",
+                        "name": "_field",
+                        "type": "function",
+                        "metadata": {
+                            "file": "main.py"
+                        }
+                    },
+                    {
+                        "id": "main.py:54",
+                        "name": "_parse_time",
+                        "type": "function",
+                        "metadata": {
+                            "file": "main.py"
+                        }
+                    },
+                    {
+                        "id": "main.py:90",
+                        "name": "_build_free_slots",
+                        "type": "function",
+                        "metadata": {
+                            "file": "main.py"
+                        }
+                    },
+                    {
+                        "id": "main.py:77",
+                        "name": "_preference_anchor",
+                        "type": "function",
+                        "metadata": {
+                            "file": "main.py"
+                        }
+                    },
+                    {
+                        "id": "main.py:98",
+                        "name": "_pick_slot",
+                        "type": "function",
+                        "metadata": {
+                            "file": "main.py"
+                        }
+                    },
+                    {
+                        "id": "main.py:42",
+                        "name": "sdk",
+                        "type": "function",
+                        "metadata": {
+                            "file": "main.py"
+                        }
+                    }
+                ],
+                "edges": [
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:50"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:50"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:54"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:54"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:90"
+                    },
+                    {
+                        "source": "main.py:77",
+                        "target": "main.py:54"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:77"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:98"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:50"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:50"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:54"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:42"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:50"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:42"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:50"
+                    },
+                    {
+                        "source": "main.py:104",
+                        "target": "main.py:50"
+                    }
+                ]
+            }
+        }
+    ]
+}
