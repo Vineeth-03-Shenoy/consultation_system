@@ -11,7 +11,7 @@ import {
 import { Input } from '@uipath/apollo-wind/components/ui/input';
 import { Label } from '@uipath/apollo-wind/components/ui/label';
 import { toast } from '@uipath/apollo-wind/components/ui/sonner';
-import { STATUS } from '../lib/constants';
+import { BOOKING_MAIL_SUBJECT, CLINIC_BOOKING_EMAIL } from '../lib/constants';
 import type { Appointment, ClinicData, Doctor, Patient } from '../lib/df';
 import { computeFreeSlots } from '../lib/slots';
 
@@ -25,7 +25,7 @@ export function BookAppointment({ data }: { data: ClinicData }) {
   const [doctorId, setDoctorId] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [booking, setBooking] = useState(false);
+  const [requested, setRequested] = useState(false);
 
   useEffect(() => {
     if (!patient) return;
@@ -53,27 +53,26 @@ export function BookAppointment({ data }: { data: ClinicData }) {
     }
   };
 
-  const book = async () => {
+  /** Option C ("App trigger mail"): the portal does NOT write the appointment
+   *  itself. It hands the request to the agentic consultation flow by composing
+   *  the standard booking mail — the flow's Gmail trigger picks it up, the
+   *  extraction agent parses it, the SlotAllocator confirms the slot, and the
+   *  patient receives a confirmation email. The selected slot travels as the
+   *  time preference. */
+  const requestViaMail = () => {
     if (!patient || !doctor || !date || !time) return;
-    setBooking(true);
-    try {
-      await data.bookAppointment({
-        patientId: patient.patientId,
-        patientEmail: patient.email,
-        doctorId: doctor.doctorId,
-        appointmentDate: date,
-        appointmentTime: time,
-        status: STATUS.booked,
-        notes: `Booked via clinic portal (${doctor.name}, ${doctor.speciality})`,
-      });
-      toast.success(`Appointment booked for ${date} at ${time} with ${doctor.name}.`);
-      setAppointments(await data.getAppointments());
-      setTime('');
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Booking failed');
-    } finally {
-      setBooking(false);
-    }
+    const body = [
+      `PatientID:${patient.patientId}`,
+      `DoctorID:${doctor.doctorId}`,
+      `Date:${date}`,
+      `Time:${time}`,
+    ].join('\n');
+    const href = `mailto:${CLINIC_BOOKING_EMAIL}?subject=${encodeURIComponent(
+      BOOKING_MAIL_SUBJECT,
+    )}&body=${encodeURIComponent(body)}`;
+    window.location.href = href;
+    setRequested(true);
+    toast.info('Your email client has opened with the booking request — press Send to submit it.');
   };
 
   return (
@@ -174,9 +173,17 @@ export function BookAppointment({ data }: { data: ClinicData }) {
                 )}
               </div>
             )}
-            <Button className="w-full" onClick={book} disabled={!doctor || !date || !time || booking}>
-              {booking ? 'Booking…' : 'Book Appointment'}
+            <Button className="w-full" onClick={requestViaMail} disabled={!doctor || !date || !time}>
+              Request Appointment via Email
             </Button>
+            {requested && (
+              <Alert>
+                <AlertDescription>
+                  After you press Send, the clinic&apos;s consultation process will verify the
+                  request, confirm the slot, and email you a booking confirmation.
+                </AlertDescription>
+              </Alert>
+            )}
           </CardContent>
         </Card>
       )}

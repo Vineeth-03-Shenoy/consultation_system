@@ -33,3 +33,8 @@ export const NON_OCCUPYING_STATUSES = new Set<number>([2, 3, 4, 7]);
 export const SLOT_MINUTES = 30;
 
 export const BRAND_NAME = 'CarePoint Clinic';
+
+/** Clinic mailbox monitored by the AgenticConsultationManagement flow's
+ *  Gmail email-received trigger (label: ConsultationBooking). */
+export const CLINIC_BOOKING_EMAIL = 'not.sir.but.good.at.it@gmail.com';
+export const BOOKING_MAIL_SUBJECT = 'Book Consultation';
