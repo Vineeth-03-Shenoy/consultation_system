@@ -1,0 +1,8 @@
+{
+  "clientId": "e85d21b5-a2c3-495c-8222-2dc2daf320f3",
+  "scope": "DataFabric.Schema.Read DataFabric.Data.Read DataFabric.Data.Write",
+  "orgName": "vineethshenoy",
+  "tenantName": "Production",
+  "baseUrl": "https://staging.api.uipath.com",
+  "redirectUri": "http://localhost:5173"
+}
